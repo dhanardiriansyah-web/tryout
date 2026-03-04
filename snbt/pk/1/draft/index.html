@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tryout 1: Pengetahuan Kuantitatif</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .instructions {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-header {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: upper-alpha;
+            padding-left: 20px;
+        }
+        .options li {
+            margin-bottom: 8px;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .options li:hover {
+            background-color: #f0f0f0;
+        }
+        .table-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 450px;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .explanation {
+            display: none;
+            background-color: #fdfae6;
+            padding: 15px 20px;
+            border-left: 4px solid #f39c12;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .explanation ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .explanation li {
+            margin-bottom: 8px;
+        }
+        .show-explanation-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .show-explanation-btn:hover {
+            background-color: #27ae60;
+        }
+        .flowchart {
+            text-align: center;
+            margin: 15px auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            width: fit-content;
+            border-radius: 8px;
+        }
+        .flowchart p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
+    <h3>Berdasarkan Kisi-kisi HOTS</h3>
+
+    <div class="instructions">
+        <strong>Petunjuk Umum:</strong> Pilihlah satu jawaban yang paling tepat. Untuk soal perbandingan kuantitas (P dan Q), analisis kecukupan data (AKD), jumlah pernyataan benar, dan kombinasi pernyataan benar, perhatikan pola pilihan ganda baku yang telah ditentukan.
+    </div>
+
+    <!-- NOMOR 1 -->
+    <div class="question">
+        <div class="question-header">1. (Pengukuran dan Aritmetika Sosial)</div>
+        <p>Sebuah toko elektronik membeli sebuah laptop dengan modal Rp$X$. Toko tersebut menetapkan harga jual dengan mengambil margin keuntungan sebesar $60\%$ dari modal. Karena ada perayaan hari libur nasional, toko memberikan diskon ganda berturut-turut sebesar $20\%$ dan $10\%$ dari harga yang tertera di label.</p>
+        <p>Manakah hubungan yang benar antara kuantitas P dan Q berikut berdasarkan informasi yang diberikan?</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Persentase keuntungan akhir yang didapatkan toko dari modal awal</td>
+                    <td>$16\%$</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+        </ol>
+        
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp1')">Tampilkan Pembahasan</button>
+        <div id="exp1" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Cari Modal & Harga Jual:</strong> Misalkan modal awal toko adalah $100\%$ atau $M$. Karena ambil untung $60\%$, harga jual di label jadi $160\%$ dari modal, yaitu $1,6M$.</li>
+                <li><strong>Diskon Pertama ($20\%$):</strong> Harga turun menjadi $80\%$ dari harga label. Harganya jadi: $0,8 \times 1,6M = 1,28M$.</li>
+                <li><strong>Diskon Kedua ($10\%$):</strong> Harga didiskon lagi, jadi sisa $90\%$ dari harga setelah diskon pertama. Harganya jadi: $0,9 \times 1,28M = 1,152M$.</li>
+                <li><strong>Kesimpulan:</strong> Keuntungan akhir toko (Kuantitas P) adalah persentase lebihnya, yaitu $(1,152 - 1) \times 100\% = 15,2\%$.</li>
+                <li>Karena $15,2\% < 16\%$, maka <strong>Kuantitas P lebih kecil daripada Kuantitas Q</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 2 -->
+    <div class="question">
+        <div class="question-header">2. (Pengukuran dan Aritmetika Sosial)</div>
+        <p>Sebuah pabrik membuat dua jenis cetakan logam dari bahan yang sama dan ketebalan seragam.</p>
+        <ul>
+            <li>Cetakan I: Berbentuk lingkaran dengan jari-jari $2r$.</li>
+            <li>Cetakan II: Terdiri dari 4 buah persegi identik, masing-masing memiliki panjang sisi $r\sqrt{\pi}$.</li>
+        </ul>
+        <p>Berdasarkan informasi di atas, manakah hubungan yang benar antara kuantitas P dan Q?</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Berat 1 buah cetakan I</td>
+                    <td>Berat gabungan 4 buah cetakan II</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp2')">Tampilkan Pembahasan</button>
+        <div id="exp2" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Konsepnya:</strong> Karena bahan dan ketebalannya sama, berat benda bakal berbanding lurus dengan luas permukaannya. Jadi kita tinggal bandingin luasnya aja.</li>
+                <li><strong>Luas Cetakan I (Lingkaran):</strong> Rumusnya $\pi \times \text{jari-jari}^2$. Masukkan nilainya: $\pi \times (2r)^2 = 4\pi r^2$.</li>
+                <li><strong>Luas Cetakan II (4 Persegi):</strong> Rumusnya $4 \times \text{sisi}^2$. Masukkan nilainya: $4 \times (r\sqrt{\pi})^2 = 4 \times r^2 \times \pi = 4\pi r^2$.</li>
+                <li><strong>Kesimpulan:</strong> Ternyata luas Cetakan I dan keseluruhan Cetakan II sama persis ($4\pi r^2$). Berarti beratnya (massanya) juga pasti sama. Kuantitas P = Kuantitas Q.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 3 -->
+    <div class="question">
+        <div class="question-header">3. (Pengukuran - KPK/FPB)</div>
+        <p>Tiga buah lampu rambu lalu lintas buatan pabrik X diuji coba secara bersamaan pada pukul 08.00. Lampu Merah berkedip setiap $m$ menit, lampu Kuning berkedip setiap $k$ menit, dan lampu Hijau berkedip setiap $h$ menit. Pada pukul berapa ketiga lampu tersebut berkedip bersamaan untuk kedua kalinya?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Kelipatan Persekutuan Terkecil (KPK) dari $m$ dan $k$ adalah 15.</li>
+            <li>$h$ adalah bilangan prima kelipatan 5.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp3')">Tampilkan Pembahasan</button>
+        <div id="exp3" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Konsepnya:</strong> Kalau ditanya kapan 3 lampu menyala bareng lagi, berarti kita harus cari angka Kelipatan Persekutuan Terkecil (KPK) dari ketiga interval tersebut ($m, k,$ dan $h$).</li>
+                <li><strong>Analisis Pernyataan 1:</strong> Dikasih tahu $\text{KPK}(m, k) = 15$. Tapi nilai $h$ belum tahu, jadi kita belum bisa hitung waktu bersamanya. (<em>Tidak Cukup</em>)</li>
+                <li><strong>Analisis Pernyataan 2:</strong> Dikasih tahu $h$ adalah bilangan prima kelipatan 5. Cuma ada satu bilangan prima yang kelipatan 5, yaitu angka 5 itu sendiri ($h=5$). Tapi kita belum tahu $m$ dan $k$. (<em>Tidak Cukup</em>)</li>
+                <li><strong>Gabungan 1 & 2:</strong> Kita punya $\text{KPK}(m, k) = 15$ dan $h = 5$. Untuk cari KPK dari ketiganya, kita tinggal cari $\text{KPK}(15, 5)$, yaitu 15 menit. Ketemu deh waktunya!</li>
+                <li><strong>Kesimpulan:</strong> Kedua pernyataan harus dipakai bareng-bareng supaya bisa menjawab soal.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 4 -->
+    <div class="question">
+        <div class="question-header">4. (Aljabar)</div>
+        <p>Diketahui variabel $a$ dan $b$ memenuhi sistem persamaan:</p>
+        $$a + b = 6$$
+        $$a^2 - b^2 = 24$$
+        <p>Nilai dari bentuk aljabar $\displaystyle \frac{a^3 - b^3}{a^2 - 2ab + b^2}$ adalah ...</p>
+
+        <ol class="options">
+            <li>$\frac{61}{4}$</li>
+            <li>$31$</li>
+            <li>$\frac{31}{4}$</li>
+            <li>$\frac{121}{4}$</li>
+            <li>$1$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp4')">Tampilkan Pembahasan</button>
+        <div id="exp4" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Sederhanakan Soal:</strong> Mari kita jabarkan dulu bentuk aljabar yang ditanya:
+                    <ul>
+                        <li>Pembilang: $a^3 - b^3 = (a-b)(a^2+ab+b^2)$</li>
+                        <li>Penyebut: $a^2 - 2ab + b^2 = (a-b)^2$</li>
+                        <li>Jadi pecahannya bisa dicoret $(a-b)$-nya, sisanya tinggal: $\frac{a^2+ab+b^2}{a-b}$</li>
+                    </ul>
+                </li>
+                <li><strong>Cari Nilai-Nilainya:</strong>
+                    <ul>
+                        <li>Kita punya $a^2 - b^2 = 24$. Difaktorkan jadi $(a-b)(a+b) = 24$.</li>
+                        <li>Karena diketahui $a+b=6$, maka $(a-b)(6) = 24$, sehingga didapat $\mathbf{a-b=4}$.</li>
+                    </ul>
+                </li>
+                <li><strong>Bermain dengan Kuadrat:</strong>
+                    <ul>
+                        <li>$(a+b)^2 = 36 \implies a^2+b^2+2ab = 36$</li>
+                        <li>$(a-b)^2 = 16 \implies a^2+b^2-2ab = 16$</li>
+                        <li>Kurangi kedua persamaan itu biar gampang: $4ab = 20 \implies \mathbf{ab = 5}$.</li>
+                        <li>Substitusikan nilai $ab$: $a^2+b^2+2(5) = 36 \implies \mathbf{a^2+b^2 = 26}$.</li>
+                    </ul>
+                </li>
+                <li><strong>Hitung Hasil Akhir:</strong> Masukkan ke pecahan sisa yang di awal tadi: $\frac{(a^2+b^2)+ab}{a-b} = \frac{26+5}{4} = \mathbf{\frac{31}{4}}$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 5 -->
+    <div class="question">
+        <div class="question-header">5. (Aljabar)</div>
+        <p>Berapakah nilai dari bilangan real $x$?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>$\displaystyle \frac{3x - 2}{4} - \frac{x + 1}{2} = \frac{x - 4}{4}$</li>
+            <li>$2x^2 - 8x = 0$</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp5')">Tampilkan Pembahasan</button>
+        <div id="exp5" class="explanation">
+            <strong>Jawaban: E</strong>
+            <ul>
+                <li><strong>Target:</strong> Soal meminta kita mencari <strong>satu nilai pasti (unik)</strong> untuk variabel $x$.</li>
+                <li><strong>Analisis Pernyataan 1:</strong> Samakan penyebut persamaannya jadi 4.
+                    <ul>
+                        <li>$\frac{3x-2}{4} - \frac{2(x+1)}{4} = \frac{x-4}{4}$</li>
+                        <li>$3x - 2 - 2x - 2 = x - 4$</li>
+                        <li>$x - 4 = x - 4$</li>
+                        <li>Hasilnya adalah $0 = 0$ (Identitas Trivial). Artinya, nilai $x$ bisa angka berapa saja. Nggak dapat nilai unik. (<em>Tidak Cukup</em>)</li>
+                    </ul>
+                </li>
+                <li><strong>Analisis Pernyataan 2:</strong> Faktorkan persamaannya.
+                    <ul>
+                        <li>$2x(x - 4) = 0$</li>
+                        <li>Solusinya bisa $x = 0$ ATAU $x = 4$. Masih ada dua kemungkinan, bukan nilai tunggal. (<em>Tidak Cukup</em>)</li>
+                    </ul>
+                </li>
+                <li><strong>Gabungan 1 & 2:</strong> Karena pernyataan 1 membolehkan semua angka, ia sama sekali tidak membatasi pilihan ganda di pernyataan 2. Kita tetap terjebak antara 0 atau 4. (<em>Tidak Cukup</em>)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 6 -->
+    <div class="question">
+        <div class="question-header">6. (Aljabar)</div>
+        <p>Diketahui bilangan real $x$ memenuhi pertidaksamaan $|2x - 3| \le 5$. </p>
+        <p>Manakah hubungan yang benar antara kuantitas P dan Q berikut?</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Nilai maksimum dari fungsi $f(x) = x^2 - 2x$</td>
+                    <td>10</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp6')">Tampilkan Pembahasan</button>
+        <div id="exp6" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Cari Rentang $x$:</strong> Kita bedah dulu pertidaksamaan mutlaknya.
+                    <ul>
+                        <li>$-5 \le 2x - 3 \le 5$</li>
+                        <li>Tambah 3 di semua sisi: $-2 \le 2x \le 8$</li>
+                        <li>Bagi 2: $-1 \le x \le 4$. Jadi, rentang nilai $x$ adalah dari $-1$ sampai $4$.</li>
+                    </ul>
+                </li>
+                <li><strong>Cari Nilai Maksimum $f(x) = x^2 - 2x$:</strong>
+                    <ul>
+                        <li>Karena ini fungsi kuadrat dengan koefisien depan positif ($x^2$), kurvanya terbuka ke atas seperti mangkuk. Nilai terbesarnya pasti ada di ujung-ujung rentang.</li>
+                        <li>Uji batas bawah ($x = -1$): $f(-1) = (-1)^2 - 2(-1) = 1 + 2 = 3$.</li>
+                        <li>Uji batas atas ($x = 4$): $f(4) = 4^2 - 2(4) = 16 - 8 = 8$.</li>
+                    </ul>
+                </li>
+                <li><strong>Kesimpulan:</strong> Nilai maksimum yang didapat adalah 8 (Kuantitas P). Karena $8 < 10$, maka <strong>Kuantitas P lebih kecil dari Kuantitas Q</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 7 -->
+    <div class="question">
+        <div class="question-header">7. (Teori Bilangan)</div>
+        <p>Didefinisikan operasi $\Delta$ pada himpunan bilangan bulat dengan aturan:</p>
+        $$x \Delta y = x(y - x) + 2$$
+        <p>Berdasarkan definisi tersebut, perhatikan keempat pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>$3 \Delta 5 = 8$</li>
+            <li>Operasi $\Delta$ bersifat komutatif.</li>
+            <li>$2 \Delta (1 \Delta 3) = 6$</li>
+            <li>Jika $a \Delta a = 2$, maka $a$ bisa bilangan asli apa saja.</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang benar dari empat pernyataan di atas?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp7')">Tampilkan Pembahasan</button>
+        <div id="exp7" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Aturan Main:</strong> Rumusnya adalah bilangan pertama dikali (bilangan kedua kurangi bilangan pertama), lalu tambah 2. Yuk, kita cek satu per satu!</li>
+                <li><strong>Pernyataan 1:</strong> $3 \Delta 5 = 3(5 - 3) + 2 = 3(2) + 2 = 8$. <em>(Benar)</em></li>
+                <li><strong>Pernyataan 2:</strong> Sifat komutatif artinya urutan nggak ngaruh ($x \Delta y = y \Delta x$). Coba kita tes angka 1 dan 2.
+                    <ul>
+                        <li>$1 \Delta 2 = 1(2-1) + 2 = 3$</li>
+                        <li>$2 \Delta 1 = 2(1-2) + 2 = 0$</li>
+                        <li>Hasilnya beda! Jadi operasi ini tidak komutatif. <em>(Salah)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Pernyataan 3:</strong> Kerjakan yang di dalam kurung dulu.
+                    <ul>
+                        <li>$(1 \Delta 3) = 1(3-1) + 2 = 4$.</li>
+                        <li>Lanjut hitung: $2 \Delta (4) = 2(4-2) + 2 = 6$. <em>(Benar)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Pernyataan 4:</strong> Kalau angkanya sama ($a \Delta a$):
+                    <ul>
+                        <li>$a \Delta a = a(a-a) + 2 = a(0) + 2 = 2$.</li>
+                        <li>Mau angka $a$-nya berapa pun, hasilnya akan selalu 2. Jadi berlaku untuk semua bilangan asli. <em>(Benar)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Kesimpulan:</strong> Ada 3 pernyataan yang benar (Pernyataan 1, 3, dan 4).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 8 -->
+    <div class="question">
+        <div class="question-header">8. (Teori Bilangan)</div>
+        <p>Perhatikan algoritma (flowchart) bilangan berikut ini:</p>
+        
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="https://imgbox.com/wai2AFIZ" target="_blank">
+                <img src="https://images2.imgbox.com/15/eb/wai2AFIZ_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/15/eb/wai2AFIZ_t.png';" alt="Flowchart Bilangan" style="width: 100%; max-width: 450px; height: auto; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"/>
+            </a>
+            <p style="font-size: 0.85em; color: #7f8c8d; margin-top: 8px;">(Klik gambar untuk melihat resolusi penuh)</p>
+        </div>
+
+        <p>Jika algoritma tersebut dijalankan secara berulang dimana <em>output</em> $y$ dijadikan <em>input</em> $x$ untuk siklus berikutnya. Diberikan nilai input awal $x = 5$. Perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>Cetakan pertama adalah 15.</li>
+            <li>Cetakan kedua adalah 8.</li>
+            <li>Cetakan ketiga adalah 2.</li>
+            <li>Cetakan keempat adalah 2.</li>
+        </ol>
+        <p>Manakah di antara pernyataan berikut yang benar?</p>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp8')">Tampilkan Pembahasan</button>
+        <div id="exp8" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Aturan Main:</strong> Kalau inputnya <strong>Genap</strong>, bagi 2. Kalau inputnya <strong>Ganjil</strong>, kalikan 3 lalu tambah 1. Input awalnya $x=5$. Mari kita mulai iterasi!</li>
+                <li><strong>Iterasi 1 (Cetak Pertama):</strong> $x=5$ (Ganjil). Maka $y = 3(5) + 1 = \mathbf{16}$. <em>(Pernyataan 1 Salah)</em></li>
+                <li><strong>Iterasi 2 (Cetak Kedua):</strong> Input sekarang $x=16$ (Genap). Maka $y = 16 / 2 = \mathbf{8}$. <em>(Pernyataan 2 Benar)</em></li>
+                <li><strong>Iterasi 3 (Cetak Ketiga):</strong> Input sekarang $x=8$ (Genap). Maka $y = 8 / 2 = \mathbf{4}$. <em>(Pernyataan 3 Salah)</em></li>
+                <li><strong>Iterasi 4 (Cetak Keempat):</strong> Input sekarang $x=4$ (Genap). Maka $y = 4 / 2 = \mathbf{2}$. <em>(Pernyataan 4 Benar)</em></li>
+                <li><strong>Kesimpulan:</strong> Pernyataan yang terbukti benar hanyalah 2 dan 4.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 9 -->
+    <div class="question">
+        <div class="question-header">9. (Teori Bilangan)</div>
+        <p>Diketahui $m$ dan $n$ adalah bilangan bulat positif. Hasil dari $m^2 - n^2$ adalah bilangan ganjil. Perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>$m + n$ adalah bilangan ganjil.</li>
+            <li>$m - n$ adalah bilangan genap.</li>
+            <li>$m \times n$ adalah bilangan genap.</li>
+            <li>$m$ dan $n$ keduanya merupakan bilangan ganjil.</li>
+        </ol>
+        <p>Manakah di antara pernyataan berikut yang benar?</p>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp9')">Tampilkan Pembahasan</button>
+        <div id="exp9" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Pecah Bentuknya:</strong> Faktorkan dulu $m^2 - n^2 = (m+n)(m-n)$. Di soal dibilang hasil kali ini adalah bilangan ganjil.</li>
+                <li><strong>Analisis Ganjil/Genap:</strong> Hasil kali dua kurung akan bernilai ganjil <em>hanya jika</em> KEDUA kurung tersebut nilainya ganjil.
+                    <ul>
+                        <li>Berarti, $(m+n)$ pastilah Ganjil. <em>(Pernyataan 1 Benar)</em></li>
+                        <li>Dan $(m-n)$ pastilah Ganjil juga. <em>(Pernyataan 2 Salah)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Sifat Penjumlahan:</strong> Kapan sih penjumlahan dua angka ($m+n$) hasilnya ganjil? Itu hanya terjadi kalau salah satunya ganjil dan satunya lagi genap (beda paritas). Jadi nggak mungkin dua-duanya ganjil. <em>(Pernyataan 4 Salah)</em></li>
+                <li><strong>Hasil Kali:</strong> Karena kita sudah tahu salah satu dari $m$ atau $n$ pasti genap, maka hasil kali mereka ($m \times n$) mutlak akan selalu ikutan genap. <em>(Pernyataan 3 Benar)</em></li>
+                <li><strong>Kesimpulan:</strong> Pernyataan yang benar adalah 1 dan 3.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 10 -->
+    <div class="question">
+        <div class="question-header">10. (Geometri Sudut dan Bidang Datar)</div>
+        <p>Diberikan sebuah persegi dengan panjang sisi 14 cm. Di dalam persegi tersebut digambar 4 buah setengah lingkaran yang masing-masing memiliki diameter berupa sisi-sisi persegi tersebut, sehingga setengah lingkaran tersebut saling berpotongan di bagian tengah persegi membentuk pola 4 "kelopak bunga".</p>
+        <p>Luas daerah "kelopak bunga" yang terarsir (daerah irisan di tengah persegi) adalah ... (gunakan $\pi = \frac{22}{7}$)</p>
+
+        <ol class="options">
+            <li>$84 \text{ cm}^2$</li>
+            <li>$154 \text{ cm}^2$</li>
+            <li>$196 \text{ cm}^2$</li>
+            <li>$112 \text{ cm}^2$</li>
+            <li>$0 \text{ cm}^2$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp10')">Tampilkan Pembahasan</button>
+        <div id="exp10" class="explanation">
+            <strong>Jawaban: D</strong>
+            <ul>
+                <li><strong>Rumus Cepatnya:</strong> Luas irisan pola 4 kelopak bunga di dalam persegi itu punya trik cepat. Rumusnya adalah gabungan 4 setengah lingkaran (alias 2 lingkaran utuh) dikurangi luas perseginya sendiri.
+                    <br><strong>Luas Arsir = $(2 \times \text{Luas Lingkaran}) - \text{Luas Persegi}$</strong>
+                </li>
+                <li><strong>Cari Jari-jari:</strong> Karena diameter setengah lingkaran = sisi persegi, berarti jari-jarinya ($r$) adalah setengah dari sisi persegi $\implies 14 / 2 = 7$ cm.</li>
+                <li><strong>Hitung Luas Lingkaran:</strong> Luas 1 lingkaran = $\pi \times r^2 = \frac{22}{7} \times 7^2 = 154 \text{ cm}^2$. Kalau dikali dua jadi $308 \text{ cm}^2$.</li>
+                <li><strong>Hitung Luas Persegi:</strong> Luas persegi = $14 \times 14 = 196 \text{ cm}^2$.</li>
+                <li><strong>Hasil Akhir:</strong> Luas Arsir = $308 - 196 = \mathbf{112 \text{ cm}^2}$. Super mudah!</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 11 -->
+    <div class="question">
+        <div class="question-header">11. (Geometri Sudut dan Bidang Datar)</div>
+        <p>Sebuah lingkaran terkurung sempurna (menyinggung keempat sisi) di dalam sebuah persegi. Berapakah luas area persegi yang berada di luar lingkaran?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Panjang diagonal persegi tersebut adalah $8\sqrt{2}$ cm.</li>
+            <li>Keliling dari persegi tersebut adalah 32 cm.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp11')">Tampilkan Pembahasan</button>
+        <div id="exp11" class="explanation">
+            <strong>Jawaban: D</strong>
+            <ul>
+                <li><strong>Target:</strong> Soal menanyakan "Luas sisa = Luas Persegi - Luas Lingkaran". Karena lingkaran menyinggung persegi, diameter lingkarannya sama persis panjangnya dengan sisi persegi ($d = s$, jadi $r = \frac{s}{2}$). Kuncinya kita <em>cuma butuh nilai sisi persegi ($s$)</em> buat ngitung semuanya!</li>
+                <li><strong>Analisis Pernyataan 1:</strong> Dikasih tahu rumus diagonal persegi itu $s\sqrt{2}$. Kalau diagonalnya dibilang $8\sqrt{2}$, kita bisa langsung tebak kalau panjang sisinya $s = 8$. Luas sisa bisa dihitung. <em>(Cukup)</em></li>
+                <li><strong>Analisis Pernyataan 2:</strong> Keliling persegi rumusnya $4s$. Dibilang kelilingnya 32, berarti $4s = 32 \implies s = 8$. Sama saja, kita dapat panjang sisinya dan luasnya bisa dihitung. <em>(Cukup)</em></li>
+                <li><strong>Kesimpulan:</strong> Karena masing-masing pernyataan bisa digunakan secara mandiri untuk menjawab soal, jawabannya adalah D.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 12 -->
+    <div class="question">
+        <div class="question-header">12. (Sistem Persamaan)</div>
+        <p>Di sebuah pameran buku, paket Bundel A terdiri dari 3 buku fiksi dan 2 buku biografi dengan harga Rp180.000. Paket Bundel B terdiri dari 2 buku fiksi dan 4 buku biografi dengan harga Rp200.000.</p>
+        <p>Berdasarkan informasi di atas, manakah hubungan yang benar antara kuantitas P dan Q?</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Harga satuan 1 buku biografi</td>
+                    <td>Rp30.000</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp12')">Tampilkan Pembahasan</button>
+        <div id="exp12" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Bikin Model Matematikanya:</strong> Misal fiksi = $f$ dan biografi = $b$.
+                    <ul>
+                        <li>Persamaan (1): $3f + 2b = 180.000$</li>
+                        <li>Persamaan (2): $2f + 4b = 200.000$</li>
+                    </ul>
+                </li>
+                <li><strong>Ekskusi (Boleh pakai eliminasi/substitusi):</strong> Kita bikin angka di persamaan (2) jadi lebih kecil dengan cara dibagi 2 semua.
+                    <ul>
+                        <li>$f + 2b = 100.000 \implies \mathbf{2b = 100.000 - f}$</li>
+                    </ul>
+                </li>
+                <li><strong>Substitusi:</strong> Masukkan nilai $2b$ ini ke persamaan (1).
+                    <ul>
+                        <li>$3f + (100.000 - f) = 180.000$</li>
+                        <li>$2f = 80.000 \implies f = 40.000$</li>
+                    </ul>
+                </li>
+                <li><strong>Cari Nilai $b$:</strong> Kalau harga buku fiksi ($f$) 40.000, masukin lagi: $40.000 + 2b = 100.000 \implies 2b = 60.000 \implies \mathbf{b = 30.000}$.</li>
+                <li><strong>Kesimpulan:</strong> Harga 1 buku biografi pas Rp30.000. Berarti Kuantitas P sama persis dengan Kuantitas Q.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 13 -->
+    <div class="question">
+        <div class="question-header">13. (Sistem Persamaan)</div>
+        <p>Tahun lalu, perbandingan usia seorang Ayah dengan usia anak sulungnya adalah 3 : 1. Berapakah selisih usia mereka saat ini?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Lima tahun yang akan datang, jumlah usia keduanya adalah 70 tahun.</li>
+            <li>Saat ini, rasio usia anak sulung terhadap usia ibunya adalah 4 : 11, dimana ibunya berusia 2 tahun lebih muda dari sang Ayah.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp13')">Tampilkan Pembahasan</button>
+        <div id="exp13" class="explanation">
+            <strong>Jawaban: D</strong>
+            <ul>
+                <li><strong>Catat Modal Awal:</strong> Misal umur Ayah sekarang = $A$, dan Anak = $S$. Tahun lalu, perbandingan mereka $3 : 1$.
+                    <ul>
+                        <li>Rumusnya: $\frac{A-1}{S-1} = 3 \implies A-1 = 3S-3 \implies \mathbf{A - 3S = -2}$. Ini adalah persamaan pertama kita.</li>
+                    </ul>
+                </li>
+                <li><strong>Analisis Pernyataan 1:</strong> Lima tahun ke depan jumlah usianya 70.
+                    <ul>
+                        <li>$(A+5) + (S+5) = 70 \implies \mathbf{A+S = 60}$.</li>
+                        <li>Nah, kita punya 2 persamaan linear beda variabel ($A-3S=-2$ dan $A+S=60$). Ini udah pasti bisa diselesaikan untuk cari nilai $A$ dan $S$, lalu kita bisa hitung selisih usianya. <em>(Cukup)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Analisis Pernyataan 2:</strong> Ibu = $I$. Umur Ibu $I = A - 2$. Rasio Anak dan Ibu adalah $4 : 11$.
+                    <ul>
+                        <li>$\frac{S}{I} = \frac{4}{11} \implies \frac{S}{A-2} = \frac{4}{11}$.</li>
+                        <li>Kalau dikali silang: $11S = 4(A-2) \implies \mathbf{11S - 4A = -8}$.</li>
+                        <li>Sama seperti tadi, persamaan baru ini bisa dipasangkan dengan modal awal ($A-3S=-2$) buat ngitung umur Ayah dan Anak secara pasti. <em>(Cukup)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Kesimpulan:</strong> Keduanya secara mandiri cukup sakti untuk ngejawab pertanyaan ini. Jawabannya D.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 14 -->
+    <div class="question">
+        <div class="question-header">14. (Sistem Persamaan)</div>
+        <p>Diberikan kurva parabola $y = x^2 - 6x + 5$ dan garis lurus $y = 2x - k$. Diketahui bahwa garis tersebut memotong kurva parabola di dua titik yang berbeda. </p>
+        <p>Perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>Nilai diskriminan ($D$) dari hasil substitusi kedua persamaan bernilai kurang dari 0.</li>
+            <li>Batas nilai $k$ yang memenuhi adalah $k < 11$.</li>
+            <li>Jika $k = 11$, maka garis tersebut tidak akan memotong kurva parabola.</li>
+            <li>Salah satu nilai $k$ yang mungkin adalah 10.</li>
+        </ol>
+        <p>Manakah di antara pernyataan berikut yang benar?</p>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp14')">Tampilkan Pembahasan</button>
+        <div id="exp14" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Konsep Perpotongan:</strong> Kalau garis lurus memotong parabola di "dua titik berbeda", syarat mutlaknya nilai Diskriminan gabungannya harus Positif ($D > 0$). Jadi, otomatis <em>Pernyataan 1 Salah</em>.</li>
+                <li><strong>Gabungkan Persamaannya:</strong>
+                    <ul>
+                        <li>$x^2 - 6x + 5 = 2x - k$</li>
+                        <li>Pindah ruas semua ke kiri: $x^2 - 8x + (5+k) = 0$</li>
+                        <li>Dari sini kelihatan: $a=1, b=-8, c=(5+k)$.</li>
+                    </ul>
+                </li>
+                <li><strong>Hitung Diskriminan ($D > 0$):</strong>
+                    <ul>
+                        <li>$b^2 - 4ac > 0$</li>
+                        <li>$(-8)^2 - 4(1)(5+k) > 0$</li>
+                        <li>$64 - 20 - 4k > 0 \implies 44 > 4k \implies \mathbf{k < 11}$. <em>(Pernyataan 2 Benar)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Cek Sisa Pernyataan:</strong>
+                    <ul>
+                        <li>Bagaimana kalau nilai batasnya, $k = 11$? Kalau dipasang, Diskriminannya jadi nol ($D=0$). Artinya garis itu bersinggungan tipis dengan kurva di 1 titik, bukan "tidak memotong sama sekali". <em>(Pernyataan 3 Salah)</em></li>
+                        <li>Karena nilai $k$ harus lebih kecil dari 11, angka 10 jelas memenuhi syarat dong. <em>(Pernyataan 4 Benar)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Kesimpulan:</strong> Pernyataan yang benar cuma 2 dan 4.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 15 -->
+    <div class="question">
+        <div class="question-header">15. (Fungsi, Fungsi Invers dan Komposisi)</div>
+        <p>Diketahui fungsi $\displaystyle f(x) = \frac{3x - 1}{2x + 4}$, dengan $x \ne -2$. Jika $f^{-1}(x)$ adalah invers dari fungsi $f(x)$, maka nilai dari $f^{-1}(x - 2)$ adalah ...</p>
+
+        <ol class="options">
+            <li>$\frac{4x + 7}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+            <li>$\frac{-4x - 1}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+            <li>$\frac{3x - 7}{2x}$, dengan $x \ne 0$</li>
+            <li>$1$</li>
+            <li>$\frac{-4x + 7}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp15')">Tampilkan Pembahasan</button>
+        <div id="exp15" class="explanation">
+            <strong>Jawaban: E</strong>
+            <ul>
+                <li><strong>Rumus Cepat Invers:</strong> Buat fungsi bentuk pecahan $\displaystyle f(x) = \frac{ax+b}{cx+d}$, cara cepat bikin inversnya cuma tinggal tukar posisi $a$ dan $d$, terus dibalik tandanya (dikasih minus).
+                    <br>Jadinya: $\displaystyle f^{-1}(x) = \frac{-dx+b}{cx-a}$
+                </li>
+                <li><strong>Terapin ke Soal:</strong> Di soal kita punya $a=3, b=-1, c=2, d=4$.
+                    <br>Bentuk inversnya langsung jadi: $\displaystyle f^{-1}(x) = \frac{-4x-1}{2x-3}$.
+                </li>
+                <li><strong>Modifikasi Variabel:</strong> Soal nanyain nilai dari $f^{-1}(x-2)$. Tinggal masukin aja $(x-2)$ menggantikan $x$ di rumus tadi.
+                    <ul>
+                        <li>$f^{-1}(x-2) = \displaystyle \frac{-4(x-2)-1}{2(x-2)-3}$</li>
+                        <li>Buka kurungnya: $\displaystyle \frac{-4x+8-1}{2x-4-3}$</li>
+                        <li>Hasil akhirnya: $\mathbf{\frac{-4x+7}{2x-7}}$. Selesai deh!</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 16 -->
+    <div class="question">
+        <div class="question-header">16. (Fungsi, Fungsi Invers dan Komposisi)</div>
+        <p>Diketahui terdapat fungsi $f(x)$ dan $g(x)$. Nilai dari komposisi fungsi $(f \circ g)(2)$ adalah 10. Berapakah nilai dari $g(2)$?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>$g(x)$ merupakan suatu fungsi linear yang memotong sumbu-y di titik $(0, -1)$.</li>
+            <li>$f(x) = 3x + 1$</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp16')">Tampilkan Pembahasan</button>
+        <div id="exp16" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Bongkar Maksud Soal:</strong> Tulisan $(f \circ g)(2) = 10$ itu cara nulis gaul dari $f(g(2)) = 10$. Kita disuruh jadi detektif buat nyari berapa nilai rahasia di dalam kurung, yaitu $g(2)$.</li>
+                <li><strong>Analisis Pernyataan 1:</strong> Dikasih tahu kalau fungsi $g(x)$ itu linier dan potong sumbu y di $(0, -1)$. Berarti bentuk fungsinya $g(x) = mx - 1$. Nilai gradiennya ($m$) nggak ada, dan kita juga nggak tahu rumus $f(x)$ itu kayak apa. Buntu deh! <em>(Tidak Cukup)</em></li>
+                <li><strong>Analisis Pernyataan 2:</strong> Ngasih bocoran rumus utamanya, $f(x) = 3x + 1$.
+                    <ul>
+                        <li>Tinggal masukin fungsi di atas: $f(g(2)) = 3(g(2)) + 1 = 10$.</li>
+                        <li>Pindah ruas: $3(g(2)) = 9$.</li>
+                        <li>Dapat deh $g(2) = 3$. Terpecahkan! <em>(Cukup)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Kesimpulan:</strong> Pernyataan 2 sendirian sudah lebih dari cukup buat nemuin jawabannya.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 17 -->
+    <div class="question">
+        <div class="question-header">17. (Matriks)</div>
+        <p>Diketahui matriks $\displaystyle A = \begin{pmatrix} 4 & 2 \\ 5 & 3 \end{pmatrix}$. Jika $A^{-1}$ merupakan invers dari matriks $A$.</p>
+        <p>Manakah hubungan yang benar antara kuantitas P dan Q berikut?</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Determinan dari matriks $A^{-1}$</td>
+                    <td>$\frac{1}{2}$</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp17')">Tampilkan Pembahasan</button>
+        <div id="exp17" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Hitung Determinan Matriks Asli:</strong> Rumus determinan matriks $2 \times 2$ itu menyilang aja ($ad - bc$).
+                    <br>$\text{det}(A) = (4)(3) - (2)(5) = 12 - 10 = \mathbf{2}$.
+                </li>
+                <li><strong>Sifat Matriks Invers:</strong> Ada satu sifat unik dari matriks invers. Kita nggak perlu repot-repot cari inversnya dulu! Determinan matriks invers itu pasti nilainya berkebalikan (seper-) dari determinan matriks aslinya.
+                    <br>Rumusnya: $\text{det}(A^{-1}) = \frac{1}{\text{det}(A)}$.
+                </li>
+                <li><strong>Kesimpulan:</strong> Karena determinan asli nilainya 2, maka $\text{det}(A^{-1}) = \frac{1}{2}$. Artinya, Kuantitas P dan Kuantitas Q nilainya sama persis!</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 18 -->
+    <div class="question">
+        <div class="question-header">18. (Matriks)</div>
+        <p>Diketahui $A$ dan $B$ adalah matriks persegi berordo $2 \times 2$ dengan $\text{det}(A) = 3$ dan $\text{det}(B) = 4$. Perhatikan pernyataan mengenai sifat-sifat matriks berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>$\text{det}(AB) = 12$</li>
+            <li>$\text{det}(A + B) = 7$</li>
+            <li>$\text{det}(A^T) = 3$, di mana $A^T$ adalah transpose matriks $A$.</li>
+            <li>$\text{det}(2A) = 6$</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang benar dari empat pernyataan di atas?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp18')">Tampilkan Pembahasan</button>
+        <div id="exp18" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Pernyataan 1: Sifat Perkalian.</strong> Sifat ajaib determinan adalah kamu bisa pisahin nilai perkaliannya. $\text{det}(AB) = \text{det}(A) \times \text{det}(B) = 3 \times 4 = 12$. <em>(Benar)</em></li>
+                <li><strong>Pernyataan 2: Sifat Penjumlahan.</strong> Hati-hati jebakan Batman! Determinan itu tidak punya sifat distributif terhadap penjumlahan. Jadi $\text{det}(A + B) \ne \text{det}(A) + \text{det}(B)$. Kita nggak bisa tahu hasilnya. <em>(Salah)</em></li>
+                <li><strong>Pernyataan 3: Sifat Transpose.</strong> Mau matriksnya dibalik (baris jadi kolom), determinannya tetap cuek bebek nggak berubah. $\text{det}(A^T) = \text{det}(A) = 3$. <em>(Benar)</em></li>
+                <li><strong>Pernyataan 4: Sifat Skalar.</strong> Kalau kamu kaliin matriks dengan angka biasa (skalar), angka itu harus dipangkatkan ordonya. Karena ordonya $2 \times 2$, rumusnya $\text{det}(kA) = k^2 \times \text{det}(A)$.
+                    <br>Jadi: $\text{det}(2A) = 2^2 \times 3 = 4 \times 3 = 12$. Di soal bilang hasilnya 6. <em>(Salah)</em>
+                </li>
+                <li><strong>Kesimpulan:</strong> Jumlah pernyataan yang terbukti benar cuma ada 2 buah.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 19 -->
+    <div class="question">
+        <div class="question-header">19. (Statistika)</div>
+        <p>Perhatikan data penjualan (dalam juta Rupiah) toko kopi "Senja" selama 5 bulan pertama di tahun 2023 berikut: Januari ($1,5$), Februari ($2,0$), Maret ($4,0$), April ($3,5$), Mei ($5,0$).</p>
+        <p>Berdasarkan data di atas, selisih antara nilai rata-rata (mean) penjualan bulanan dengan nilai median penjualannya adalah ... juta Rupiah.</p>
+
+        <ol class="options">
+            <li>$3,2$</li>
+            <li>$0,3$</li>
+            <li>$3,5$</li>
+            <li>$3,8$</li>
+            <li>$-10$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp19')">Tampilkan Pembahasan</button>
+        <div id="exp19" class="explanation">
+            <strong>Jawaban: B</strong>
+            <ul>
+                <li><strong>Kumpulin Datanya:</strong> Datanya dalam urutan bulan: $1.5, 2.0, 4.0, 3.5, 5.0$.</li>
+                <li><strong>Hitung Rata-rata (Mean):</strong> Tinggal dijumlah semua dan bagi jumlah bulannya (5).
+                    <br>$\text{Rata-rata} = \frac{1.5 + 2.0 + 4.0 + 3.5 + 5.0}{5} = \frac{16.0}{5} = \mathbf{3.2}$.
+                </li>
+                <li><strong>Cari Median (Nilai Tengah):</strong> Ingat, kalau mau cari median, datanya harus "berbaris rapi" dari terkecil ke terbesar dulu!
+                    <br>Susun datanya: $1.5, 2.0, \mathbf{3.5}, 4.0, 5.0$. Nilai pas di tengahnya adalah $\mathbf{3.5}$.
+                </li>
+                <li><strong>Hitung Selisih:</strong> Selisih itu nilai absolut jarak keduanya.
+                    <br>Selisih $= |3.2 - 3.5| = |-0.3| = \mathbf{0.3}$.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 20 -->
+    <div class="question">
+        <div class="question-header">20. (Statistika)</div>
+        <p>Diberikan 5 buah himpunan bilangan bulat positif tak berurutan: $3, 8, x, 12, 5$. Berapakah nilai rata-rata kelima bilangan tersebut?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Median dari himpunan bilangan tersebut adalah 8.</li>
+            <li>Jangkauan (range) dari data tersebut adalah 11.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp20')">Tampilkan Pembahasan</button>
+        <div id="exp20" class="explanation">
+            <strong>Jawaban: C</strong>
+            <ul>
+                <li><strong>Target:</strong> Datanya adalah $3, 5, 8, 12, x$. Untuk ngitung rata-rata, kita butuh tahu angka pasti dari $x$.</li>
+                <li><strong>Analisis Pernyataan 1:</strong> Median (nilai tengah) adalah 8. Supaya 8 benar-benar ada di tengah, posisinya harus di urutan ketiga dari lima angka ($\dots, \dots, 8, \dots, \dots$). Karena angka 3 dan 5 sudah pasti lebih kecil dan ngisi spot di depan, posisi belakang (lebih besar dari 8) diduduki 12 dan $x$. Artinya nilai $x$ harus $\ge 8$. Ada banyak banget tebakan nilainya (misal 9, 10, dll). <em>(Tidak Cukup)</em></li>
+                <li><strong>Analisis Pernyataan 2:</strong> Range (Nilai Terbesar - Terkecil) = 11.
+                    <ul>
+                        <li>Kasus pertama: Kalau angka paling kecilnya 3, berarti maksimalnya 14 (yaitu nilai $x$).</li>
+                        <li>Kasus kedua: Kalau angka paling besarnya 12, berarti angka terkecilnya 1 (yaitu nilai $x$).</li>
+                        <li>Masih ada dua jawaban $x$, jadi belum pasti. <em>(Tidak Cukup)</em></li>
+                    </ul>
+                </li>
+                <li><strong>Gabungan 1 & 2:</strong> Yuk kita kawinkan! Dari Pernyataan 1 kita tahu $x \ge 8$. Dari Pernyataan 2 pilihan angkanya antara 1 atau 14. Nah, satu-satunya angka yang memenuhi syarat keduanya sudah jelas adalah $x = \mathbf{14}$. Karena nilainya udah pasti, otomatis rata-ratanya bisa dihitung dengan lancar!</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleExplanation(id) {
+        var x = document.getElementById(id);
+        var btn = x.previousElementSibling;
+        if (x.style.display === "block" || x.style.display === "") {
+            x.style.display = "none";
+            btn.innerHTML = "Tampilkan Pembahasan";
+        } else {
+            x.style.display = "block";
+            btn.innerHTML = "Sembunyikan Pembahasan";
+        }
+    }
+</script>
+
+</body>
+</html>
