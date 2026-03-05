@@ -44,7 +44,7 @@
         --secondary-text: #555555;
         --border-color: #dddddd;
         --header-bg: #e0f7fa;
-        --header-accent: #2980b9; /* Diubah menyesuaikan tema biru */
+        --header-accent: #2980b9; 
         --hover-bg: #ebf5fb;
         --selected-bg: #2980b9;
         --selected-text: #ffffff;
@@ -122,7 +122,7 @@
 
       /* --- LANDING PAGE STYLES --- */
       #landing-page {
-        display: block;
+        display: none; /* Disembunyikan dulu sampai pengecekan sesi selesai */
         text-align: center;
       }
       .landing-header h1 {
@@ -310,7 +310,7 @@
         display: block;
       }
       
-      /* Style Tabel dari file kedua */
+      /* Style Tabel */
       .table-container {
         margin: 15px 0;
         display: flex;
@@ -506,9 +506,40 @@
           border-radius: 4px;
           transition: width 1s ease-in-out;
       }
+
+      /* Loader Layar Penuh Awal */
+      #loading-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          z-index: 10000000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+      .spinner {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid var(--header-accent);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
   </head>
   <body>
+    
+    <!-- OVERLAY LOADING SESI -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-weight: bold; color: var(--header-accent); font-size: 16px;">Memeriksa Sesi Anda...</p>
+    </div>
+
     <!-- COUNTDOWN TIMER -->
     <div id="timer-bar">
         <span>SISA WAKTU:</span>
@@ -577,7 +608,7 @@
                 <!-- KOLOM KIRI (1-10) -->
                 <div class="kolom">
                     <!-- Soal 1 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="1">
                         <div class="soal-header">
                             <span class="nomor">1.</span>
                             <div class="pertanyaan">
@@ -611,7 +642,7 @@
                     </div>
 
                     <!-- Soal 2 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="2">
                         <div class="soal-header">
                             <span class="nomor">2.</span>
                             <div class="pertanyaan">
@@ -648,7 +679,7 @@
                     </div>
 
                     <!-- Soal 3 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="3">
                         <div class="soal-header">
                             <span class="nomor">3.</span>
                             <div class="pertanyaan">
@@ -680,7 +711,7 @@
                     </div>
 
                     <!-- Soal 4 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="4">
                         <div class="soal-header">
                             <span class="nomor">4.</span>
                             <div class="pertanyaan">
@@ -719,7 +750,7 @@
                     </div>
 
                     <!-- Soal 5 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="5">
                         <div class="soal-header">
                             <span class="nomor">5.</span>
                             <div class="pertanyaan">
@@ -751,7 +782,7 @@
                     </div>
 
                     <!-- Soal 6 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="6">
                         <div class="soal-header">
                             <span class="nomor">6.</span>
                             <div class="pertanyaan">
@@ -785,7 +816,7 @@
                     </div>
 
                     <!-- Soal 7 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="7">
                         <div class="soal-header">
                             <span class="nomor">7.</span>
                             <div class="pertanyaan">
@@ -823,7 +854,7 @@
                     </div>
 
                     <!-- Soal 8 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="8">
                         <div class="soal-header">
                             <span class="nomor">8.</span>
                             <div class="pertanyaan">
@@ -861,7 +892,7 @@
                     </div>
 
                     <!-- Soal 9 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="9">
                         <div class="soal-header">
                             <span class="nomor">9.</span>
                             <div class="pertanyaan">
@@ -895,7 +926,7 @@
                     </div>
 
                     <!-- Soal 10 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="10">
                         <div class="soal-header">
                             <span class="nomor">10.</span>
                             <div class="pertanyaan">
@@ -929,7 +960,7 @@
                 <!-- KOLOM KANAN (11-20) -->
                 <div class="kolom">
                     <!-- Soal 11 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="11">
                         <div class="soal-header">
                             <span class="nomor">11.</span>
                             <div class="pertanyaan">
@@ -961,7 +992,7 @@
                     </div>
 
                     <!-- Soal 12 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="12">
                         <div class="soal-header">
                             <span class="nomor">12.</span>
                             <div class="pertanyaan">
@@ -1006,7 +1037,7 @@
                     </div>
 
                     <!-- Soal 13 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="13">
                         <div class="soal-header">
                             <span class="nomor">13.</span>
                             <div class="pertanyaan">
@@ -1038,7 +1069,7 @@
                     </div>
 
                     <!-- Soal 14 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="14">
                         <div class="soal-header">
                             <span class="nomor">14.</span>
                             <div class="pertanyaan">
@@ -1086,7 +1117,7 @@
                     </div>
 
                     <!-- Soal 15 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="15">
                         <div class="soal-header">
                             <span class="nomor">15.</span>
                             <div class="pertanyaan">
@@ -1122,7 +1153,7 @@
                     </div>
 
                     <!-- Soal 16 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="16">
                         <div class="soal-header">
                             <span class="nomor">16.</span>
                             <div class="pertanyaan">
@@ -1163,7 +1194,7 @@
                     </div>
 
                     <!-- Soal 17 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="17">
                         <div class="soal-header">
                             <span class="nomor">17.</span>
                             <div class="pertanyaan">
@@ -1196,7 +1227,7 @@
                     </div>
 
                     <!-- Soal 18 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="18">
                         <div class="soal-header">
                             <span class="nomor">18.</span>
                             <div class="pertanyaan">
@@ -1232,7 +1263,7 @@
                     </div>
 
                     <!-- Soal 19 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="19">
                         <div class="soal-header">
                             <span class="nomor">19.</span>
                             <div class="pertanyaan">
@@ -1263,7 +1294,7 @@
                     </div>
 
                     <!-- Soal 20 -->
-                    <div class="soal-item">
+                    <div class="soal-item" data-qnum="20">
                         <div class="soal-header">
                             <span class="nomor">20.</span>
                             <div class="pertanyaan">
@@ -1367,8 +1398,12 @@
         </div>
     </div>
 
-    <!-- Script Interaktif -->
-    <script>
+    <!-- Script Interaktif (Module Base Storage) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
       // Kunci Jawaban Pengetahuan Kuantitatif (20 Soal)
       const answerKey = {
         1: 'B', 2: 'C', 3: 'C', 4: 'C', 5: 'E',
@@ -1377,294 +1412,412 @@
         16: 'B', 17: 'C', 18: 'C', 19: 'B', 20: 'C'
       };
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const landingPage = document.getElementById('landing-page');
-        const examPage = document.getElementById('exam-page');
-        const btnStart = document.getElementById('btn-start');
-        const timerBar = document.getElementById('timer-bar');
-        
-        // Input Elements
-        const namaInput = document.getElementById('nama');
-        const emailInput = document.getElementById('email');
-        const hpInput = document.getElementById('hp');
-        const sekolahInput = document.getElementById('sekolah');
+      // Inisialisasi Variabel DOM
+      const landingPage = document.getElementById('landing-page');
+      const examPage = document.getElementById('exam-page');
+      const btnStart = document.getElementById('btn-start');
+      const timerBar = document.getElementById('timer-bar');
+      const loadingOverlay = document.getElementById('loading-overlay');
+      
+      const namaInput = document.getElementById('nama');
+      const emailInput = document.getElementById('email');
+      const hpInput = document.getElementById('hp');
+      const sekolahInput = document.getElementById('sekolah');
 
-        // Display Elements
-        const displayNama = document.getElementById('display-nama');
-        const displaySekolah = document.getElementById('display-sekolah');
-        const displayHp = document.getElementById('display-hp');
+      const options = document.querySelectorAll('.pilihan-ganda li');
+      const submitBtn = document.getElementById('submitBtn');
+      const timerDisplay = document.getElementById('timer-display');
+      
+      // Modal Variabel
+      const modal = document.getElementById('customModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalBtnCancel = document.getElementById('modalBtnCancel');
+      const modalBtnConfirm = document.getElementById('modalBtnConfirm');
 
-        let startTime;
+      let isSubmitted = false;
+      let timerInterval;
+      
+      // Firebase State
+      let db, auth, userId, appId, docRef;
+      let state = {
+          status: 'not_started', // not_started | in_progress | completed
+          endTime: null,
+          answers: {},
+          userData: null
+      };
 
-        // START EXAM LOGIC
-        btnStart.addEventListener('click', function() {
-            let nama = namaInput.value.trim() || "Peserta Anonim";
-            let email = emailInput.value.trim() || "-";
-            let hp = hpInput.value.trim() || "-";
-            let sekolah = sekolahInput.value.trim() || "-";
+      async function initStorage() {
+          try {
+              if (typeof __firebase_config === 'undefined' || !__firebase_config) throw new Error("Firebase Config missing");
+              const firebaseConfig = JSON.parse(__firebase_config);
+              appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+              
+              const app = initializeApp(firebaseConfig);
+              auth = getAuth(app);
+              db = getFirestore(app);
 
-            startTime = new Date();
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                  await signInWithCustomToken(auth, __initial_auth_token);
+              } else {
+                  await signInAnonymously(auth);
+              }
+              
+              userId = auth.currentUser.uid;
+              docRef = doc(db, 'artifacts', appId, 'users', userId, 'tryout_state');
+              
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  state = docSnap.data();
+              }
+          } catch (e) {
+              console.warn("Storage tidak tersedia, menggunakan sesi lokal memori.", e);
+          }
+          handleInitialState();
+      }
 
-            landingPage.style.display = 'none';
-            examPage.style.display = 'block';
-            
-            displayNama.textContent = nama;
-            displaySekolah.textContent = sekolah;
-            displayHp.textContent = hp;
+      function handleInitialState() {
+          loadingOverlay.style.display = 'none';
 
-            timerBar.style.display = 'flex';
-            document.body.style.paddingTop = '80px'; 
-            startTimer();
+          if (state.status === 'completed') {
+              // Jika sudah selesai, langsung lompat ke halaman hasil
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'none';
+              processSubmission(true, true); // (auto, isRestoring)
+          } else if (state.status === 'in_progress') {
+              // Jika ter-refresh saat masih mengerjakan
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'flex';
+              document.body.style.paddingTop = '80px';
+              startTimer(); // Melanjutkan waktu
+          } else {
+              // Baru pertama kali buka
+              landingPage.style.display = 'block';
+          }
+      }
 
-            window.scrollTo(0, 0);
-        });
+      function restoreUserData(userData) {
+          if (!userData) return;
+          document.getElementById('display-nama').textContent = userData.nama || "-";
+          document.getElementById('display-sekolah').textContent = userData.sekolah || "-";
+          document.getElementById('display-hp').textContent = userData.hp || "-";
+      }
 
-        const options = document.querySelectorAll('.pilihan-ganda li');
-        const submitBtn = document.getElementById('submitBtn');
-        const timerDisplay = document.getElementById('timer-display');
-        let isSubmitted = false;
-        
-        // 25 menit
-        const durationInMinutes = 25; 
-        let endTime;
-        let timerInterval;
-
-        function startTimer() {
-             // Kalkulasi waktu selesai berdasarkan waktu saat tombol mulai ditekan
-             endTime = new Date(Date.now() + durationInMinutes * 60000);
-             timerInterval = setInterval(updateTimer, 1000);
-             updateTimer(); // Panggil sekali langsung agar tidak menunggu 1 detik
-        }
-
-        function updateTimer() {
-            if (isSubmitted) {
-                clearInterval(timerInterval);
-                return;
-            }
-
-            const now = new Date();
-            const timeDiff = endTime - now;
-
-            if (timeDiff <= 0) {
-                clearInterval(timerInterval);
-                timerDisplay.textContent = "00:00";
-                handleTimeUp();
-                return;
-            }
-
-            // Konversi sisa waktu ke detik
-            const remainingSeconds = Math.floor(timeDiff / 1000);
-            const minutes = Math.floor(remainingSeconds / 60);
-            const seconds = remainingSeconds % 60;
-
-            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            timerDisplay.textContent = formattedTime;
-            
-            // Peringatan saat waktu kurang dari 5 menit (300 detik)
-            if (remainingSeconds < 300) {
-                timerDisplay.classList.add('timer-warning');
-            } else {
-                timerDisplay.classList.remove('timer-warning');
-            }
-        }
-
-        function handleTimeUp() {
-            showModal("Waktu Habis!", "Waktu anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
-                processSubmission(true);
-            });
-        }
-
-        // Custom Modal Logic
-        const modal = document.getElementById('customModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalMessage = document.getElementById('modalMessage');
-        const modalBtnCancel = document.getElementById('modalBtnCancel');
-        const modalBtnConfirm = document.getElementById('modalBtnConfirm');
-
-        function showModal(title, message, showCancel, onConfirm) {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
-            modal.style.display = 'flex';
-            
-            modalBtnConfirm.onclick = function() {
-                modal.style.display = 'none';
-                if(onConfirm) onConfirm();
-            };
-            modalBtnCancel.onclick = function() {
-                modal.style.display = 'none';
-            };
-        }
-
-        // Klik Pilihan Ganda
-        options.forEach(option => {
-          option.addEventListener('click', function() {
-            if (isSubmitted) return; 
-            
-            const siblings = this.parentNode.children;
-            for (let sibling of siblings) {
-              sibling.classList.remove('selected');
-            }
-            this.classList.add('selected');
+      function restoreAnswers(answers) {
+          if (!answers) return;
+          const soalItems = document.querySelectorAll('.soal-item');
+          soalItems.forEach(item => {
+              const qNum = item.getAttribute('data-qnum');
+              if (answers[qNum]) {
+                  const option = item.querySelector(`li[data-option="${answers[qNum]}"]`);
+                  if (option) option.classList.add('selected');
+              }
           });
-        });
+      }
 
-        // Klik Tombol Submit
-        submitBtn.addEventListener('click', function() {
-            if (isSubmitted) return;
-            showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengubahnya lagi.", true, function() {
-                processSubmission(false);
-            });
-        });
+      // Mulai inisialisasi Firebase saat DOM Load
+      initStorage();
 
-        function processSubmission(isAutoSubmit) {
-            if(isSubmitted) return;
-            isSubmitted = true;
-            clearInterval(timerInterval);
+      // LOGIKA TOMBOL MULAI
+      btnStart.addEventListener('click', async function() {
+          const nama = namaInput.value.trim() || "Peserta Anonim";
+          const email = emailInput.value.trim() || "-";
+          const hp = hpInput.value.trim() || "-";
+          const sekolah = sekolahInput.value.trim() || "-";
 
-            submitBtn.style.display = "none";
+          // Fitur Pengecualian / Admin Bypass
+          if (email.toLowerCase() === "riansyahdhanardi@gmail.com") {
+              // Jika email admin dimasukkan, reset status
+              state.status = 'in_progress';
+              state.answers = {};
+              state.userData = { nama, email, hp, sekolah };
+              state.endTime = Date.now() + 25 * 60000;
+              isSubmitted = false;
 
-            let correctCount = 0;
-            let wrongCount = 0;
-            let emptyCount = 0;
-            const categoryStats = {};
+              // Hapus semua pilihan yang sudah terpilih (reset visual UI)
+              const options = document.querySelectorAll('.pilihan-ganda li');
+              options.forEach(opt => {
+                  opt.classList.remove('selected', 'correct', 'wrong');
+              });
+              const olLists = document.querySelectorAll('.pilihan-ganda');
+              olLists.forEach(ol => {
+                  ol.classList.remove('disabled-options');
+              });
+              const explanations = document.querySelectorAll('.explanation');
+              explanations.forEach(exp => {
+                  exp.style.display = 'none';
+              });
+              
+              // Reset Result Box
+              document.getElementById('resultBox').style.display = 'none';
+              document.getElementById('submitBtn').style.display = 'inline-block';
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          } else {
+             // Alur Normal Peserta
+              state.userData = { nama, email, hp, sekolah };
+              state.status = 'in_progress';
+              // 25 Menit = 25 * 60000 ms
+              state.endTime = Date.now() + 25 * 60000;
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          }
 
-            const soalItems = document.querySelectorAll('.soal-item');
-            
-            soalItems.forEach((item, index) => {
-                const questionNumber = index + 1;
-                const correctAnswer = answerKey[questionNumber];
-                const selectedOption = item.querySelector('li.selected');
-                
-                // Track Kategori
-                const catEl = item.querySelector('.kategori');
-                const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
-                if (!categoryStats[categoryName]) {
-                    categoryStats[categoryName] = { total: 0, correct: 0, wrong: 0, empty: 0 };
-                }
-                categoryStats[categoryName].total++;
-
-                // Kunci form pilihan ganda
-                item.querySelector('ol').classList.add('disabled-options');
-
-                if (selectedOption) {
-                    const userAnswer = selectedOption.getAttribute('data-option');
-                    
-                    if (userAnswer === correctAnswer) {
-                        correctCount++;
-                        categoryStats[categoryName].correct++;
-                        selectedOption.classList.add('correct');
-                        selectedOption.classList.remove('selected');
-                    } else {
-                        wrongCount++;
-                        categoryStats[categoryName].wrong++;
-                        selectedOption.classList.add('wrong');
-                        selectedOption.classList.remove('selected');
-                        // Beri tanda pada jawaban yang seharusnya benar
-                        const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
-                        if (correctEl) correctEl.classList.add('correct');
-                    }
-                } else {
-                    emptyCount++;
-                    categoryStats[categoryName].empty++;
-                    // Jika tidak dijawab, tetap tunjukkan jawaban benarnya
-                    const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
-                    if (correctEl) correctEl.classList.add('correct');
-                }
-            });
-
-            // Hitung Skor (Skala 100)
-            const finalScore = Math.round((correctCount / 20) * 100);
-            
-            // Animasi Angka Skor
-            let currentScore = 0;
-            const scoreEl = document.getElementById('scoreValue');
-            const scoreInterval = setInterval(() => {
-                if (currentScore >= finalScore) {
-                    clearInterval(scoreInterval);
-                    scoreEl.textContent = finalScore;
-                } else {
-                    currentScore += Math.ceil((finalScore - currentScore) / 5) || 1;
-                    scoreEl.textContent = currentScore;
-                }
-            }, 30);
-            
-            // Update UI Stats Umum
-            document.getElementById('count-benar').textContent = correctCount;
-            document.getElementById('count-salah').textContent = wrongCount;
-            document.getElementById('count-kosong').textContent = emptyCount;
-
-            // Generate Detailed Report Table
-            const tbody = document.getElementById('topic-breakdown-body');
-            tbody.innerHTML = '';
-            
-            let strengths = [];
-            let weaknesses = [];
-            let moderates = [];
-
-            for (const [cat, data] of Object.entries(categoryStats)) {
-                const percentage = Math.round((data.correct / data.total) * 100);
-                const errors = data.wrong + data.empty;
-                
-                // Kategori Rekomendasi
-                if (percentage >= 70) strengths.push(cat);
-                else if (percentage <= 40) weaknesses.push(cat);
-                else moderates.push(cat);
-
-                // Warna Progress Bar
-                let barColor = '#dc3545'; // Merah
-                if (percentage >= 70) barColor = '#28a745'; // Hijau
-                else if (percentage > 40) barColor = '#f39c12'; // Kuning/Oranye
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="padding: 12px; text-align: left; font-weight: 600; color: #444;">${cat}</td>
-                    <td style="padding: 12px;">${data.total}</td>
-                    <td style="padding: 12px; font-weight: bold; color: #28a745;">${data.correct}</td>
-                    <td style="padding: 12px; font-weight: bold; color: #dc3545;">${errors}</td>
-                    <td style="padding: 12px;">
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
-                        </div>
-                        <span style="font-size: 12px; font-weight: bold; color: #555;">${percentage}%</span>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            }
-
-            // Generate Rekomendasi Teks
-            const recList = document.getElementById('recommendation-list');
-            recList.innerHTML = '';
-
-            if (strengths.length > 0) {
-                recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #27ae60; font-weight: bold;">💪 Pertahankan:</span> Penguasaan materi <em>${strengths.join(", ")}</em> kamu sudah sangat baik. Lanjutkan latihan dengan variasi soal yang lebih sulit (HOTS).</li>`;
-            }
-            if (moderates.length > 0) {
-                recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #d35400; font-weight: bold;">⚖️ Cukup Baik:</span> Kamu cukup memahami materi <em>${moderates.join(", ")}</em>, namun ketelitian dan kecepatan masih bisa ditingkatkan.</li>`;
-            }
-            if (weaknesses.length > 0) {
-                recList.innerHTML += `<li><span style="color: #c0392b; font-weight: bold;">⚠️ Tingkatkan:</span> Nilai kamu di materi <em>${weaknesses.join(", ")}</em> masih di bawah rata-rata. Prioritaskan me-review ulang konsep dasar dan perbanyak latihan soal dasar sebelum ke tingkat lanjut.</li>`;
-            }
-            if (strengths.length === 0 && weaknesses.length === 0 && moderates.length === 0) {
-                recList.innerHTML += `<li>Materi belum dapat diidentifikasi secara spesifik.</li>`;
-            }
-
-            // Buka semua kotak penjelasan (Pembahasan)
-            const explanations = document.querySelectorAll('.explanation');
-            explanations.forEach(exp => {
-                exp.style.display = 'block';
-            });
-
-            // Tampilkan kotak skor
-            const resultBox = document.getElementById('resultBox');
-            resultBox.style.display = 'block';
-            
-            // Beri jeda kecil agar scroll terlihat rapi setelah DOM merender tabel
-            setTimeout(() => {
-                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 200);
-        }
+          restoreUserData(state.userData);
+          landingPage.style.display = 'none';
+          examPage.style.display = 'block';
+          timerBar.style.display = 'flex';
+          document.body.style.paddingTop = '80px'; 
+          startTimer();
+          window.scrollTo(0, 0);
       });
+
+      function startTimer() {
+           timerInterval = setInterval(updateTimer, 1000);
+           updateTimer(); // Panggil sekali langsung agar tidak delay
+      }
+
+      function updateTimer() {
+          if (isSubmitted || state.status === 'completed') {
+              clearInterval(timerInterval);
+              return;
+          }
+
+          const now = Date.now();
+          const timeDiff = state.endTime - now;
+
+          if (timeDiff <= 0) {
+              clearInterval(timerInterval);
+              timerDisplay.textContent = "00:00";
+              handleTimeUp();
+              return;
+          }
+
+          const remainingSeconds = Math.floor(timeDiff / 1000);
+          const minutes = Math.floor(remainingSeconds / 60);
+          const seconds = remainingSeconds % 60;
+
+          timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (remainingSeconds < 300) {
+              timerDisplay.classList.add('timer-warning');
+          } else {
+              timerDisplay.classList.remove('timer-warning');
+          }
+      }
+
+      function handleTimeUp() {
+          showModal("Waktu Habis!", "Waktu ujian anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
+              processSubmission(true, false);
+          });
+      }
+
+      function showModal(title, message, showCancel, onConfirm) {
+          modalTitle.textContent = title;
+          modalMessage.textContent = message;
+          modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
+          modal.style.display = 'flex';
+          
+          modalBtnConfirm.onclick = function() {
+              modal.style.display = 'none';
+              if(onConfirm) onConfirm();
+          };
+          modalBtnCancel.onclick = function() {
+              modal.style.display = 'none';
+          };
+      }
+
+      // Klik Pilihan Ganda (Menyimpan Otomatis)
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return; 
+          
+          const siblings = this.parentNode.children;
+          for (let sibling of siblings) {
+            sibling.classList.remove('selected');
+          }
+          this.classList.add('selected');
+
+          // Ambil nomor soal
+          const questionItem = this.closest('.soal-item');
+          const qNum = questionItem.getAttribute('data-qnum');
+          const answer = this.getAttribute('data-option');
+          
+          // Simpan State lokal & Cloud
+          if(qNum) {
+              if(!state.answers) state.answers = {};
+              state.answers[qNum] = answer;
+              if(docRef) {
+                  updateDoc(docRef, { answers: state.answers }).catch(()=>{});
+              }
+          }
+        });
+      });
+
+      // Klik Tombol Submit Manual
+      submitBtn.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return;
+          showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengulangi ujian.", true, function() {
+              processSubmission(false, false);
+          });
+      });
+
+      function processSubmission(isAutoSubmit, isRestoring = false) {
+          if(isSubmitted) return;
+          isSubmitted = true;
+          clearInterval(timerInterval);
+
+          submitBtn.style.display = "none";
+          timerBar.style.display = "none";
+          
+          // Set status Selesai
+          state.status = 'completed';
+          if (docRef && !isRestoring) {
+              updateDoc(docRef, { status: 'completed' }).catch(()=>{});
+          }
+
+          let correctCount = 0;
+          let wrongCount = 0;
+          let emptyCount = 0;
+          const categoryStats = {};
+
+          const soalItems = document.querySelectorAll('.soal-item');
+          
+          soalItems.forEach((item, index) => {
+              const questionNumber = index + 1;
+              const correctAnswer = answerKey[questionNumber];
+              const selectedOption = item.querySelector('li.selected');
+              
+              // Analisis Kategori
+              const catEl = item.querySelector('.kategori');
+              const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
+              if (!categoryStats[categoryName]) {
+                  categoryStats[categoryName] = { total: 0, correct: 0, wrong: 0, empty: 0 };
+              }
+              categoryStats[categoryName].total++;
+
+              // Kunci UI
+              item.querySelector('ol').classList.add('disabled-options');
+
+              if (selectedOption) {
+                  const userAnswer = selectedOption.getAttribute('data-option');
+                  
+                  if (userAnswer === correctAnswer) {
+                      correctCount++;
+                      categoryStats[categoryName].correct++;
+                      selectedOption.classList.add('correct');
+                      selectedOption.classList.remove('selected');
+                  } else {
+                      wrongCount++;
+                      categoryStats[categoryName].wrong++;
+                      selectedOption.classList.add('wrong');
+                      selectedOption.classList.remove('selected');
+                      const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                      if (correctEl) correctEl.classList.add('correct');
+                  }
+              } else {
+                  emptyCount++;
+                  categoryStats[categoryName].empty++;
+                  const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                  if (correctEl) correctEl.classList.add('correct');
+              }
+          });
+
+          // Skoring (Skala 100)
+          const finalScore = Math.round((correctCount / 20) * 100);
+          
+          // Animasi Angka
+          let currentScore = 0;
+          const scoreEl = document.getElementById('scoreValue');
+          const scoreInterval = setInterval(() => {
+              if (currentScore >= finalScore) {
+                  clearInterval(scoreInterval);
+                  scoreEl.textContent = finalScore;
+              } else {
+                  currentScore += Math.ceil((finalScore - currentScore) / 5) || 1;
+                  scoreEl.textContent = currentScore;
+              }
+          }, 30);
+          
+          document.getElementById('count-benar').textContent = correctCount;
+          document.getElementById('count-salah').textContent = wrongCount;
+          document.getElementById('count-kosong').textContent = emptyCount;
+
+          // Buat Laporan Tabel
+          const tbody = document.getElementById('topic-breakdown-body');
+          tbody.innerHTML = '';
+          
+          let strengths = [];
+          let weaknesses = [];
+          let moderates = [];
+
+          for (const [cat, data] of Object.entries(categoryStats)) {
+              const percentage = Math.round((data.correct / data.total) * 100);
+              const errors = data.wrong + data.empty;
+              
+              if (percentage >= 70) strengths.push(cat);
+              else if (percentage <= 40) weaknesses.push(cat);
+              else moderates.push(cat);
+
+              let barColor = '#dc3545'; // Merah
+              if (percentage >= 70) barColor = '#28a745'; // Hijau
+              else if (percentage > 40) barColor = '#f39c12'; // Kuning
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                  <td style="padding: 12px; text-align: left; font-weight: 600; color: #444;">${cat}</td>
+                  <td style="padding: 12px;">${data.total}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #28a745;">${data.correct}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #dc3545;">${errors}</td>
+                  <td style="padding: 12px;">
+                      <div class="progress-bar-bg">
+                          <div class="progress-bar-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+                      </div>
+                      <span style="font-size: 12px; font-weight: bold; color: #555;">${percentage}%</span>
+                  </td>
+              `;
+              tbody.appendChild(tr);
+          }
+
+          // Generate Teks Rekomendasi
+          const recList = document.getElementById('recommendation-list');
+          recList.innerHTML = '';
+
+          if (strengths.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #27ae60; font-weight: bold;">💪 Pertahankan:</span> Penguasaan materi <em>${strengths.join(", ")}</em> kamu sudah sangat baik. Lanjutkan latihan dengan soal-soal HOTS yang menantang!</li>`;
+          }
+          if (moderates.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #d35400; font-weight: bold;">⚖️ Cukup Baik:</span> Kamu cukup paham dasar materi <em>${moderates.join(", ")}</em>, tapi jangan lengah. Tingkatkan lagi kecepatan hitung dan ketelitiannya.</li>`;
+          }
+          if (weaknesses.length > 0) {
+              recList.innerHTML += `<li><span style="color: #c0392b; font-weight: bold;">⚠️ Tingkatkan:</span> Nilai kamu di materi <em>${weaknesses.join(", ")}</em> masih kurang maksimal. Yuk, gas pelajari lagi rumus dan konsep dasarnya, jangan ragu bahas bareng teman atau guru!</li>`;
+          }
+
+          // Buka Semua Pembahasan
+          const explanations = document.querySelectorAll('.explanation');
+          explanations.forEach(exp => {
+              exp.style.display = 'block';
+          });
+
+          const resultBox = document.getElementById('resultBox');
+          resultBox.style.display = 'block';
+          
+          setTimeout(() => {
+              if(!isRestoring) {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+          }, 200);
+      }
     </script>
   </body>
 </html>
