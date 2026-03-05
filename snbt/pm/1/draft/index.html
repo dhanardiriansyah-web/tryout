@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tryout 1: Penalaran Matematika</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .instructions {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+        }
+        .wacana {
+            background-color: #fdfdfd;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-top: 4px solid #34495e;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .wacana-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-header {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: upper-alpha;
+            padding-left: 20px;
+        }
+        .options li {
+            margin-bottom: 8px;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .options li:hover {
+            background-color: #f0f0f0;
+        }
+        .table-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 450px;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        /* Tcolorbox UI Simulation */
+        .tcolorbox {
+            display: none;
+            background-color: #f2f7fc;
+            border: 2px solid #1a4c80;
+            border-radius: 6px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .tcolorbox-title {
+            background-color: #1a4c80;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 8px 15px;
+        }
+        .tcolorbox-content {
+            padding: 15px;
+        }
+        .tcolorbox-content ul, .tcolorbox-content ol {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .tcolorbox-content p {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .show-explanation-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .show-explanation-btn:hover {
+            background-color: #27ae60;
+        }
+        .statement-list {
+            list-style-type: decimal;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tryout 1: Penalaran Matematika (SNBT)</h1>
+
+    <div class="instructions">
+        <strong>Petunjuk Umum:</strong> Pilihlah satu jawaban yang paling tepat. Untuk soal perbandingan kuantitas (P dan Q), analisis kecukupan data (AKD), jumlah pernyataan benar, dan kombinasi pernyataan benar, perhatikan pola pilihan ganda baku yang telah ditentukan.
+    </div>
+
+    <!-- ========================================== -->
+    <!-- WACANA 1 -->
+    <!-- ========================================== -->
+    <div class="wacana">
+        <div class="wacana-title">Wacana 1: Paradoks Antrean (The Faster Lane Illusion)</div>
+        <p>Saat mengantre di kasir supermarket, antrean di sebelah kita sering kali terasa bergerak lebih cepat. Misalkan di sebuah supermarket terdapat 3 kasir: Kasir A, Kasir B, dan Kasir C. Waktu pelayanan setiap pelanggan diasumsikan konstan sebagai berikut:</p>
+        <ul>
+            <li>Kasir A membutuhkan waktu 3 menit per pelanggan.</li>
+            <li>Kasir B membutuhkan waktu 4 menit per pelanggan.</li>
+            <li>Kasir C membutuhkan waktu 2 menit per pelanggan.</li>
+        </ul>
+        <p>Saat Andi tiba, antrean Kasir A berisi 4 orang (orang ke-4 sedang dilayani), Kasir B berisi 2 orang, dan Kasir C berisi 5 orang. Andi memutuskan untuk bergabung di antrean Kasir B (menjadi orang ke-3).</p>
+    </div>
+
+    <!-- NOMOR 1 -->
+    <div class="question">
+        <div class="question-header">1.</div>
+        <p>Berapa menit total waktu yang harus ditunggu Andi sejak ia mulai mengantre hingga pelayanannya selesai di Kasir B?</p>
+        
+        <ol class="options">
+            <li>4 menit</li>
+            <li>8 menit</li>
+            <li>12 menit</li>
+            <li>16 menit</li>
+            <li>20 menit</li>
+        </ol>
+        
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp1')">Tampilkan Pembahasan</button>
+        <div id="exp1" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p><strong>Logika gampangnya:</strong><br>
+                Andi masuk ke Kasir B. Di sana katanya udah ada 2 orang. Nah, Andi ini join ke antrean dan jadi orang ke-3.<br>
+                Artinya, Andi harus nunggu orang ke-1 beres, nunggu orang ke-2 beres, baru setelah itu dia dilayani.<br>
+                Karena di Kasir B setiap orang makan waktu <strong>4 menit</strong>, maka:</p>
+                <ul>
+                    <li>Waktu orang ke-1 = 4 menit</li>
+                    <li>Waktu orang ke-2 = 4 menit</li>
+                    <li>Waktu pelayanannya Andi sendiri = 4 menit</li>
+                </ul>
+                <p>Total waktunya tinggal kita tambahin aja: $4 + 4 + 4 = 12$ menit. (Bisa juga dikali langsung: 3 orang $\times$ 4 menit = 12 menit).<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 2 -->
+    <div class="question">
+        <div class="question-header">2.</div>
+        <p>Andi sedang mempertimbangkan untuk pindah ke Kasir A. Apakah waktu tunggu Andi akan menjadi <strong>lebih singkat</strong> jika ia pindah ke ujung antrean Kasir A saat ini?</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>(1) Kasir A mendadak harus melakukan <em>restart</em> mesin kasir yang memakan waktu 5 menit.</li>
+            <li>(2) Satu orang di depan antrean Kasir A memutuskan untuk keluar dari antrean karena barangnya tertinggal.</li>
+        </ul>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp2')">Tampilkan Pembahasan</button>
+        <div id="exp2" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p><strong>Tujuan kita:</strong> Menjawab "YA" (lebih singkat) atau "TIDAK" (ngga lebih singkat). Ingat ya, kalau kita bisa jawab dengan pasti "TIDAK", itu artinya infonya <strong>CUKUP</strong>. Jangan kejebak ngira info cukup itu cuma kalau jawabannya "YA".</p>
+                
+                <p>Di soal no 1, kita tahu waktu total di Kasir B = <strong>12 menit</strong>.<br>
+                Sekarang kita lihat Kasir A. Di Kasir A normalnya ada 4 orang. Tiap orang butuh 3 menit. Kalau Andi pindah ke Kasir A, dia jadi orang ke-5.<br>
+                Total waktu Andi di Kasir A normal = 5 orang $\times$ 3 menit = <strong>15 menit</strong>.</p>
+                
+                <p><strong>Cek Pernyataan (1):</strong><br>
+                Kasir A error dan butuh restart 5 menit.<br>
+                Total waktu di Kasir A sekarang jadi: 15 menit (antrean) + 5 menit (restart) = <strong>20 menit</strong>.<br>
+                Pertanyaannya: Apakah 20 menit lebih singkat dari 12 menit? <strong>TIDAK</strong>.<br>
+                Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (1) <strong>CUKUP</strong>.</p>
+                
+                <p><strong>Cek Pernyataan (2):</strong><br>
+                Ada 1 orang keluar dari Kasir A. Jadi antrean A yang tadinya 4 orang berkurang jadi 3 orang.<br>
+                Kalau Andi masuk, Andi jadi orang ke-4.<br>
+                Waktu Andi di Kasir A sekarang = 4 orang $\times$ 3 menit = <strong>12 menit</strong>.<br>
+                Pertanyaannya: Apakah 12 menit <em>lebih singkat</em> dari 12 menit? <strong>TIDAK</strong> (karena sama persis, bukan lebih singkat).<br>
+                Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (2) <strong>CUKUP</strong>.</p>
+                
+                <p><strong>Kesimpulan:</strong> Karena pernyataan 1 bisa buat ngejawab sendiri, dan pernyataan 2 juga bisa dipake buat ngejawab sendiri, berarti dua-duanya sama-sama cukup secara sendirian.<br>
+                <strong>Jawaban: D</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 3 -->
+    <div class="question">
+        <div class="question-header">3.</div>
+        <p>Perhatikan empat pernyataan berikut terkait kondisi awal antrean:</p>
+        <ol class="statement-list">
+            <li>Waktu total antrean di Kasir A hingga kosong adalah 12 menit.</li>
+            <li>Kasir C adalah kasir yang akan paling lambat menyelesaikan seluruh antreannya saat ini.</li>
+            <li>Selisih waktu selesai antrean A dan B adalah 4 menit.</li>
+            <li>Jika Andi masuk ke Kasir C, ia akan selesai lebih cepat dibandingkan di Kasir B.</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang BENAR dari empat pernyataan di atas?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp3')">Tampilkan Pembahasan</button>
+        <div id="exp3" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Mari kita bongkar dan hitung waktu normal setiap kasir dulu:</p>
+                <ul>
+                    <li><strong>Kasir A:</strong> 4 orang $\times$ 3 menit = 12 menit.</li>
+                    <li><strong>Kasir B:</strong> 2 orang $\times$ 4 menit = 8 menit.</li>
+                    <li><strong>Kasir C:</strong> 5 orang $\times$ 2 menit = 10 menit.</li>
+                </ul>
+                <p>Sekarang kita cocokkan dengan pernyataannya:</p>
+                <ol class="statement-list">
+                    <li>Waktu Kasir A kosong adalah 12 menit. $\rightarrow$ <strong>BENAR</strong>. Hitungannya pas 12 menit.</li>
+                    <li>Kasir C paling lambat selesainya. $\rightarrow$ <strong>SALAH</strong>. Yang paling lambat itu Kasir A (12 menit), Kasir C cuma 10 menit.</li>
+                    <li>Selisih waktu A dan B adalah 4 menit. $\rightarrow$ <strong>BENAR</strong>. Kasir A (12) dikurangi Kasir B (8) hasilnya pas 4.</li>
+                    <li>Jika Andi ke Kasir C, dia lebih cepet dari B. $\rightarrow$ Mari kita tes. Kalau Andi ke C, dia jadi orang ke-6. Waktunya: 6 orang $\times$ 2 menit = 12 menit. Waktu di Kasir B juga 12 menit (dari soal nomor 1). Karena sama persis (12 vs 12), berarti ngga lebih cepat. <strong>SALAH</strong>.</li>
+                </ol>
+                <p>Total pernyataan yang benar cuma ada 2 (Pernyataan 1 dan 3).<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 4 -->
+    <div class="question">
+        <div class="question-header">4.</div>
+        <p>Diketahui probabilitas seseorang keluar dari antrean sebelum dilayani adalah $10\%$. Manakah di antara pernyataan berikut yang BENAR terkait ekspektasi (harapan) matematika waktu antrean?</p>
+        <ol class="statement-list">
+            <li>Ekspektasi waktu pelayanan untuk 10 orang di Kasir C adalah kurang dari 20 menit.</li>
+            <li>Semakin panjang antrean, semakin tinggi probabilitas waktu tunggu total meleset dari perhitungan konstan.</li>
+            <li>Ekspektasi jumlah orang yang bertahan di antrean A adalah 3,6 orang.</li>
+            <li>Probabilitas semua orang di ketiga kasir (11 orang) tetap berada di antrean adalah $(0,9)^{11}$.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp4')">Tampilkan Pembahasan</button>
+        <div id="exp4" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>"Ekspektasi" itu bahasa ribetnya, padahal maksudnya cuma <strong>perkiraan rata-rata</strong> aja.<br>
+                Kalau peluang keluar $10\%$, berarti peluang dia <strong>bertahan</strong> di antrean adalah $90\%$ atau 0,9.<br>
+                Ayo kita cek:</p>
+                <ol class="statement-list">
+                    <li>Kasir C (2 menit/orang). Kalau 10 orang normalnya $10 \times 2 = 20$ menit. Tapi karena peluang keluarnya 10%, jumlah orang yang bakal bertahan cuma $10 \times 90\% = 9$ orang. Jadi ekspektasi waktunya $9 \times 2 = 18$ menit. Angka 18 ini pasti kurang dari 20 menit kan? $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Kalau antrean kepanjangan, pasti makin banyak dong orang yang kesel terus milih keluar? Nah, gara-gara ada yang keluar, waktu aslinya pasti meleset dari hitungan di atas kertas. Makin panjang antrean = makin gede peluang error/meleset. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Di Kasir A ada 4 orang. Jumlah orang yang bertahan = Total orang $\times$ peluang bertahan = $4 \times 0,9 = 3,6$ orang. (Walau mustahil ada 0,6 orang di dunia nyata, tapi secara matematika tulisan ini bener). $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Total orang di semua kasir (4 + 2 + 5 = 11 orang). Peluang SATU orang bertahan itu $90\%$ atau 0,9. Kalau SEBELAS orang bertahan berurutan, dalam matematika peluangnya dikaliin semuanya: $0,9 \times 0,9 \times 0,9...$ sampai 11 kali. Ditulisnya jadi $(0,9)^{11}$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                </ol>
+                <p>Karena semuanya benar, pilih opsi semua benar!<br>
+                <strong>Jawaban: E</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- WACANA 2 -->
+    <!-- ========================================== -->
+    <div class="wacana">
+        <div class="wacana-title">Wacana 2: Matematika di Balik "FYP" Media Sosial</div>
+        <p>Algoritma sebuah media sosial menggunakan <em>Graph Theory</em> (teori jejaring) dan pembobotan numerik untuk menentukan skor sebuah konten video agar bisa masuk <em>For You Page</em> (FYP). Skor total $S$ sebuah video dihitung menggunakan rumus:</p>
+        <p style="text-align: center;">$$S = (3 \times L) + (5 \times R) + (2 \times W)$$</p>
+        <p>Dimana:<br>
+        $L =$ Jumlah <em>Like</em>,<br>
+        $R =$ Jumlah <em>Share</em> (Retweet/Bagikan), dan<br>
+        $W =$ Rata-rata <em>Watch time</em> (dalam detik).<br>
+        Agar masuk ke kategori FYP, sebuah video harus memiliki skor $S \ge 500$.</p>
+    </div>
+
+    <!-- NOMOR 5 -->
+    <div class="question">
+        <div class="question-header">5.</div>
+        <p>Sebuah video memiliki 50 <em>like</em>, 20 <em>share</em>, dan ditonton rata-rata selama 45 detik. Berapakah skor total video tersebut?</p>
+        
+        <ol class="options">
+            <li>250</li>
+            <li>340</li>
+            <li>400</li>
+            <li>440</li>
+            <li>500</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp5')">Tampilkan Pembahasan</button>
+        <div id="exp5" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Ini soal paling gampang. Tinggal cocokin angkanya ke dalam huruf di rumus!<br>
+                Kita dikasih info:<br>
+                - <em>Like</em> ($L$) = 50<br>
+                - <em>Share</em> ($R$) = 20<br>
+                - <em>Watch time</em> ($W$) = 45</p>
+                
+                <p>Tulis ulang rumusnya: $S = (3 \times L) + (5 \times R) + (2 \times W)$<br>
+                Masukin angkanya gantiin huruf:<br>
+                $$S = (3 \times \mathbf{50}) + (5 \times \mathbf{20}) + (2 \times \mathbf{45})$$</p>
+                
+                <p>Tinggal kaliin deh:<br>
+                $$S = 150 + 100 + 90$$<br>
+                $$S = 340$$</p>
+                
+                <p>Gampang banget kan?<br>
+                <strong>Jawaban: B</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 6 -->
+    <div class="question">
+        <div class="question-header">6.</div>
+        <p>Video B memiliki 100 <em>like</em>. Apakah Video B berhasil masuk FYP?</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>(1) Rata-rata waktu tonton (W) Video B adalah 60 detik.</li>
+            <li>(2) Jumlah <em>share</em> (R) Video B adalah 25.</li>
+        </ul>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp6')">Tampilkan Pembahasan</button>
+        <div id="exp6" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Ingat target FYP adalah kalau skornya $S \ge 500$.<br>
+                Info awal kita: $L = 100$. Berarti dari <em>like</em> aja dia udah dapet poin: $3 \times 100 = 300$.<br>
+                Skor S sekarang = 300. Dia butuh minimal 200 poin lagi dari $R$ dan $W$.</p>
+
+                <p><strong>Cek Pernyataan (1) aja:</strong><br>
+                Katanya $W = 60$. Poin tambahannya = $2 \times 60 = 120$.<br>
+                Total skor = $300 + 120 = 420$. Karena kita ngga tau si $R$ (<em>share</em>) berapa, kita ngga bisa mastiin skor totalnya bakal nembus 500 atau ngga. Siapa tau $R$ nya nol? (Berarti TIDAK CUKUP).</p>
+
+                <p><strong>Cek Pernyataan (2) aja:</strong><br>
+                Katanya $R = 25$. Poin tambahannya = $5 \times 25 = 125$.<br>
+                Total skor = $300 + 125 = 425$. Sama kayak tadi, kita ngga tau si $W$-nya berapa, jadi ngga bisa jawab pasti bisa masuk FYP apa ngga. (TIDAK CUKUP).</p>
+
+                <p><strong>Gabungin Pernyataan (1) dan (2):</strong><br>
+                Kalau dua info digabung, kita tau $W=60$ dan $R=25$.<br>
+                Total skor = Poin $L$ (300) + Poin $R$ (125) + Poin $W$ (120) = <strong>545</strong>.<br>
+                Apakah 545 nembus 500? Ya, tembus banget! FYP!<br>
+                Karena baru bisa kejawab pas informasinya digabungin, berarti harus bareng-bareng.<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 7 -->
+    <div class="question">
+        <div class="question-header">7.</div>
+        <p>Perhatikan pernyataan berikut berdasarkan rumus algoritma $S$:</p>
+        <ol class="statement-list">
+            <li>1 <em>share</em> bernilai sama dengan 2,5 detik <em>watch time</em>.</li>
+            <li>Jika jumlah <em>like</em> digandakan dan indikator lainnya (share & watch time) diasumsikan bernilai tetap dan tidak nol, skor total akan selalu naik kurang dari $100\%$.</li>
+            <li>Untuk mencapai batas minimal FYP tanpa adanya <em>share</em> dan <em>like</em>, video harus ditonton rata-rata minimal 250 detik.</li>
+            <li>Kenaikan 10 <em>share</em> akan memberikan tambahan skor yang sama dengan kenaikan 25 <em>like</em>.</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang BENAR?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp7')">Tampilkan Pembahasan</button>
+        <div id="exp7" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Mari kita analisis rumusnya: $S = 3L + 5R + 2W$.</p>
+                <ol class="statement-list">
+                    <li>Kalau 1 <em>share</em> ($R=1$), poinnya dapet: $5 \times 1 = 5$ poin. Kalau <em>watch time</em> 2,5 detik ($W=2,5$), poinnya dapet: $2 \times 2,5 = 5$ poin. Sama-sama ngasilin 5 poin! $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Kalau <em>Like</em> dikali dua, skor <em>total</em> ngga mungkin otomatis jadi dua kali lipat (naik 100%). Kenapa? Karena di skor total masih ada sumbangan poin dari $R$ dan $W$. Jika Like dikalikan dua, poin dari Like memang naik 100%, tetapi karena poin R dan W tetap, secara keseluruhan persentase kenaikan <em>skor total</em> pasti "diencerkan" dan hasilnya akan berada di bawah 100%. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Ngga ada <em>share</em> ($R=0$), ngga ada <em>like</em> ($L=0$). Jadi skor cuma bergantung sama jam tayang: $S = 2W$. Biar nembus batas FYP 500, maka $2W = 500 \rightarrow W = 500 / 2 = 250$ detik. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Kalau naik 10 <em>share</em>, poin nambah: $10 \times 5 = 50$ poin. Kalau naik 25 <em>like</em>, poin nambah: $25 \times 3 = 75$ poin. Beda dong angkanya (50 sama 75)! $\rightarrow$ <strong>SALAH</strong>.</li>
+                </ol>
+                <p>Ada 3 kalimat yang benar (Kalimat 1, 2, dan 3).<br>
+                <strong>Jawaban: B</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 8 -->
+    <div class="question">
+        <div class="question-header">8.</div>
+        <p>Developer media sosial mengubah algoritma menjadi $S_{baru} = (2 \times L) + (10 \times R) + W$. Manakah di antara pernyataan berikut yang BENAR?</p>
+        <ol class="statement-list">
+            <li>Peran <em>share</em> menjadi dua kali lipat lebih penting dari algoritma sebelumnya.</li>
+            <li>Peran <em>watch time</em> (W) berkurang setengahnya secara bobot absolut.</li>
+            <li>Video yang hanya mengandalkan <em>Like</em> akan lebih sulit masuk FYP dengan algoritma baru.</li>
+            <li>Skor total sebuah video pasti berubah jika menggunakan rumus algoritma baru.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp8')">Tampilkan Pembahasan</button>
+        <div id="exp8" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Mari kita jejerin rumusnya biar kelihatan bedanya:<br>
+                Rumus Lama: $3L + \mathbf{5}R + \mathbf{2}W$<br>
+                Rumus Baru: $2L + \mathbf{10}R + \mathbf{1}W$</p>
+                <ol class="statement-list">
+                    <li>Lihat angka di depan $R$ (<em>share</em>). Awalnya 5, sekarang jadi 10. Yap, angkanya jadi 2 kali lipat lebih gede, berarti makin penting! $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Lihat angka di depan $W$ (<em>watch time</em>). Awalnya dikali 2, sekarang cuma dikali 1. Berarti nilainya terjun bebas setengahnya. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Lihat angka di depan $L$ (<em>Like</em>). Awalnya kalau dapet 1 Like nilainya 3 poin, sekarang nilainya cuma 2 poin. Wah, berarti konten modal Like aja makin kecil sumbangannya, jadinya makin sulit FYP. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Apakah nilainya <strong>pasti</strong> berubah? Kata "pasti" itu bahaya di matematika. Coba kalau kita asalkan masukin angka $L=3, R=1, W=2$.<br>
+                    - Poin lama: $(3\times3) + (5\times1) + (2\times2) = 9 + 5 + 4 = \mathbf{18}$.<br>
+                    - Poin baru: $(2\times3) + (10\times1) + (1\times2) = 6 + 10 + 2 = \mathbf{18}$.<br>
+                    Loh, ternyata bisa SAMA KOK! Jadi dibilang <strong>pasti</strong> berubah itu $\rightarrow$ <strong>SALAH</strong>.</li>
+                </ol>
+                <p>Yang benar adalah 1, 2, dan 3.<br>
+                <strong>Jawaban: A</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- WACANA 3 -->
+    <!-- ========================================== -->
+    <div class="wacana">
+        <div class="wacana-title">Wacana 3: Efektivitas Diskon Ganda (50% + 20% vs 70%)</div>
+        <p>Menjelang hari raya, Toko A memberikan promosi "Diskon $50\% + 20\%$". Sementara itu, Toko B, pesaingnya, memberikan diskon tunggal sebesar $70\%$. Banyak konsumen terkecoh dan menganggap kedua jenis diskon tersebut bernilai sama. Harga normal sepotong kemeja di kedua toko adalah Rp400.000,00.</p>
+    </div>
+
+    <!-- NOMOR 9 -->
+    <div class="question">
+        <div class="question-header">9.</div>
+        <p>Toko C memberikan penawaran "Diskon $x\% + 30\%$". Apakah harga akhir kemeja di Toko C lebih murah daripada di Toko A?</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>(1) $x = 40$</li>
+            <li>(2) Toko C memiliki harga normal awal Rp400.000,00.</li>
+        </ul>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp9')">Tampilkan Pembahasan</button>
+        <div id="exp9" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Sebelum ngejawab soal ini, kita wajib ngitung harga Toko A dulu biar ada patokan.<br>
+                - <strong>Harga Toko A:</strong> Awalnya Rp400.000. Didiskon pertama $50\%$ alias bayar setengahnya aja (sisanya Rp200.000). Habis itu, sisa yang Rp200.000 ini didiskon lagi $20\%$. (Bayarnya berarti tinggal $80\%$ dari Rp200.000).<br>
+                $80\% \times 200.000 =$ <strong>Rp160.000</strong>. Ini harga akhir Toko A.</p>
+                
+                <p>Nah, ditanya apakah Toko C lebih murah dari 160 ribu?</p>
+                <p><strong>Cek Pernyataan (1) aja:</strong> $x = 40$. Toko C kasih diskon $40\% + 30\%$. Tapi tunggu dulu, harga normal Toko C kita belum tau! Di cerita awal yang harganya Rp400rb itu cuma Toko A dan B. Toko C ngga pernah disebut harga awalnya. Gimana mau ngitung kalau harganya aja ghoib? (TIDAK CUKUP).</p>
+                
+                <p><strong>Cek Pernyataan (2) aja:</strong> Harga normal Toko C = 400.000. Oke mantap, tapi variabel $x$-nya ngga disebutin, diskon depannya berapa persen? Kita juga ngga bisa ngitung. (TIDAK CUKUP).</p>
+                
+                <p><strong>Gabungin (1) &amp; (2):</strong><br>
+                Harga Toko C = 400.000. Diskon = $40\% + 30\%$.<br>
+                - Diskon 1 (40%): Kita bayar 60%-nya saja. $60\% \times 400.000 = 240.000$.<br>
+                - Diskon 2 (30%): Dari harga baru 240.000, dipotong 30%, kita cuma bayar 70%-nya. $70\% \times 240.000 = \mathbf{168.000}$.<br>
+                Pertanyaan: Apakah 168.000 lebih murah dari 160.000? <strong>TIDAK</strong>.<br>
+                Karena infonya bisa ngebantu kita ngejawab dengan tegas "TIDAK", berarti info gabungannya CUKUP!<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 10 -->
+    <div class="question">
+        <div class="question-header">10.</div>
+        <p>Manakah di antara pernyataan berikut yang BENAR mengenai diskon bertingkat $A\% + B\%$ (diasumsikan $A > 0$ dan $B > 0$)?</p>
+        <ol class="statement-list">
+            <li>Total diskon efektif dari $A\% + B\%$ selalu lebih kecil dari $(A+B)\%$.</li>
+            <li>Diskon $50\% + 20\%$ memiliki harga akhir yang sama dengan diskon $20\% + 50\%$.</li>
+            <li>Total persentase potongan harga dari diskon $50\% + 20\%$ adalah $60\%$.</li>
+            <li>Pembeli di Toko B akan membayar lebih mahal dibandingkan pembeli di Toko A.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp10')">Tampilkan Pembahasan</button>
+        <div id="exp10" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Konsep penting <em>Mall</em> se-Indonesia: Diskon $50\% + 20\%$ itu <strong>BUKAN</strong> $70\%$. Jangan mau diboongin spanduk sale!</p>
+                <ol class="statement-list">
+                    <li>Diskon $A\% + B\%$ potongannya selalu di bawah kalau diskon itu langsung digabung ($A+B$). Kenapa? Karena diskon kedua cuma motong dari "harga sisa" yang jumlahnya udah mengecil. (Contoh: $50\%+20\%$ hasilnya cuma potongan 60%, bukan 70%). $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Di matematika perkalian itu sifatnya bolak-balik sama aja (<em>komutatif</em>). Dipotong 50% dulu lalu 20%, harganya bakal persis sama kayak dipotong 20% dulu baru 50%. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Seperti yang udah kita hitung, barang Rp400rb kalau di diskon $50\%+20\%$ hasil akhirnya jadi Rp160.000. Harga dipotong berapa? $400 - 160 = 240$ ribu. Berapa persennya 240 dari 400? $(240 / 400) \times 100\% = 60\%$. Total diskon aslinya emang cuma $60\%$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Toko B diskon langsung 70%. Pembeli cuma bayar 30% dari Rp400.000, yaitu Rp120.000. Sedang Toko A (kayak hitungan sebelumnya) harganya Rp160.000. Jadi Toko B itu LEBIH MURAH, bukan lebih mahal! $\rightarrow$ <strong>SALAH</strong>.</li>
+                </ol>
+                <p>Pernyataan yang benar ada 3 (1, 2, dan 3).<br>
+                <strong>Jawaban: A</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 11 -->
+    <div class="question">
+        <div class="question-header">11.</div>
+        <p>Berapa selisih harga yang harus dibayarkan pembeli jika membeli kemeja tersebut di Toko A dibandingkan dengan di Toko B?</p>
+        
+        <ol class="options">
+            <li>Rp0,00 (Harganya sama)</li>
+            <li>Rp10.000,00</li>
+            <li>Rp20.000,00</li>
+            <li>Rp30.000,00</li>
+            <li>Rp40.000,00</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp11')">Tampilkan Pembahasan</button>
+        <div id="exp11" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Karena kita udah capek-capek ngitung harga di dua toko dari nomor sebelumnya, tinggal kita kurangi aja di sini:<br>
+                - Harga baju di Toko A: Rp160.000 (hasil diskon 50% lalu 20%)<br>
+                - Harga baju di Toko B: Rp120.000 (hasil langsung diskon 70% dari 400.000)<br>
+                Selisihnya (bedanya) = $160.000 - 120.000 =$ <strong>Rp40.000</strong>.<br>
+                <strong>Jawaban: E</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 12 -->
+    <div class="question">
+        <div class="question-header">12.</div>
+        <p>Dina memiliki <em>voucher</em> potongan tunai tambahan sebesar Rp10.000,00 yang dapat digunakan di Toko A <strong>setelah</strong> semua diskon persentase diaplikasikan. Berapa persentase total diskon efektif yang didapatkan Dina terhadap harga normal kemeja tersebut?</p>
+        
+        <ol class="options">
+            <li>$60,0\%$</li>
+            <li>$62,5\%$</li>
+            <li>$65,0\%$</li>
+            <li>$67,5\%$</li>
+            <li>$70,0\%$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp12')">Tampilkan Pembahasan</button>
+        <div id="exp12" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Ayo kita jadi temen belanja si Dina!<br>
+                Dina ke Toko A. Baju udah didiskon $50\% + 20\%$. Harga di kasir udah berubah jadi Rp160.000 (hitungan kita tadi).<br>
+                Tiba-tiba Dina inget bawa <em>voucher</em> 10 ribu. Kasirnya seneng, potong deh dari Rp160.000.<br>
+                Harga final yang harus Dina bayar beneran: $160.000 - 10.000 =$ <strong>Rp150.000</strong>.</p>
+                
+                <p>Sekarang ditanya, berapa total diskon alias "total duit yang berhasil diselamatkan" sama Dina?<br>
+                Harga asli baju = Rp400.000.<br>
+                Yang dibayar = Rp150.000.<br>
+                Duit potongan (diskon total Dina) = $400.000 - 150.000 =$ <strong>Rp250.000</strong>.</p>
+                
+                <p>Jadikan persentase:<br>
+                $\text{Persen Diskon} = \frac{\text{Potongan Duit}}{\text{Harga Asli}} \times 100\%$<br>
+                $\text{Persen Diskon} = \frac{250.000}{400.000} \times 100\%$<br>
+                Coret nol-nolnya yang nyebelin, jadi: $\frac{25}{40} \times 100\%$.<br>
+                Disederhanakan (bagi 5) jadi: $\frac{5}{8} \times 100\%$.<br>
+                100 dibagi 8 = 12,5. Terus dikali 5 = <strong>62,5%</strong>.<br>
+                <strong>Jawaban: B</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- WACANA 4 -->
+    <!-- ========================================== -->
+    <div class="wacana">
+        <div class="wacana-title">Wacana 4: Teori Enam Derajat Pemisahan</div>
+        <p>Teori <em>Six Degrees of Separation</em> menyatakan bahwa setiap orang di dunia dapat dihubungkan ke orang lain melalui maksimal enam perantara sosial. Asumsikan bahwa secara rata-rata, satu orang mengenal secara langsung 40 orang unik (derajat ke-1). Orang-orang di derajat ke-1 ini masing-masing juga mengenal 40 orang unik lainnya yang belum dikenal oleh kelompok sebelumnya (derajat ke-2), dan seterusnya membentuk pertumbuhan eksponensial.</p>
+    </div>
+
+    <!-- NOMOR 13 -->
+    <div class="question">
+        <div class="question-header">13.</div>
+        <p>Manakah di antara pernyataan berikut yang BENAR terkait relasi eksponensial di atas?</p>
+        <ol class="statement-list">
+            <li>Jumlah orang pada derajat ke-$n$ dapat diformulasikan sebagai $40^n$.</li>
+            <li>Pada derajat ke-3, jumlah orang yang terhubung adalah 64.000 orang.</li>
+            <li>Jika asumsi rata-rata kenalan diubah menjadi 80 orang, maka jumlah populasi yang terhubung pada derajat ke-2 akan menjadi tepat empat kali lipat lebih banyak dibandingkan algoritma awal.</li>
+            <li>Jaringan eksponensial ini akan mampu menghubungkan lebih dari 8 miliar manusia pada derajat ke-6.</li>
+        </ol>
+        
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp13')">Tampilkan Pembahasan</button>
+        <div id="exp13" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Bayangin ini sistem multi level marketing (MLM) atau penyebaran gosip. Kamu bawa 40 orang, setiap orang itu bawa 40 orang lagi, dst.</p>
+                <ol class="statement-list">
+                    <li>Karena tiap cabang bercabang 40 lagi secara terus menerus, maka rumusnya adalah perkalian berulang pangkat (Eksponen): $P = 40^n$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Tinggal pakai rumus: $40^3 = 40 \times 40 \times 40 = 64.000$ orang. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Kalau diubah jadi 80. Derajat ke-2 pakai rumus baru: $80^2 = 6.400$. Derajat ke-2 pakai rumus lama: $40^2 = 1.600$. Kalau dibandingin: $6.400 / 1.600 = 4$. Berarti bener, jumlahnya jadi persis 4 kali lipat! $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Yuk hitung pakai rumus: Derajat 6 = $40^6$. Hitung kasar aja: $(4 \times 10)^6 = 4^6 \times 10^6 = 4.096 \times 1.000.000 \approx 4.096.000.000$. Baru sekitar 4 miliar orang! Masih di bawah 8 miliar. $\rightarrow$ <strong>SALAH</strong>.</li>
+                </ol>
+                <p>Yang benar ada 3 (1, 2, 3).<br>
+                <strong>Jawaban: A</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 14 -->
+    <div class="question">
+        <div class="question-header">14.</div>
+        <p>Berdasarkan asumsi formula $P = 40^n$ (dengan $P$ = jumlah populasi terhubung dan $n$ = derajat perantara), periksa empat pernyataan ini:</p>
+        <ol class="statement-list">
+            <li>Grafik fungsi hubungan ini merupakan garis lurus jika digambar pada bidang kartesius linier biasa.</li>
+            <li>Jumlah populasi pada derajat ke-4 adalah 2.560.000 orang.</li>
+            <li>Selisih populasi antara derajat ke-2 dan derajat ke-1 adalah 1.560 orang.</li>
+            <li>Jika basis eksponen diubah dari 40 menjadi 10, diperlukan minimal 10 derajat pemisahan untuk mencapai populasi 10 miliar.</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang BENAR?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp14')">Tampilkan Pembahasan</button>
+        <div id="exp14" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Kita bedah lagi pernyataannya pelan-pelan:</p>
+                <ol class="statement-list">
+                    <li>Grafik <strong>eksponensial</strong> (pangkat-pangkatan) itu bentuknya melengkung naik tajam banget ke atas (kayak kurva penyebaran virus), <strong>bukan garis lurus</strong>. Garis lurus itu cuma buat fungsi linier kayak $y = 40x$. $\rightarrow$ <strong>SALAH</strong>.</li>
+                    <li>Derajat 4: $40^4 = 40 \times 40 \times 40 \times 40$. (Cara gampang: $4\times4\times4\times4 = 256$, terus tambahin nol-nya 4 biji) jadinya 2.560.000. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Derajat 2: $40^2 = 1.600$. Derajat 1: $40^1 = 40$. Selisihnya (tinggal dikurang) = $1.600 - 40 = 1.560$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                    <li>Basis 40 diganti 10. Rumus jadi $10^n$. Kita mau cari tau target $\ge 10$ Miliar (Nol-nya ada sepuluh $\rightarrow 10.000.000.000$). Nah, 10 Miliar itu wujud eksponennya adalah $10^{10}$. Berarti bener harus pangkat 10 alias derajat ke-10. $\rightarrow$ <strong>BENAR</strong>.</li>
+                </ol>
+                <p>Ada 3 pernyataan yang benar.<br>
+                <strong>Jawaban: B</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 15 -->
+    <div class="question">
+        <div class="question-header">15.</div>
+        <p>Jika populasi sebuah negara kecil adalah 10.000.000 jiwa, pada derajat ke berapakah (<em>minimum</em>) teori relasi ini mampu mencakup seluruh penduduk negara tersebut?</p>
+        
+        <ol class="options">
+            <li>Derajat ke-3</li>
+            <li>Derajat ke-4</li>
+            <li>Derajat ke-5</li>
+            <li>Derajat ke-6</li>
+            <li>Derajat ke-7</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp15')">Tampilkan Pembahasan</button>
+        <div id="exp15" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Tugas kita adalah cari tahu pangkat berapa ($n$) di rumus $40^n$ yang hasilnya minimal sama dengan atau lebih besar sedikit dari angka 10.000.000. Coba satu-satu aja pake hasil dari nomor sebelumnya:<br>
+                - Jika $n=3$, populasi terhubung = 64.000 (Masih kurang banyak banget).<br>
+                - Jika $n=4$, populasi terhubung = 2.560.000 (Udah jutaan, tapi masih di bawah 10 juta).<br>
+                - Jika $n=5$, populasi = $40 \times 2.560.000 =$ <strong>102.400.000</strong> (Wah, udah 102 juta jiwa! Sangat jauh melampaui 10 juta penduduk).</p>
+                <p>Karena di derajat ke-4 belum nyampe, berarti mau nggak mau kita harus nambah satu langkah lagi ke derajat ke-5 untuk menyapu bersih sisa populasinya.<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 16 -->
+    <div class="question">
+        <div class="question-header">16.</div>
+        <p>Misalkan Budi ingin mengantarkan sebuah paket rahasia kepada X, seorang tokoh terkenal. Apakah Budi membutuhkan <strong>tepat 3 perantara</strong> untuk bisa terhubung dengan X?</p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li>(1) Budi mengenal Andi, yang merupakan tetangga dari sekretaris pribadi tokoh X.</li>
+            <li>(2) Sekretaris pribadi tokoh X mengenal tokoh X secara langsung.</li>
+        </ul>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp16')">Tampilkan Pembahasan</button>
+        <div id="exp16" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Fokus pertanyaannya: "Apakah Budi butuh <strong>TEPAT 3 PERANTARA</strong>?". Perantara itu artinya orang yang berdiri di tengah-tengah antara Si Budi sama Si Tokoh X.</p>
+                <p>Ayo kita bikin jaringannya (berdasarkan info gabungan 1 dan 2, asumsi tetangga saling kenal di teori sosial ini):<br>
+                BUDI $\rightarrow$ mengenal $\rightarrow$ ANDI $\rightarrow$ mengenal $\rightarrow$ SEKPRI TOKOH X $\rightarrow$ mengenal $\rightarrow$ TOKOH X.</p>
+                <p>Ayo kita hitung ada berapa perantara di tengah-tengah jembatan ini:<br>
+                1. Perantara pertama: Andi.<br>
+                2. Perantara kedua: Sekpri Tokoh X.<br>
+                Loh, habis sekpri itu kan udah langsung si Tokoh X? Berarti orang di tengahnya cuma ada 2 doang, nggak nyampe 3 orang!</p>
+                <p>Nah, karena kita udah bisa buktiin kalau perantaranya cuma butuh 2, maka kita bisa ngejawab pertanyaan di soal dengan lantang: "<strong>TIDAK! Budi nggak butuh tepat 3, dia cuma butuh 2 perantara aja!</strong>"<br>
+                Karena informasi dari pernyataan (1) dan (2) pas digabungin CUKUP buat ngasih kita jawaban yang akurat, maka jawabannya "Dua pernyataan bersama-sama cukup".<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- WACANA 5 -->
+    <!-- ========================================== -->
+    <div class="wacana">
+        <div class="wacana-title">Wacana 5: Analisis "Bubble Tea" dan Volume Es Batu</div>
+        
+        <div style="text-align: center; margin: 20px 0;">
+            <svg width="100%" style="max-width: 350px; height: auto;" viewBox="-130 -40 260 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tabung -->
+                <ellipse cx="0" cy="0" rx="40" ry="10" fill="none" stroke="black" stroke-width="2"/>
+                <path d="M -40 0 L -40 120 A 40 10 0 0 0 40 120 L 40 0" fill="none" stroke="black" stroke-width="2"/>
+                <path d="M -40 120 A 40 10 0 0 1 40 120" fill="none" stroke="black" stroke-dasharray="4,4"/>
+                
+                <!-- Es batu (Bola) -->
+                <circle cx="0" cy="100" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                <circle cx="20" cy="90" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                <circle cx="-20" cy="85" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                <circle cx="10" cy="70" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                <circle cx="-10" cy="65" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+
+                <!-- Cairan level -->
+                <ellipse cx="0" cy="20" rx="40" ry="10" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="4,4"/>
+                <line x1="-40" y1="20" x2="-65" y2="20" stroke="#2980b9" stroke-width="1"/>
+                <text x="-70" y="23" font-size="10" text-anchor="end" fill="#2980b9" font-family="sans-serif">Batas Cairan</text>
+                
+                <!-- Labels & Dimensi -->
+                <line x1="40" y1="0" x2="70" y2="0" stroke="black" stroke-dasharray="2,2"/>
+                <line x1="40" y1="120" x2="70" y2="120" stroke="black" stroke-dasharray="2,2"/>
+                <line x1="65" y1="0" x2="65" y2="120" stroke="black"/>
+                <polygon points="65,0 62,5 68,5" fill="black"/>
+                <polygon points="65,120 62,115 68,115" fill="black"/>
+                <text x="75" y="65" font-size="12" font-family="sans-serif">t = 15 cm</text>
+
+                <line x1="0" y1="-25" x2="40" y2="-25" stroke="black"/>
+                <polygon points="0,-25 5,-28 5,-22" fill="black"/>
+                <polygon points="40,-25 35,-28 35,-22" fill="black"/>
+                <text x="20" y="-32" font-size="12" text-anchor="middle" font-family="sans-serif">r = 4 cm</text>
+                <line x1="0" y1="0" x2="0" y2="-25" stroke="black" stroke-dasharray="2,2"/>
+                <line x1="40" y1="0" x2="40" y2="-25" stroke="black" stroke-dasharray="2,2"/>
+            </svg>
+        </div>
+
+        <p>Sebuah kedai <em>bubble tea</em> menyajikan minumannya di dalam gelas plastik berbentuk tabung sempurna. Jari-jari alas gelas adalah $r = 4$ cm dan tingginya $t = 15$ cm.<br>
+        Kedai tersebut menggunakan es batu berbentuk bola sempurna dengan jari-jari $r_{es} = 1,5$ cm.<br>
+        Standar penyajian (<em>Normal Ice</em>) menggunakan <strong>12 buah es batu</strong>, sedangkan pesanan (<em>Less Ice</em>) hanya menggunakan <strong>4 buah es batu</strong>.<br>
+        Dalam penyajiannya, minuman teh (cairan) dituangkan hingga memenuhi gelas (<em>full</em>) setelah es batu dimasukkan.<br>
+        <em>Gunakan nilai $\pi$ sebagaimana adanya, jangan dikonversi ke desimal.</em></p>
+    </div>
+
+    <!-- NOMOR 17 -->
+    <div class="question">
+        <div class="question-header">17.</div>
+        <p>Berapakah kapasitas volume total (volume maksimal) dari gelas kosong tersebut?</p>
+        
+        <ol class="options">
+            <li>$120\pi \text{ cm}^3$</li>
+            <li>$180\pi \text{ cm}^3$</li>
+            <li>$240\pi \text{ cm}^3$</li>
+            <li>$360\pi \text{ cm}^3$</li>
+            <li>$480\pi \text{ cm}^3$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp17')">Tampilkan Pembahasan</button>
+        <div id="exp17" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Gelasnya bentuknya <strong>Tabung</strong>. Dari SD sampai kapanpun, rumus ruang tabung itu sama:<br>
+                Volume Tabung = Luas Alas (Bentuk Lingkaran) $\times$ Tinggi.<br>
+                $\text{Volume} = (\pi \times r \times r) \times t$</p>
+                <p>Dari gambar dan soal kita punya angka: jari-jari (r) = 4, dan tinggi (t) = 15. Tinggal masukin aja!<br>
+                $\text{Volume} = \pi \times 4^2 \times 15$<br>
+                $\text{Volume} = \pi \times 16 \times 15$<br>
+                $\text{Volume} =$ <strong>$240\pi$</strong> (Biarkan $\pi$-nya nangkring di situ, jangan repot-repot dikali 3,14).<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 18 -->
+    <div class="question">
+        <div class="question-header">18.</div>
+        <p>Berapakah total volume ruang yang ditempati oleh es batu pada pesanan <em>Normal Ice</em>?</p>
+        
+        <ol class="options">
+            <li>$18\pi \text{ cm}^3$</li>
+            <li>$36\pi \text{ cm}^3$</li>
+            <li>$54\pi \text{ cm}^3$</li>
+            <li>$72\pi \text{ cm}^3$</li>
+            <li>$108\pi \text{ cm}^3$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp18')">Tampilkan Pembahasan</button>
+        <div id="exp18" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Es batunya ajaib, bentuknya <strong>Bola</strong>!<br>
+                Rumus nyari gendutnya bola (Volume) itu = $\frac{4}{3} \times \pi \times r^3$.<br>
+                Jari-jari es (r) = 1,5. Biar gampang nyoret angkanya nanti, 1,5 kita ubah jadi bentuk pecahan $\frac{3}{2}$.</p>
+                <p>Ayo hitung 1 biji es batu dulu:<br>
+                $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times (\frac{3}{2})^3$<br>
+                $(\frac{3}{2})$ pangkat tiga berarti dikali tiga kali: $\frac{3\times3\times3}{2\times2\times2} = \frac{27}{8}$.<br>
+                Nah kita satukan lagi:<br>
+                $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times \frac{27}{8}$<br>
+                (Coret silang: 4 di atas sama 8 di bawah, 8-nya sisa 2. Lalu 27 di atas sama 3 di bawah, 27-nya sisa 9).<br>
+                Ketemu deh! Volume 1 es batu = $\frac{9}{2}\pi$ alias <strong>$4,5\pi$</strong>.</p>
+                <p>Karena varian <em>Normal Ice</em> pake <strong>12 buah es batu</strong>, tinggal kali aja:<br>
+                $\text{Total Es} = 12 \times 4,5\pi =$ <strong>$54\pi$</strong>.<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 19 -->
+    <div class="question">
+        <div class="question-header">19.</div>
+        <p>Jika seorang pelanggan memesan varian <em>Normal Ice</em>, berapakah volume murni minuman teh (cairan) yang sebenarnya ia dapatkan?</p>
+        
+        <ol class="options">
+            <li>$186\pi \text{ cm}^3$</li>
+            <li>$204\pi \text{ cm}^3$</li>
+            <li>$240\pi \text{ cm}^3$</li>
+            <li>$288\pi \text{ cm}^3$</li>
+            <li>$306\pi \text{ cm}^3$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp19')">Tampilkan Pembahasan</button>
+        <div id="exp19" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Logika jajan minuman:<br>
+                Gelas yang dikasih ke kita kan diisi sampai penuh. Penuh itu isinya apa aja? Isinya Teh murni ditambah Es Batu yang ngambil jatah ruang di dalem gelas.<br>
+                Berarti, buat tau seberapa banyak teh murni yang masuk perut, tinggal kurangi aja Gelas Full sama Es Batunya.<br>
+                $\text{Volume Teh Murni} = \text{Volume Gelas} - \text{Volume Es Normal}$<br>
+                Ambil jawaban dari soal 17 dan 18:<br>
+                $\text{Volume Teh Murni} = 240\pi - 54\pi =$ <strong>$186\pi$</strong>.<br>
+                Sesederhana itu kawan!<br>
+                <strong>Jawaban: A</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOMOR 20 -->
+    <div class="question">
+        <div class="question-header">20.</div>
+        <p>Seorang pelanggan merasa rugi dan beralih dari pesanan <em>Normal Ice</em> menjadi <em>Less Ice</em>. Berapa persentase peningkatkan volume cairan teh yang ia dapatkan dibandingkan saat ia memesan <em>Normal Ice</em>?</p>
+        
+        <ol class="options">
+            <li>$15,50\%$</li>
+            <li>$17,25\%$</li>
+            <li>$19,35\%$</li>
+            <li>$21,50\%$</li>
+            <li>$24,75\%$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp20')">Tampilkan Pembahasan</button>
+        <div id="exp20" class="tcolorbox">
+            <div class="tcolorbox-title">Pembahasan:</div>
+            <div class="tcolorbox-content">
+                <p>Mari kita selesaikan kasus manipulasi jualan minuman ini!<br>
+                Kalau pesan <em>Less Ice</em>, es batunya cuma <strong>4 buah</strong>.<br>
+                Berarti volume esnya = $4 \times 4,5\pi$ (volume satu es) = <strong>$18\pi$</strong>.</p>
+                <p>Teh murni di <em>Less Ice</em> = Volume Gelas - Volume Es Less = $240\pi - 18\pi =$ <strong>$222\pi$</strong>.<br>
+                (Tadi kalau pesen Normal tehnya dapet <strong>$186\pi$</strong>).</p>
+                <p><strong>Berapa selisihnya (peningkatannya)?</strong><br>
+                Teh di Less Ice (222) dikurang Teh di Normal (186) = <strong>$36\pi$</strong> nambahnya.</p>
+                <p><strong>Sekarang jadikan persentase:</strong><br>
+                Karena di soal dibilangnya <em>"dibandingkan saat ia memesan Normal Ice"</em>, berarti si nilai Normal Ice ini posisinya di bawah (dijadiin patokan pembagi).<br>
+                $\text{Persentase} = \frac{\text{Selisih Teh}}{\text{Teh Normal Ice}} \times 100\%$<br>
+                $\text{Persentase} = \frac{36\pi}{186\pi} \times 100\%$<br>
+                Coret $\pi$-nya. Lalu bagi angkanya dengan 6 biar sederhana.<br>
+                $\frac{36}{186} \times 100\% = \frac{6}{31} \times 100\% \approx$ <strong>$19,35\%$</strong>.</p>
+                <p>Artinya, dengan ngurangin es batu ke varian Less Ice, kamu untung (dapet air teh) nyaris 20% lebih banyak!<br>
+                <strong>Jawaban: C</strong></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleExplanation(id) {
+        var x = document.getElementById(id);
+        var btn = x.previousElementSibling;
+        if (x.style.display === "block" || x.style.display === "") {
+            x.style.display = "none";
+            btn.innerHTML = "Tampilkan Pembahasan";
+        } else {
+            x.style.display = "block";
+            btn.innerHTML = "Sembunyikan Pembahasan";
+        }
+    }
+</script>
+
+</body>
+</html>
