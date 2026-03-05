@@ -1,0 +1,1620 @@
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tryout 1: Pengetahuan Kuantitatif (CBT System)</title>
+    
+    <!-- MathJax untuk Matematika -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          packages: { "[+]": ["ams"] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    
+    <!-- Font Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-bg: #e0f7fa;
+        --header-accent: #2980b9; /* Diubah menyesuaikan tema biru */
+        --hover-bg: #ebf5fb;
+        --selected-bg: #2980b9;
+        --selected-text: #ffffff;
+        
+        /* Warna Feedback Jawaban */
+        --correct-bg: #d4edda;
+        --correct-border: #28a745;
+        --correct-text: #155724;
+        --wrong-bg: #f8d7da;
+        --wrong-border: #dc3545;
+        --wrong-text: #721c24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        padding-bottom: 100px;
+        min-height: 100vh;
+      }
+
+      /* TIMER STYLES */
+      #timer-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50;
+        color: #ffffff;
+        padding: 15px 0;
+        text-align: center;
+        z-index: 999999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      #timer-display {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 22px;
+        background: #34495e;
+        padding: 2px 10px;
+        border-radius: 4px;
+        color: #3498db;
+      }
+      .timer-warning {
+        color: #e74c3c !important;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        50% { opacity: 0.5; }
+      }
+
+      /* Container Utama */
+      .container-wrapper {
+        background: white;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: visible;
+      }
+
+      /* --- LANDING PAGE STYLES --- */
+      #landing-page {
+        display: block;
+        text-align: center;
+      }
+      .landing-header h1 {
+        color: var(--header-accent);
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .rules-box {
+        background-color: #e8f4fd;
+        border: 2px solid var(--header-accent);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px auto;
+        text-align: left;
+        max-width: 600px;
+      }
+      .rules-box h3 {
+        margin-top: 0;
+        color: var(--header-accent);
+        border-bottom: 1px solid #b2ebf2;
+        padding-bottom: 10px;
+      }
+      .rules-box ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .rules-box li {
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .identity-box-landing {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        text-align: left;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .btn-start {
+        background-color: var(--header-accent);
+        color: white;        border: none;
+        padding: 15px 50px;
+        font-size: 22px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-start:hover {
+        background-color: #1f618d;
+        transform: scale(1.05);
+      }
+
+      /* --- EXAM PAGE STYLES --- */
+      #exam-page {
+        display: none;
+      }
+      
+      .worksheet-header {
+        border-bottom: 3px solid var(--header-accent);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .header-left h1 {
+        font-size: 24px;
+        color: var(--header-accent);
+        margin: 0 0 5px 0;
+        font-weight: 800;
+      }
+      .header-left h2 {
+        font-size: 16px;
+        color: var(--secondary-text);
+        margin: 0;
+        font-weight: 500;
+      }
+      .header-logo {
+        height: 100px;
+        object-fit: contain;
+      }
+      .exam-info-bar {
+        background: #f1f8e9;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        border-left: 5px solid #8bc34a;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .exam-info-bar strong {
+        color: #33691e;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        width: 120px;
+        font-weight: 600;
+        color: var(--header-accent);
+      }
+      .form-group input,
+      .form-group select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      /* Grid Layout Soal */
+      .questions-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 50px;
+      }
+      @media (max-width: 768px) {
+        .questions-grid {
+          grid-template-columns: 1fr;
+        }
+        .container-wrapper {
+            padding: 20px;
+        }
+        .form-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+        }
+      }
+
+      /* Styling Soal */
+      .soal-item {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        page-break-inside: avoid;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .soal-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .nomor {
+        font-weight: 800;
+        color: var(--header-accent);
+        min-width: 25px;
+      }
+      .pertanyaan {
+        flex: 1;
+        text-align: justify;
+      }
+      .kategori {
+        display: inline-block;
+        font-size: 0.8em;
+        background: #e8f4fd;
+        color: #2980b9;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .gambar-soal {
+        max-width: 100%;
+        height: auto;
+        margin: 10px auto;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        padding: 5px;
+        display: block;
+      }
+      
+      /* Style Tabel dari file kedua */
+      .table-container {
+        margin: 15px 0;
+        display: flex;
+        justify-content: center;
+      }
+      table.soal-table {
+        border-collapse: collapse;
+        width: 90%;
+        max-width: 450px;
+      }
+      table.soal-table, table.soal-table th, table.soal-table td {
+        border: 1px solid #999;
+      }
+      table.soal-table th, table.soal-table td {
+        padding: 10px;
+        text-align: center;
+      }
+      table.soal-table th {
+        background-color: #f2f2f2;
+      }
+
+      /* Pilihan Ganda Interaktif */
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 15px;
+      }
+      ol.pilihan-ganda li {
+        position: relative;
+        padding: 8px 15px 8px 40px;
+        margin-bottom: 6px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      ol.pilihan-ganda li:hover {
+        background-color: var(--hover-bg);
+        border-color: var(--header-accent);
+      }
+      ol.pilihan-ganda li.selected {
+        background-color: var(--selected-bg);
+        color: var(--selected-text);
+        border-color: var(--selected-bg);
+        font-weight: 600;
+      }
+      ol.pilihan-ganda li.selected .mjx-chtml {
+         color: white !important;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: #eee;
+        color: #555;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      ol.pilihan-ganda li.selected::before {
+        background: white;
+        color: var(--selected-bg);
+      }
+
+      /* Styles untuk Feedback & Pembahasan */
+      .disabled-options li {
+        pointer-events: none;
+      }
+      li.correct {
+        background-color: var(--correct-bg) !important;
+        border-color: var(--correct-border) !important;
+        color: var(--correct-text) !important;
+      }
+      li.correct::before {
+        background-color: var(--correct-border) !important;
+        color: white !important;
+        content: "✓";
+        font-size: 12px;
+      }
+      li.wrong {
+        background-color: var(--wrong-bg) !important;
+        border-color: var(--wrong-border) !important;
+        color: var(--wrong-text) !important;
+      }
+      li.wrong::before {
+        background-color: var(--wrong-border) !important;
+        color: white !important;
+        content: "✕";
+        font-size: 12px;
+      }
+      
+      /* Pembahasan tersembunyi selama ujian */
+      .explanation {
+        display: none;
+        background-color: #fdfae6;
+        padding: 15px 20px;
+        border-left: 4px solid #f39c12;
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95em;
+      }
+      .explanation ul {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+      .explanation li {
+        margin-bottom: 8px;
+      }
+
+      /* Tombol Submit & Hasil */
+      .action-area {
+        margin-top: 50px;
+        text-align: center;
+        padding: 40px 20px;
+        border-top: 2px dashed #ddd;
+        position: relative;
+        background-color: white;
+      }
+      .btn-submit {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 20px 60px;
+        font-size: 20px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 6px 15px rgba(41, 128, 185, 0.4);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1f618d !important;
+        transform: translateY(-4px);
+      }
+      .result-box {
+        margin-top: 30px;
+        padding: 25px;
+        border-radius: 8px;
+        background-color: #f1f8e9;
+        border: 2px solid #8bc34a;
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .score-display {
+        font-size: 36px;
+        font-weight: 800;
+        color: #2e7d32;
+        margin-bottom: 10px;
+      }
+      .score-message {
+        font-size: 16px;
+        color: #555;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .worksheet-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- COUNTDOWN TIMER -->
+    <div id="timer-bar">
+        <span>SISA WAKTU:</span>
+        <span id="timer-display">25:00</span>
+    </div>
+
+    <div class="container-wrapper">
+        <!-- ================= PAGE 1: LANDING & BIODATA ================= -->
+        <div id="landing-page">
+            <header class="landing-header">
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" style="height: 140px; margin-bottom: 20px;" />
+                <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
+                <h2>Berdasarkan Kisi-kisi HOTS</h2>
+            </header>
+
+            <div class="rules-box">
+                <h3>PERATURAN UJIAN</h3>
+                <ul>
+                    <li>Terdapat 20 soal pengetahuan kuantitatif.</li>
+                    <li>Waktu pengerjaan: <strong>25 menit</strong>.</li>
+                    <li>Waktu berjalan otomatis setelah tombol "Mulai Sekarang" ditekan.</li>
+                    <li>Pastikan koneksi internet stabil.</li>
+                    <li>Setelah klik kumpulkan, <strong>Pembahasan lengkap akan otomatis muncul</strong> di bawah setiap soal.</li>
+                </ul>
+            </div>
+
+            <div class="identity-box-landing">
+                <h3 style="margin-top:0; color:var(--header-accent);">BIODATA PESERTA</h3>
+                <div class="form-group">
+                  <label for="nama">Nama :</label>
+                  <input type="text" id="nama" placeholder="Masukkan nama lengkap..." />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email :</label>
+                  <input type="email" id="email" placeholder="Masukkan email..." />
+                </div>
+                <div class="form-group">
+                  <label for="hp">Nomor HP :</label>
+                  <input type="tel" id="hp" placeholder="Masukkan nomor HP/WA..." />
+                </div>
+                <div class="form-group">
+                  <label for="sekolah">Asal Sekolah :</label>
+                  <input type="text" id="sekolah" placeholder="Masukkan asal sekolah..." />
+                </div>
+            </div>
+
+            <button id="btn-start" class="btn-start">MULAI SEKARANG</button>
+        </div>
+
+        <!-- ================= PAGE 2: EXAM ================= -->
+        <div id="exam-page">
+            <header class="worksheet-header">
+                <div class="header-left">
+                    <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
+                    <h2>Berdasarkan Kisi-kisi HOTS</h2>
+                </div>
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" />
+            </header>
+
+            <div class="exam-info-bar">
+                Peserta: <strong id="display-nama">-</strong> | Sekolah: <strong id="display-sekolah">-</strong> | HP: <strong id="display-hp">-</strong>
+            </div>
+
+            <!-- DAFTAR SOAL -->
+            <div class="questions-grid">
+                <!-- KOLOM KIRI (1-10) -->
+                <div class="kolom">
+                    <!-- Soal 1 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">1.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Pengukuran dan Aritmetika Sosial</span><br>
+                                Sebuah toko elektronik membeli sebuah laptop dengan modal Rp$X$. Toko tersebut menetapkan harga jual dengan mengambil margin keuntungan sebesar $60\%$ dari modal. Karena ada perayaan hari libur nasional, toko memberikan diskon ganda berturut-turut sebesar $20\%$ dan $10\%$ dari harga yang tertera di label.<br><br>
+                                Manakah hubungan yang benar antara kuantitas P dan Q berikut berdasarkan informasi yang diberikan?
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr><th>P</th><th>Q</th></tr>
+                                        <tr><td>Persentase keuntungan akhir yang didapatkan toko dari modal awal</td><td>$16\%$</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Diasumsikan modal awal toko adalah $100\%$ atau $M$. Harga jual ditetapkan $160\%$ dari modal, yaitu $1,6M$.</li>
+                                <li>Diskon pertama sebesar $20\%$ akan mengurangi harga jual menjadi $80\%$ dari harga tertera, sehingga menjadi $0,8 \times 1,6M = 1,28M$.</li>
+                                <li>Diskon kedua sebesar $10\%$ akan mengurangi harga menjadi $90\%$ dari harga sebelumnya, sehingga harga akhir adalah $0,9 \times 1,28M = 1,152M$.</li>
+                                <li>Hal ini menunjukkan bahwa persentase keuntungan akhir yang diperoleh (Kuantitas P) adalah sebesar $(1,152 - 1) \times 100\% = 15,2\%$.</li>
+                                <li>Karena $15,2\% < 16\%$, maka Kuantitas P lebih kecil daripada Kuantitas Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 2 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">2.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Pengukuran dan Aritmetika Sosial</span><br>
+                                Sebuah pabrik membuat dua jenis cetakan logam dari bahan yang sama dan ketebalan seragam.
+                                <ul style="margin-top: 5px;">
+                                    <li>Cetakan I: Berbentuk lingkaran dengan jari-jari $2r$.</li>
+                                    <li>Cetakan II: Terdiri dari 4 buah persegi identik, masing-masing memiliki panjang sisi $r\sqrt{\pi}$.</li>
+                                </ul>
+                                Berdasarkan informasi di atas, manakah hubungan yang benar antara kuantitas P dan Q?
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr><th>P</th><th>Q</th></tr>
+                                        <tr><td>Berat 1 buah cetakan I</td><td>Berat gabungan 4 buah cetakan II</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Berdasarkan asumsi bahwa bahan dan ketebalan bernilai konstan, berat benda berbanding lurus dengan luas permukaannya.</li>
+                                <li>Luas Cetakan I (Lingkaran) dirumuskan dengan $\pi \times r_{\text{lingkaran}}^2$. Substitusi nilai jari-jari: $\pi \times (2r)^2 = 4\pi r^2$.</li>
+                                <li>Luas Cetakan II (4 buah Persegi) dirumuskan dengan $4 \times (s_{\text{persegi}})^2$. Substitusi nilai sisi: $4 \times (r\sqrt{\pi})^2 = 4 \times r^2 \times \pi = 4\pi r^2$.</li>
+                                <li>Karena luas Cetakan I sama dengan luas keseluruhan Cetakan II ($4\pi r^2$), maka massa kedua benda tersebut ekuivalen. Kuantitas P sama dengan Kuantitas Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 3 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">3.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Pengukuran - KPK/FPB</span><br>
+                                Tiga buah lampu rambu lalu lintas buatan pabrik X diuji coba secara bersamaan pada pukul 08.00. Lampu Merah berkedip setiap $m$ menit, lampu Kuning berkedip setiap $k$ menit, dan lampu Hijau berkedip setiap $h$ menit. Pada pukul berapa ketiga lampu tersebut berkedip bersamaan untuk kedua kalinya?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Kelipatan Persekutuan Terkecil (KPK) dari $m$ dan $k$ adalah 15.</li>
+                                    <li>$h$ adalah bilangan prima kelipatan 5.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Untuk menentukan waktu ketika ketiga lampu berkedip secara bersamaan untuk kedua kalinya, diperlukan nilai Kelipatan Persekutuan Terkecil (KPK) dari interval ketiga lampu, yakni $m$, $k$, dan $h$.</li>
+                                <li>Pernyataan (1): Memberikan informasi bahwa KPK dari variabel $m$ dan $k$ adalah 15. Informasi ini tidak memadai karena variabel $h$ belum diketahui. (Tidak Cukup).</li>
+                                <li>Pernyataan (2): Memberikan informasi bahwa $h$ adalah bilangan prima kelipatan 5. Satu-satunya bilangan prima kelipatan 5 adalah angka 5 itu sendiri, sehingga $h = 5$. Informasi ini tidak memadai karena nilai atau KPK dari $m$ dan $k$ belum diketahui. (Tidak Cukup).</li>
+                                <li>Gabungan (1) dan (2): Menggunakan informasi $\text{KPK}(m,k) = 15$ dan nilai $h = 5$, KPK dari ketiga variabel tersebut adalah ekuivalen dengan mencari KPK dari 15 dan 5. $\text{KPK}(15, 5)$ bernilai 15. Gabungan kedua pernyataan memadai untuk menyelesaikan permasalahan.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 4 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">4.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aljabar</span><br>
+                                Diketahui variabel $a$ dan $b$ memenuhi sistem persamaan:
+                                $$a + b = 6$$
+                                $$a^2 - b^2 = 24$$
+                                Nilai dari bentuk aljabar $\displaystyle \frac{a^3 - b^3}{a^2 - 2ab + b^2}$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\frac{61}{4}$</li>
+                            <li data-option="B">$31$</li>
+                            <li data-option="C">$\frac{31}{4}$</li>
+                            <li data-option="D">$\frac{121}{4}$</li>
+                            <li data-option="E">$1$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Dari persamaan yang diberikan, dapat dijabarkan: 
+                                    $$
+                                    \begin{aligned}
+                                    a^2 - b^2 &= 24 \\
+                                    (a - b)(a + b) &= 24
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Diketahui $a + b = 6$, sehingga substitusi akan menghasilkan $(a - b)(6) = 24$, atau $a - b = 4$.</li>
+                                <li>Bentuk aljabar pada pertanyaan dapat difaktorkan sebagai berikut. Pembilang: $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$. Penyebut: $a^2 - 2ab + b^2 = (a - b)^2$. Pecahan disederhanakan menjadi $\frac{a^2 + ab + b^2}{a - b}$.</li>
+                                <li>Diberikan persamaan hasil penjabaran bentuk kuadrat:
+                                    $$
+                                    \begin{aligned}
+                                    (a + b)^2 = 36 &\implies a^2 + b^2 + 2ab = 36 \\
+                                    (a - b)^2 = 16 &\implies a^2 + b^2 - 2ab = 16
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Melalui proses eliminasi (pengurangan), didapatkan $4ab = 20$, yang mengimplikasikan $ab = 5$. Substitusi nilai $ab$ mengindikasikan bahwa $a^2 + b^2 + 2(5) = 36$, sehingga $a^2 + b^2 = 26$.</li>
+                                <li>Substitusikan nilai akhir ke dalam pecahan sederhana:
+                                    $$
+                                    \begin{aligned}
+                                    \frac{(a^2 + b^2) + ab}{a - b} &= \frac{26 + 5}{4} \\
+                                    &= \frac{31}{4}
+                                    \end{aligned}
+                                    $$
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 5 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">5.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aljabar</span><br>
+                                Berapakah nilai dari bilangan real $x$?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>$\displaystyle \frac{3x - 2}{4} - \frac{x + 1}{2} = \frac{x - 4}{4}$</li>
+                                    <li>$2x^2 - 8x = 0$</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: E</strong>
+                            <ul>
+                                <li>Permasalahan menuntut penentuan nilai spesifik dari variabel $x$.</li>
+                                <li>Pernyataan (1): Persamaan dapat diselesaikan dengan menyamakan penyebut menjadi 4.
+                                    $$
+                                    \begin{aligned}
+                                    \frac{3x - 2}{4} - \frac{2(x + 1)}{4} &= \frac{x - 4}{4} \\
+                                    \frac{3x - 2 - 2x - 2}{4} &= \frac{x - 4}{4} \\
+                                    x - 4 &= x - 4
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Karena persamaan tersebut merupakan suatu identitas trivial ($0 = 0$), nilai $x$ dapat berupa bilangan real apapun. Informasi tidak memadai untuk menghasilkan solusi unik. (Tidak Cukup).</li>
+                                <li>Pernyataan (2): Persamaan $2x^2 - 8x = 0$ dapat difaktorkan menjadi $2x(x - 4) = 0$. Solusi yang dihasilkan adalah $x = 0$ atau $x = 4$. Karena terdapat dua kemungkinan himpunan penyelesaian, informasi tidak memadai untuk menghasilkan solusi unik. (Tidak Cukup).</li>
+                                <li>Gabungan (1) dan (2): Penggabungan kedua pernyataan tetap tidak memberikan nilai pasti dari $x$ karena pernyataan (1) tidak membatasi dua opsi solusi dari pernyataan (2). Gabungan pernyataan tidak cukup menjawab pertanyaan.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 6 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">6.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aljabar</span><br>
+                                Diketahui bilangan real $x$ memenuhi pertidaksamaan $|2x - 3| \le 5$. <br><br>
+                                Manakah hubungan yang benar antara kuantitas P dan Q berikut?
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr><th>P</th><th>Q</th></tr>
+                                        <tr><td>Nilai maksimum dari fungsi $f(x) = x^2 - 2x$</td><td>10</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Penyelesaian pertidaksamaan mutlak $|2x - 3| \le 5$ dijabarkan sebagai berikut:
+                                    $$
+                                    \begin{aligned}
+                                    -5 &\le 2x - 3 \le 5 \\
+                                    -2 &\le 2x \le 8 \\
+                                    -1 &\le x \le 4
+                                    \end{aligned}
+                                    $$
+                                    Himpunan penyelesaian untuk $x$ berada pada interval tertutup $[-1, 4]$.
+                                </li>
+                                <li>Kuantitas P meminta pencarian titik maksimum mutlak dari fungsi kuadrat $f(x) = x^2 - 2x$ pada interval tertutup tersebut. Karena koefisien $x^2$ bernilai positif ($a > 0$), kurva parabola terbuka ke atas. Nilai maksimum pada suatu interval tertutup pasti terjadi di salah satu titik batas.</li>
+                                <li>Evaluasi pada batas bawah: $f(-1) = (-1)^2 - 2(-1) = 1 + 2 = 3$.</li>
+                                <li>Evaluasi pada batas atas: $f(4) = (4)^2 - 2(4) = 16 - 8 = 8$.</li>
+                                <li>Oleh karena itu, nilai maksimum (Kuantitas P) adalah 8. Karena $8 < 10$, maka Kuantitas P lebih kecil daripada Kuantitas Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 7 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">7.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Teori Bilangan</span><br>
+                                Didefinisikan operasi $\Delta$ pada himpunan bilangan bulat dengan aturan:
+                                $$x \Delta y = x(y - x) + 2$$
+                                Berdasarkan definisi tersebut, perhatikan keempat pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>$3 \Delta 5 = 8$</li>
+                                    <li>Operasi $\Delta$ bersifat komutatif.</li>
+                                    <li>$2 \Delta (1 \Delta 3) = 6$</li>
+                                    <li>Jika $a \Delta a = 2$, maka $a$ bisa bilangan asli apa saja.</li>
+                                </ol>
+                                Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li>
+                            <li data-option="B">3</li>
+                            <li data-option="C">2</li>
+                            <li data-option="D">1</li>
+                            <li data-option="E">0</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Operasi didefinisikan secara spesifik dengan fungsi $f(x, y) = x(y - x) + 2$. Evaluasi validitas tiap pernyataan:</li>
+                                <li>Pernyataan 1: $3 \Delta 5 = 3(5 - 3) + 2 = 3(2) + 2 = 8$. (Pernyataan Benar).</li>
+                                <li>Pernyataan 2: Pengujian sifat komutatif $x \Delta y = y \Delta x$. Misalkan $x = 1$ dan $y = 2$. $1 \Delta 2 = 1(2 - 1) + 2 = 3$. Namun, $2 \Delta 1 = 2(1 - 2) + 2 = 2(-1) + 2 = 0$. Karena hasilnya tidak ekuivalen, operasi ini tidak memenuhi sifat komutatif. (Pernyataan Salah).</li>
+                                <li>Pernyataan 3: Evaluasi bersarang diprioritaskan pada ekspresi di dalam kurung. $(1 \Delta 3) = 1(3 - 1) + 2 = 4$. Kemudian evaluasi $2 \Delta (4) = 2(4 - 2) + 2 = 2(2) + 2 = 6$. (Pernyataan Benar).</li>
+                                <li>Pernyataan 4: Analisis fungsi identitas mandiri: $a \Delta a = a(a - a) + 2 = a(0) + 2 = 2$. Karena ekspresi ini bernilai 2 terlepas dari nilai numerik $a$, kondisi ini berlaku untuk semua himpunan bilangan asli. (Pernyataan Benar).</li>
+                                <li>Terdapat 3 pernyataan yang dikonfirmasi benar.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 8 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">8.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Teori Bilangan</span><br>
+                                Perhatikan algoritma (flowchart) bilangan berikut ini:<br>
+                                <img src="https://images2.imgbox.com/15/eb/wai2AFIZ_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/15/eb/wai2AFIZ_t.png';" alt="Flowchart Bilangan" class="gambar-soal" style="max-width:300px;"/>
+                                Jika algoritma tersebut dijalankan secara berulang dimana <em>output</em> $y$ dijadikan <em>input</em> $x$ untuk siklus berikutnya. Diberikan nilai input awal $x = 5$. Perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Cetakan pertama adalah 15.</li>
+                                    <li>Cetakan kedua adalah 8.</li>
+                                    <li>Cetakan ketiga adalah 2.</li>
+                                    <li>Cetakan keempat adalah 2.</li>
+                                </ol>
+                                Manakah di antara pernyataan berikut yang benar?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                            <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                            <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                            <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Proses iteratif didasarkan pada definisi fungsi kondisional $f(x)$ di mana $f(x) = x/2$ jika $x$ genap, dan $f(x) = 3x + 1$ jika $x$ ganjil. Diberikan inisialisasi awal $x = 5$.</li>
+                                <li>Iterasi 1: $x = 5$ adalah ganjil. Evaluasi $y = 3(5) + 1 = 16$. Cetakan pertama = 16. (Pernyataan 1 Salah).</li>
+                                <li>Iterasi 2: Nilai input $x = 16$. $16$ adalah genap. Evaluasi $y = 16 / 2 = 8$. Cetakan kedua = 8. (Pernyataan 2 Benar).</li>
+                                <li>Iterasi 3: Nilai input $x = 8$. $8$ adalah genap. Evaluasi $y = 8 / 2 = 4$. Cetakan ketiga = 4. (Pernyataan 3 Salah).</li>
+                                <li>Iterasi 4: Nilai input $x = 4$. $4$ adalah genap. Evaluasi $y = 4 / 2 = 2$. Cetakan keempat = 2. (Pernyataan 4 Benar).</li>
+                                <li>Pernyataan yang secara logis benar adalah nomor 2 dan 4.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 9 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">9.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Teori Bilangan</span><br>
+                                Diketahui $m$ dan $n$ adalah bilangan bulat positif. Hasil dari $m^2 - n^2$ adalah bilangan ganjil. Perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>$m + n$ adalah bilangan ganjil.</li>
+                                    <li>$m - n$ adalah bilangan genap.</li>
+                                    <li>$m \times n$ adalah bilangan genap.</li>
+                                    <li>$m$ dan $n$ keduanya merupakan bilangan ganjil.</li>
+                                </ol>
+                                Manakah di antara pernyataan berikut yang benar?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                            <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                            <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                            <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Berdasarkan faktorisasi aljabar, diperoleh persamaan $m^2 - n^2 = (m + n)(m - n)$.</li>
+                                <li>Diketahui bahwa hasil operasi ini adalah bilangan ganjil. Produk perkalian antara dua bilangan bulat akan menghasilkan bilangan ganjil jika dan hanya jika kedua faktor multiplier tersebut bernilai ganjil.</li>
+                                <li>Dengan demikian, term $(m + n)$ secara mutlak harus ganjil (Pernyataan 1 Benar), dan term $(m - n)$ secara mutlak harus ganjil (Pernyataan 2 Salah).</li>
+                                <li>Secara teoretis, penjumlahan atau pengurangan antara dua bilangan akan bernilai ganjil jika paritas dari kedua bilangan tersebut berbeda (satu genap dan satu ganjil). Oleh karena itu, $m$ dan $n$ tidak mungkin sama-sama ganjil. (Pernyataan 4 Salah).</li>
+                                <li>Karena dipastikan salah satu dari variabel berparitas genap dan yang lain ganjil, hasil kali kedua variabel $m \times n$ mutlak akan menghasilkan bilangan genap (sebab faktor pengali genap selalu menghasilkan kelipatan 2). (Pernyataan 3 Benar).</li>
+                                <li>Pernyataan yang tepat adalah pernyataan 1 dan 3.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 10 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">10.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Geometri Sudut dan Bidang Datar</span><br>
+                                Perhatikan gambar berikut!<br>
+                                <img src="https://images2.imgbox.com/2d/5a/EgmNULJ2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/2d/5a/EgmNULJ2_t.png';" alt="Geometri Kelopak Bunga" class="gambar-soal" style="max-width:250px;"/>
+                                Diberikan sebuah persegi dengan panjang sisi 14 cm. Luas daerah "kelopak bunga" yang terarsir pada gambar di atas adalah ... (gunakan $\pi = \frac{22}{7}$)
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$84 \text{ cm}^2$</li>
+                            <li data-option="B">$154 \text{ cm}^2$</li>
+                            <li data-option="C">$196 \text{ cm}^2$</li>
+                            <li data-option="D">$112 \text{ cm}^2$</li>
+                            <li data-option="E">$0 \text{ cm}^2$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: D</strong>
+                            <ul>
+                                <li>Permasalahan geometris ini memuat perpotongan dari empat buah setengah lingkaran yang berada dalam interior bangun persegi. Konfigurasi empat setengah lingkaran secara teknis setara dengan area dari dua lingkaran penuh.</li>
+                                <li>Area perpotongan (arsiran "kelopak bunga") didapatkan dengan menghitung agregat area lengkungan dan mereduksinya dengan luas pembatas geometri utamanya (persegi).</li>
+                                <li>Formulasi matematisnya adalah: $\text{Luas Arsir} = (2 \times \text{Luas Lingkaran}) - \text{Luas Persegi}$.</li>
+                                <li>Radius lingkaran dihitung sebagai setengah dari panjang sisi persegi: $r = 14 / 2 = 7 \text{ cm}$.</li>
+                                <li>Luas satu lingkaran utuh: $\pi r^2 = (\frac{22}{7}) \times (7)^2 = 154 \text{ cm}^2$. Total area lingkar: $2 \times 154 = 308 \text{ cm}^2$.</li>
+                                <li>Luas penampang persegi: $s^2 = (14)^2 = 196 \text{ cm}^2$.</li>
+                                <li>Area terarsir dihitung sebagai selisih: $308 - 196 = 112 \text{ cm}^2$.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN (11-20) -->
+                <div class="kolom">
+                    <!-- Soal 11 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">11.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Geometri Sudut dan Bidang Datar</span><br>
+                                Sebuah lingkaran terkurung sempurna (menyinggung keempat sisi) di dalam sebuah persegi. Berapakah luas area persegi yang berada di luar lingkaran?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Panjang diagonal persegi tersebut adalah $8\sqrt{2}$ cm.</li>
+                                    <li>Keliling dari persegi tersebut adalah 32 cm.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: D</strong>
+                            <ul>
+                                <li>Target analisis adalah luasan sisa yang ekuivalen dengan $\text{Luas Persegi} - \text{Luas Lingkaran}$. Proses perhitungan sepenuhnya bergantung pada identifikasi nilai skalar dari salah satu sisi bujur sangkar ($s$), karena diameter lingkaran yang menyinggung ekuivalen dengan panjang rusuk bidang pembatasnya ($d = s$, $r = s/2$).</li>
+                                <li>Pernyataan (1): Nilai diagonal persegi didefinisikan sebagai $s\sqrt{2}$. Dengan nilai yang diberikan, $s\sqrt{2} = 8\sqrt{2}$, diperoleh $s = 8$. Dimensi persegi diketahui dengan spesifik sehingga luas arsiran dapat dikalkulasi. (Cukup).</li>
+                                <li>Pernyataan (2): Keliling persegi didefinisikan sebagai $4s$. Dengan nilai yang diberikan, $4s = 32$, maka $s = 8$. Karena menghasilkan derivasi yang sama, luas dapat dikalkulasi secara deterministik. (Cukup).</li>
+                                <li>Kesimpulan analisis: Pernyataan (1) saja cukup, dan pernyataan (2) saja juga cukup untuk menghasilkan solusi.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 12 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">12.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Sistem Persamaan</span><br>
+                                Di sebuah pameran buku, paket Bundel A terdiri dari 3 buku fiksi dan 2 buku biografi dengan harga Rp180.000. Paket Bundel B terdiri dari 2 buku fiksi dan 4 buku biografi dengan harga Rp200.000.<br><br>
+                                Berdasarkan informasi di atas, manakah hubungan yang benar antara kuantitas P dan Q?
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr><th>P</th><th>Q</th></tr>
+                                        <tr><td>Harga satuan 1 buku biografi</td><td>Rp30.000</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Identifikasi dua variabel bebas: $f$ untuk buku fiksi dan $b$ untuk buku biografi.</li>
+                                <li>Sistem persamaan linear yang dibentuk: (1) $3f + 2b = 180.000$ dan (2) $2f + 4b = 200.000$.</li>
+                                <li>Reduksi skala pada persamaan kedua (dibagi 2) menghasilkan: $f + 2b = 100.000$, yang berimplikasi pada $f = 100.000 - 2b$.</li>
+                                <li>Terapkan metode substitusi pada persamaan pertama:
+                                    $$
+                                    \begin{aligned}
+                                    3(100.000 - 2b) + 2b &= 180.000 \\
+                                    300.000 - 6b + 2b &= 180.000 \\
+                                    300.000 - 4b &= 180.000 \\
+                                    120.000 &= 4b \\
+                                    b &= 30.000
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Harga unit buku biografi secara analitis adalah Rp30.000. Karena Kuantitas P ($30.000$) dan Kuantitas Q ($30.000$) identik secara nilai, jawaban yang benar adalah (C).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 13 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">13.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Sistem Persamaan</span><br>
+                                Tahun lalu, perbandingan usia seorang Ayah dengan usia anak sulungnya adalah 3 : 1. Berapakah selisih usia mereka saat ini?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Lima tahun yang akan datang, jumlah usia keduanya adalah 70 tahun.</li>
+                                    <li>Saat ini, rasio usia anak sulung terhadap usia ibunya adalah 4 : 11, dimana ibunya berusia 2 tahun lebih muda dari sang Ayah.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: D</strong>
+                            <ul>
+                                <li>Model matematika dengan representasi variabel $A$ (Ayah saat ini) dan $S$ (Anak Sulung saat ini). Premis awal (kondisi tahun lalu):
+                                    $$
+                                    \begin{aligned}
+                                    \frac{A - 1}{S - 1} &= \frac{3}{1} \\
+                                    A - 1 &= 3S - 3 \\
+                                    A - 3S &= -2
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Pernyataan (1): Estimasi lima tahun masa depan diformulasikan: $(A + 5) + (S + 5) = 70 \implies A + S = 60$. Formulasi ini menciptakan Sistem Persamaan Linear Dua Variabel (SPLDV) dengan determinan koefisien yang tidak bernilai nol, menjamin eksistensi penyelesaian tunggal untuk variabel $A$ maupun $S$. Perbedaan umur bisa ditentukan pasti. (Cukup).</li>
+                                <li>Pernyataan (2): Melibatkan variabel Ibu ($I$) dengan $I = A - 2$. Rasio umur adalah $\frac{S}{I} = \frac{4}{11}$.</li>
+                                <li>Substitusi:
+                                    $$
+                                    \begin{aligned}
+                                    \frac{S}{A - 2} &= \frac{4}{11} \\
+                                    11S &= 4(A - 2) \\
+                                    11S - 4A &= -8
+                                    \end{aligned}
+                                    $$
+                                    Sistem persamaan ini juga membentuk SPLDV independen terhadap premis awal. Mekanisme komputasi standar dapat memproyeksikan jawaban final terkait selisih umur tanpa ambiguitas. (Cukup).
+                                </li>
+                                <li>Kesimpulan: Masing-masing pernyataan secara independen memberikan kecukupan data yang logis.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 14 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">14.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Sistem Persamaan</span><br>
+                                Diberikan kurva parabola $y = x^2 - 6x + 5$ dan garis lurus $y = 2x - k$. Diketahui bahwa garis tersebut memotong kurva parabola di dua titik yang berbeda. <br><br>
+                                Perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Nilai diskriminan ($D$) dari hasil substitusi kedua persamaan bernilai kurang dari 0.</li>
+                                    <li>Batas nilai $k$ yang memenuhi adalah $k < 11$.</li>
+                                    <li>Jika $k = 11$, maka garis tersebut tidak akan memotong kurva parabola.</li>
+                                    <li>Salah satu nilai $k$ yang mungkin adalah 10.</li>
+                                </ol>
+                                Manakah di antara pernyataan berikut yang benar?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                            <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                            <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                            <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Kriteria perpotongan dari sebuah garis linear membedah kurva kuadratik pada dua titik diskrit terdefinisikan oleh syarat bahwa diskriminan ($D$) sistem harus bernilai positif ($D > 0$). (Pernyataan 1 Salah).</li>
+                                <li>Penyatuan dua fungsi menginisiasi fungsi referensi baru:
+                                    $$
+                                    \begin{aligned}
+                                    x^2 - 6x + 5 &= 2x - k \\
+                                    x^2 - 8x + (5 + k) &= 0
+                                    \end{aligned}
+                                    $$
+                                    Koefisien yang teridentifikasi: $a = 1$, $b = -8$, dan $c = 5 + k$.
+                                </li>
+                                <li>Terapkan dalil Diskriminan untuk titik potong ganda:
+                                    $$
+                                    \begin{aligned}
+                                    b^2 - 4ac &> 0 \\
+                                    (-8)^2 - 4(1)(5 + k) &> 0 \\
+                                    64 - 20 - 4k &> 0 \\
+                                    44 &> 4k \\
+                                    k &< 11
+                                    \end{aligned}
+                                    $$
+                                    Himpunan penyelesaian terkonfirmasi. (Pernyataan 2 Benar).
+                                </li>
+                                <li>Jika konstanta dievaluasi pada limit $k = 11$, akan terjadi ekuivalensi $D = 0$. Secara geometris, hal ini didefinisikan sebagai peristiwa garis menyinggung kurva, sehingga garis tersebut memotong objek dalam titik singular. Asumsi "tidak memotong" adalah definisi turunan yang secara fundamental keliru. (Pernyataan 3 Salah).</li>
+                                <li>Himpunan nilai batas atas didefinisikan secara asimtot sebagai bilangan kurang dari 11, membuat skalar eksak seperti 10 secara matematis termasuk ke dalam ranah domain. (Pernyataan 4 Benar).</li>
+                                <li>Pernyataan yang secara analitis dan numerik sesuai prosedur adalah 2 dan 4.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 15 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">15.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Fungsi, Fungsi Invers dan Komposisi</span><br>
+                                Diketahui fungsi $\displaystyle f(x) = \frac{3x - 1}{2x + 4}$, dengan $x \ne -2$. Jika $f^{-1}(x)$ adalah invers dari fungsi $f(x)$, maka nilai dari $f^{-1}(x - 2)$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\frac{4x + 7}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+                            <li data-option="B">$\frac{-4x - 1}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+                            <li data-option="C">$\frac{3x - 7}{2x}$, dengan $x \ne 0$</li>
+                            <li data-option="D">$1$</li>
+                            <li data-option="E">$\frac{-4x + 7}{2x - 7}$, dengan $x \ne \frac{7}{2}$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: E</strong>
+                            <ul>
+                                <li>Prosedur transformasi fungsi invers untuk pemetaan rasional terfraksi berbentuk $f(x) = \frac{ax + b}{cx + d}$ dapat dikalkulasi menggunakan properti determinan minor sehingga menjadi $f^{-1}(x) = \frac{-dx + b}{cx - a}$.</li>
+                                <li>Dengan basis parameter terdaftar: $a = 3$, $b = -1$, $c = 2$, dan $d = 4$. Substitusi menghasilkan: $f^{-1}(x) = \frac{-4x - 1}{2x - 3}$.</li>
+                                <li>Instruksi selanjutnya merujuk kepada komposisi modifikasi domain yakni mensubstitusi variabel bebas $x$ dengan $(x - 2)$.</li>
+                                <li>Kalkulasi evaluasi:
+                                    $$
+                                    \begin{aligned}
+                                    f^{-1}(x - 2) &= \frac{-4(x - 2) - 1}{2(x - 2) - 3} \\
+                                    &= \frac{-4x + 8 - 1}{2x - 4 - 3} \\
+                                    &= \frac{-4x + 7}{2x - 7}
+                                    \end{aligned}
+                                    $$
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 16 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">16.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Fungsi, Fungsi Invers dan Komposisi</span><br>
+                                Diketahui terdapat fungsi $f(x)$ dan $g(x)$. Nilai dari komposisi fungsi $(f \circ g)(2)$ adalah 10. Berapakah nilai dari $g(2)$?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>$g(x)$ merupakan suatu fungsi linear yang memotong sumbu-y di titik $(0, -1)$.</li>
+                                    <li>$f(x) = 3x + 1$</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Operasi turunan komposisi diekspresikan sebagai penyatuan argumentasi fungsi: $(f \circ g)(2) = f(g(2)) = 10$. Target parameter adalah nilai numerik dari fungsi turunan sebelah dalam, yakni $g(2)$.</li>
+                                <li>Pernyataan (1): Menetapkan konstruksi garis linear $g(x) = mx - 1$. Kurangnya identifikasi gradien kemiringan ($m$) serta fungsi primitif $f(x)$ mengakibatkan limitasi data dan mencegah pengerucutan satu solusi numerik eksak. (Tidak Cukup).</li>
+                                <li>Pernyataan (2): Memberikan relasi fungsi spesifik: $f(x) = 3x + 1$. Substitusi ini ke skema komposisi:
+                                    $$
+                                    \begin{aligned}
+                                    f(g(2)) &= 10 \\
+                                    3(g(2)) + 1 &= 10 \\
+                                    3(g(2)) &= 9 \\
+                                    g(2) &= 3
+                                    \end{aligned}
+                                    $$
+                                </li>
+                                <li>Informasi ini menuntun kepada determinasi unik dan resolutif. Pernyataan (2) SAJA cukup memadai.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 17 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">17.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Matriks</span><br>
+                                Diketahui matriks $\displaystyle A = \begin{pmatrix} 4 & 2 \\ 5 & 3 \end{pmatrix}$. Jika $A^{-1}$ merupakan invers dari matriks $A$.<br><br>
+                                Manakah hubungan yang benar antara kuantitas P dan Q berikut?
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr><th>P</th><th>Q</th></tr>
+                                        <tr><td>Determinan dari matriks $A^{-1}$</td><td>$\frac{1}{2}$</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Penentuan skalar determinan ordo $2 \times 2$ dirumuskan sebagai selisih dari perkalian entri antar diagonal ($\text{det} = ad - bc$). Untuk matriks primer $A$: $\text{det}(A) = (4)(3) - (5)(2) = 12 - 10 = 2$.</li>
+                                <li>Berdasarkan teorema fundamental inversi matriks persegi, rasio skalar untuk matriks berinversi ekuivalen terhadap nilai balik determinan awal matriks sumber. Rumus ekuivalensi terformulasikan: $\text{det}(A^{-1}) = \frac{1}{\text{det}(A)}$.</li>
+                                <li>Evaluasi membuktikan bahwa $\text{det}(A^{-1}) = \frac{1}{2}$. Konsekuensi akhir menampilkan keseimbangan neraca kuantitatif. Kuantitas P bernilai $1/2$ dan ekuivalen secara proporsi mutlak terhadap Kuantitas Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 18 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">18.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Matriks</span><br>
+                                Diketahui $A$ dan $B$ adalah matriks persegi berordo $2 \times 2$ dengan $\text{det}(A) = 3$ dan $\text{det}(B) = 4$. Perhatikan pernyataan mengenai sifat-sifat matriks berikut:
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>$\text{det}(AB) = 12$</li>
+                                    <li>$\text{det}(A + B) = 7$</li>
+                                    <li>$\text{det}(A^T) = 3$, di mana $A^T$ adalah transpose matriks $A$.</li>
+                                    <li>$\text{det}(2A) = 6$</li>
+                                </ol>
+                                Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li>
+                            <li data-option="B">3</li>
+                            <li data-option="C">2</li>
+                            <li data-option="D">1</li>
+                            <li data-option="E">0</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Pengujian aksioma dan identitas operator pada fungsi matriks persegi dianalisis melalui dekonstruksi teorema:</li>
+                                <li>Pernyataan 1: Teorema perkalian determinan terbukti secara universal: $\text{det}(AB) = \text{det}(A) \times \text{det}(B) = 3 \times 4 = 12$. (Pernyataan Benar).</li>
+                                <li>Pernyataan 2: Aturan pemisahan linier terlarang diaplikasikan pada determinan multivariabel: Operator matriks $\text{det}(A + B)$ tidak dapat direduksi secara distributif menjadi jumlah komponen terpisah $\text{det}(A) + \text{det}(B)$. Ekstrapolasi seperti ini menciptakan cacat matematis yang ireversibel. (Pernyataan Salah).</li>
+                                <li>Pernyataan 3: Aksioma pencerminan transposisi menyatakan rotasi simetris sumbu tidak akan memengaruhi produk silang. Konstanta $\text{det}(A^T)$ selaras dan sejalan penuh terhadap identitas $\text{det}(A)$, yakni 3. (Pernyataan Benar).</li>
+                                <li>Pernyataan 4: Sifat dilatasi skalar untuk setiap ordo geometri dimensi $n$ divalidasi dengan pengali $k^n$. Fungsi ordo di atas adalah $2 \times 2$. Operasi komputasi mendiktekan $\text{det}(2A) = 2^2 \times \text{det}(A) = 4 \times 3 = 12$. Output nilai 6 pada referensi pernyataan bernilai rancu. (Pernyataan Salah).</li>
+                                <li>Secara keseluruhan, sistem memvalidasi eksistensi 2 buah kebenaran operasional.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 19 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">19.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Statistika</span><br>
+                                Perhatikan grafik data penjualan (dalam juta Rupiah) toko kopi "Senja" selama 5 bulan pertama di tahun 2023 berikut:<br>
+                                <img src="https://images2.imgbox.com/1d/7b/uvnmOcZQ_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/1d/7b/uvnmOcZQ_t.png';" alt="Grafik Penjualan" class="gambar-soal" style="max-width:350px;"/>
+                                Berdasarkan grafik di atas, selisih antara nilai rata-rata (mean) penjualan bulanan dengan nilai median penjualannya adalah ... juta Rupiah.
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$3,2$</li>
+                            <li data-option="B">$0,3$</li>
+                            <li data-option="C">$3,5$</li>
+                            <li data-option="D">$3,8$</li>
+                            <li data-option="E">$-10$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: B</strong>
+                            <ul>
+                                <li>Data diskrit historis dalam skala vertikal menunjukkan agregasi berurutan dari set $1.5, 2.0, 4.0, 3.5, 5.0$.</li>
+                                <li>Tahapan kalkulasi Rata-rata (Mean): Rata-rata tertimbang $= \frac{1.5 + 2.0 + 4.0 + 3.5 + 5.0}{5} = \frac{16.0}{5} = 3.2$.</li>
+                                <li>Tahapan lokalisasi Median: Syarat validasi median wajib merestrukturisasi elemen data awal kepada susunan monoton naik bertahap. Barisan data terurut absolut menghasilkan vektor array independen: $1.5, 2.0, 3.5, 4.0, 5.0$. Nilai fokal persis titik pusat adalah angka sentral $3.5$.</li>
+                                <li>Jarak marjinal deviasi (Selisih Mutlak) disimpulkan sebagai $|3.2 - 3.5| = |-0.3| = 0.3$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Soal 20 -->
+                    <div class="soal-item">
+                        <div class="soal-header">
+                            <span class="nomor">20.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Statistika</span><br>
+                                Diberikan 5 buah himpunan bilangan bulat positif tak berurutan: $3, 8, x, 12, 5$. Berapakah nilai rata-rata kelima bilangan tersebut?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-top: 5px;">
+                                    <li>Median dari himpunan bilangan tersebut adalah 8.</li>
+                                    <li>Jangkauan (range) dari data tersebut adalah 11.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Jawaban: C</strong>
+                            <ul>
+                                <li>Analisis struktur himpunan dan properti deskriptif sentral membutuhkan verifikasi kepastian untuk keseluruhan populasi elemen: $3, 5, 8, 12, x$.</li>
+                                <li>Pernyataan (1): Deskriptor tendensi pusat Median memiliki nilai tetap $8$. Agar $8$ dapat terisolasi selaku tumpuan tengah, populasi himpunan harus membentuk array berurutan. Karena $3$ dan $5$ menempati posisi lebih kecil, posisinya mensyaratkan skalar relasional $x \ge 8$. Variasi dan rentang tak terhingga untuk variabel $x$ membuat ekuivalensi jumlah elemen terus bergeser. (Tidak Cukup).</li>
+                                <li>Pernyataan (2): Range didefinisikan secara selisih absolut $\text{Range} = X_{\text{max}} - X_{\text{min}} = 11$. Terdapat dua titik simpul. Jika $X_{\text{min}} = 3$, maka $X_{\text{max}}$ berpotensi merepresentasikan $x = 14$. Jika $X_{\text{max}} = 12$, maka $X_{\text{min}}$ akan merepresentasikan limit inferior $x = 1$. Konflik ganda menghalangi kepastian tunggal. (Tidak Cukup).</li>
+                                <li>Penggabungan (1) dan (2): Sinergi informasi menghasilkan kesimpulan silang. Data dieliminasi atas asas prasyarat dari Pernyataan 1 yang mengharuskan $x \ge 8$. Opsi singular yang mengkompromikan selisih batas interval $11$ dan mempertahankan rasio pertengahan adalah $x = 14$. Karena himpunan terkonsolidasi sebagai entitas definitif, ekstrapolasi nilai akhir Rata-Rata/Mean dapat dikerjakan secara eksak.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ACTION AREA: Submit Button & Result -->
+            <div class="action-area">
+                <button id="submitBtn" class="btn-submit">KUMPULKAN JAWABAN</button>
+                
+                <div id="resultBox" class="result-box">
+                    <div class="score-display">SKOR ANDA: <span id="scoreValue">0</span></div>
+                    
+                    <div class="stats-summary" style="display: flex; justify-content: center; gap: 15px; margin: 15px 0; flex-wrap: wrap;">
+                        <div style="background: var(--correct-bg); color: var(--correct-text); padding: 10px 20px; border-radius: 6px; font-weight: bold;">Benar: <span id="count-benar">0</span></div>
+                        <div style="background: var(--wrong-bg); color: var(--wrong-text); padding: 10px 20px; border-radius: 6px; font-weight: bold;">Salah: <span id="count-salah">0</span></div>
+                        <div style="background: #e2e3e5; color: #383d41; padding: 10px 20px; border-radius: 6px; font-weight: bold;">Kosong: <span id="count-kosong">0</span></div>
+                    </div>
+
+                    <div class="analysis-box" style="text-align: left; background: white; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #ddd;">
+                        <h4 style="margin-top: 0; color: var(--header-accent); border-bottom: 1px solid #eee; padding-bottom: 8px;">Analisis Topik</h4>
+                        <p style="margin-bottom: 5px; font-size: 13px;"><strong>Kekuatan (Strength):</strong> <span id="strength-text" style="color: #27ae60;">-</span></p>
+                        <p style="margin: 0; font-size: 13px;"><strong>Kelemahan (Weakness):</strong> <span id="weakness-text" style="color: #c0392b;">-</span></p>
+                    </div>
+
+                    <p style="margin-top:15px; font-weight: 600; color: #d35400;">Silahkan gulir/scroll ke atas untuk melihat pembahasan setiap soal.</p>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="worksheet-footer">
+                <b>Tryout 1 - Pengetahuan Kuantitatif</b><br>
+                <i>CBT System Interface</i>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CUSTOM MODAL -->
+    <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 25px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <h3 id="modalTitle" style="margin-top: 0; color: var(--header-accent);">Konfirmasi</h3>
+            <p id="modalMessage" style="margin-bottom: 20px; color: #555;">Pesan disini</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button id="modalBtnCancel" style="padding: 10px 20px; border: none; background: #eee; color: #333; border-radius: 4px; cursor: pointer; font-weight: bold;">Batal</button>
+                <button id="modalBtnConfirm" style="padding: 10px 20px; border: none; background: var(--header-accent); color: white; border-radius: 4px; cursor: pointer; font-weight: bold;">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Interaktif -->
+    <script>
+      // Kunci Jawaban Pengetahuan Kuantitatif (20 Soal)
+      const answerKey = {
+        1: 'B', 2: 'C', 3: 'C', 4: 'C', 5: 'E',
+        6: 'B', 7: 'B', 8: 'C', 9: 'B', 10: 'D',
+        11: 'D', 12: 'C', 13: 'D', 14: 'C', 15: 'E',
+        16: 'B', 17: 'C', 18: 'C', 19: 'B', 20: 'C'
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const landingPage = document.getElementById('landing-page');
+        const examPage = document.getElementById('exam-page');
+        const btnStart = document.getElementById('btn-start');
+        const timerBar = document.getElementById('timer-bar');
+        
+        // Input Elements
+        const namaInput = document.getElementById('nama');
+        const emailInput = document.getElementById('email');
+        const hpInput = document.getElementById('hp');
+        const sekolahInput = document.getElementById('sekolah');
+
+        // Display Elements
+        const displayNama = document.getElementById('display-nama');
+        const displaySekolah = document.getElementById('display-sekolah');
+        const displayHp = document.getElementById('display-hp');
+
+        let startTime;
+
+        // START EXAM LOGIC
+        btnStart.addEventListener('click', function() {
+            let nama = namaInput.value.trim() || "Peserta Anonim";
+            let email = emailInput.value.trim() || "-";
+            let hp = hpInput.value.trim() || "-";
+            let sekolah = sekolahInput.value.trim() || "-";
+
+            startTime = new Date();
+
+            landingPage.style.display = 'none';
+            examPage.style.display = 'block';
+            
+            displayNama.textContent = nama;
+            displaySekolah.textContent = sekolah;
+            displayHp.textContent = hp;
+
+            timerBar.style.display = 'flex';
+            document.body.style.paddingTop = '80px'; 
+            startTimer();
+
+            window.scrollTo(0, 0);
+        });
+
+        const options = document.querySelectorAll('.pilihan-ganda li');
+        const submitBtn = document.getElementById('submitBtn');
+        const timerDisplay = document.getElementById('timer-display');
+        let isSubmitted = false;
+        
+        // 25 menit
+        const durationInMinutes = 25; 
+        let endTime;
+        let timerInterval;
+
+        function startTimer() {
+             // Kalkulasi waktu selesai berdasarkan waktu saat tombol mulai ditekan
+             endTime = new Date(Date.now() + durationInMinutes * 60000);
+             timerInterval = setInterval(updateTimer, 1000);
+             updateTimer(); // Panggil sekali langsung agar tidak menunggu 1 detik
+        }
+
+        function updateTimer() {
+            if (isSubmitted) {
+                clearInterval(timerInterval);
+                return;
+            }
+
+            const now = new Date();
+            const timeDiff = endTime - now;
+
+            if (timeDiff <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "00:00";
+                handleTimeUp();
+                return;
+            }
+
+            // Konversi sisa waktu ke detik
+            const remainingSeconds = Math.floor(timeDiff / 1000);
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
+
+            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timerDisplay.textContent = formattedTime;
+            
+            // Peringatan saat waktu kurang dari 5 menit (300 detik)
+            if (remainingSeconds < 300) {
+                timerDisplay.classList.add('timer-warning');
+            } else {
+                timerDisplay.classList.remove('timer-warning');
+            }
+        }
+
+        function handleTimeUp() {
+            showModal("Waktu Habis!", "Waktu anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
+                processSubmission(true);
+            });
+        }
+
+        // Custom Modal Logic
+        const modal = document.getElementById('customModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalBtnCancel = document.getElementById('modalBtnCancel');
+        const modalBtnConfirm = document.getElementById('modalBtnConfirm');
+
+        function showModal(title, message, showCancel, onConfirm) {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
+            modal.style.display = 'flex';
+            
+            modalBtnConfirm.onclick = function() {
+                modal.style.display = 'none';
+                if(onConfirm) onConfirm();
+            };
+            modalBtnCancel.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
+
+        // Klik Pilihan Ganda
+        options.forEach(option => {
+          option.addEventListener('click', function() {
+            if (isSubmitted) return; 
+            
+            const siblings = this.parentNode.children;
+            for (let sibling of siblings) {
+              sibling.classList.remove('selected');
+            }
+            this.classList.add('selected');
+          });
+        });
+
+        // Klik Tombol Submit
+        submitBtn.addEventListener('click', function() {
+            if (isSubmitted) return;
+            showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengubahnya lagi.", true, function() {
+                processSubmission(false);
+            });
+        });
+
+        function processSubmission(isAutoSubmit) {
+            if(isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            submitBtn.style.display = "none";
+
+            let correctCount = 0;
+            let wrongCount = 0;
+            let emptyCount = 0;
+            const categoryStats = {};
+
+            const soalItems = document.querySelectorAll('.soal-item');
+            
+            soalItems.forEach((item, index) => {
+                const questionNumber = index + 1;
+                const correctAnswer = answerKey[questionNumber];
+                const selectedOption = item.querySelector('li.selected');
+                
+                // Track Kategori
+                const catEl = item.querySelector('.kategori');
+                const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
+                if (!categoryStats[categoryName]) {
+                    categoryStats[categoryName] = { total: 0, correct: 0 };
+                }
+                categoryStats[categoryName].total++;
+
+                // Kunci form pilihan ganda
+                item.querySelector('ol').classList.add('disabled-options');
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.getAttribute('data-option');
+                    
+                    if (userAnswer === correctAnswer) {
+                        correctCount++;
+                        categoryStats[categoryName].correct++;
+                        selectedOption.classList.add('correct');
+                        selectedOption.classList.remove('selected');
+                    } else {
+                        wrongCount++;
+                        selectedOption.classList.add('wrong');
+                        selectedOption.classList.remove('selected');
+                        // Beri tanda pada jawaban yang seharusnya benar
+                        const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                        if (correctEl) correctEl.classList.add('correct');
+                    }
+                } else {
+                    emptyCount++;
+                    // Jika tidak dijawab, tetap tunjukkan jawaban benarnya
+                    const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                    if (correctEl) correctEl.classList.add('correct');
+                }
+            });
+
+            // Hitung Skor
+            const finalScore = (correctCount / 20) * 100;
+            document.getElementById('scoreValue').textContent = finalScore;
+            
+            // Update UI Stats
+            document.getElementById('count-benar').textContent = correctCount;
+            document.getElementById('count-salah').textContent = wrongCount;
+            document.getElementById('count-kosong').textContent = emptyCount;
+
+            // Analisis Strength & Weakness
+            let strengths = [];
+            let weaknesses = [];
+
+            for (const [cat, data] of Object.entries(categoryStats)) {
+                const percentage = (data.correct / data.total) * 100;
+                if (percentage >= 60) {
+                    strengths.push(cat);
+                } else if (percentage <= 40) {
+                    weaknesses.push(cat);
+                }
+            }
+
+            document.getElementById('strength-text').textContent = strengths.length > 0 ? strengths.join(", ") : "Belum ada (Terus tingkatkan!)";
+            document.getElementById('weakness-text').textContent = weaknesses.length > 0 ? weaknesses.join(", ") : "Tidak ada (Pertahankan!)";
+
+            // Buka semua kotak penjelasan (Pembahasan)
+            const explanations = document.querySelectorAll('.explanation');
+            explanations.forEach(exp => {
+                exp.style.display = 'block';
+            });
+
+            // Tampilkan kotak skor
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    </script>
+  </body>
+</html>
