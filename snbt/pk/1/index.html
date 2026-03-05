@@ -130,6 +130,22 @@
         font-size: 28px;
         margin-bottom: 10px;
       }
+      
+      /* Promo Banner Styling */
+      .promo-banner {
+          background-color: #fff3e0;
+          color: #d35400;
+          padding: 8px 20px;
+          border-radius: 50px;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: 1px dashed #f39c12;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
       .rules-box {
         background-color: #e8f4fd;
         border: 2px solid var(--header-accent);
@@ -452,6 +468,13 @@
         background-color: #1f618d !important;
         transform: translateY(-4px);
       }
+      .btn-submit:disabled {
+        background-color: #95a5a6 !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
       .result-box {
         margin-top: 30px;
         padding: 30px;
@@ -553,6 +576,7 @@
                 <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" style="height: 140px; margin-bottom: 20px;" />
                 <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
                 <h2>Topik : Bilangan, Aritmetika Sosial, Aljabar</h2>
+                <div class="promo-banner">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
             </header>
 
             <div class="rules-box">
@@ -595,6 +619,7 @@
                 <div class="header-left">
                     <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
                     <h2>Topik : Bilangan, Aritmetika Sosial, Aljabar</h2>
+                    <div class="promo-banner" style="margin-top: 10px; font-size: 13px; padding: 5px 15px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
                 </div>
                 <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" />
             </header>
@@ -1381,7 +1406,8 @@
             <!-- FOOTER -->
             <footer class="worksheet-footer">
                 <b>Tryout 1 - Pengetahuan Kuantitatif</b><br>
-                <i>CBT System Interface</i>
+                <i>CBT System Interface</i><br>
+                <p style="color: #2980b9; font-weight: 600; margin-top: 10px; font-size: 14px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</p>
             </footer>
         </div>
     </div>
@@ -1403,6 +1429,11 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
       import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
       import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      // ==========================================
+      // URL GOOGLE APPS SCRIPT
+      // ==========================================
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyShlfwnc6zLQHPW-SU3zAV7G3m17cxzDK67lijrcOvxevlu4JyPEKpz6UcFuKOe1Vulg/exec";
 
       // Kunci Jawaban Pengetahuan Kuantitatif (20 Soal)
       const answerKey = {
@@ -1677,7 +1708,6 @@
           isSubmitted = true;
           clearInterval(timerInterval);
 
-          submitBtn.style.display = "none";
           timerBar.style.display = "none";
           
           // Set status Selesai
@@ -1736,7 +1766,47 @@
           // Skoring (Skala 100)
           const finalScore = Math.round((correctCount / 20) * 100);
           
-          // Animasi Angka
+          // ==========================================
+          // KIRIM DATA KE GOOGLE SHEETS
+          // ==========================================
+          if (!isRestoring && state.userData.email !== "riansyahdhanardi@gmail.com") {
+              submitBtn.innerText = "SEDANG MENGIRIM DATA...";
+              submitBtn.style.backgroundColor = "#95a5a6";
+              submitBtn.disabled = true;
+              
+              let dataToSend = {
+                  nama: state.userData.nama,
+                  email: state.userData.email,
+                  hp: state.userData.hp,
+                  sekolah: state.userData.sekolah,
+                  score: finalScore,
+                  benar: correctCount,
+                  salah: wrongCount,
+                  kosong: emptyCount
+              };
+              
+              // Loop masukin jawaban tiap nomor
+              for (let i = 1; i <= 20; i++) {
+                  dataToSend['soal_' + i] = state.answers[i] || "";
+              }
+
+              fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  body: JSON.stringify(dataToSend)
+              })
+              .then(response => {
+                  console.log("Data sukses terkirim ke server", response);
+                  submitBtn.style.display = "none";
+              })
+              .catch(error => {
+                  console.error('Error saat mengirim data:', error);
+                  submitBtn.style.display = "none";
+              });
+          } else {
+              submitBtn.style.display = "none";
+          }
+
+          // Animasi Angka Skor
           let currentScore = 0;
           const scoreEl = document.getElementById('scoreValue');
           const scoreInterval = setInterval(() => {
