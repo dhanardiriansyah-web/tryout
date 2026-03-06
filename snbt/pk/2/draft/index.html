@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tryout 1: Pengetahuan Kuantitatif</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .instructions {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-header {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: upper-alpha;
+            padding-left: 20px;
+        }
+        .options li {
+            margin-bottom: 8px;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .options li:hover {
+            background-color: #f0f0f0;
+        }
+        .table-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 450px;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .explanation {
+            display: none;
+            background-color: #fdfae6;
+            padding: 15px 20px;
+            border-left: 4px solid #f39c12;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .explanation ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .explanation li {
+            margin-bottom: 8px;
+        }
+        .show-explanation-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .show-explanation-btn:hover {
+            background-color: #27ae60;
+        }
+        .flowchart {
+            text-align: center;
+            margin: 15px auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            width: fit-content;
+            border-radius: 8px;
+        }
+        .flowchart p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tryout 1: Pengetahuan Kuantitatif</h1>
+    <h3>Berdasarkan Kisi-Kisi Ujian Masuk PTN</h3>
+
+    <div class="instructions">
+        <strong>Petunjuk Umum:</strong> Pilihlah satu jawaban yang paling tepat. Untuk soal perbandingan kuantitas (P dan Q), analisis kecukupan data (AKD), jumlah pernyataan benar, dan kombinasi pernyataan benar, perhatikan pola pilihan ganda baku yang telah ditentukan.
+    </div>
+
+    <!-- NOMOR 1 -->
+    <div class="question">
+        <div class="question-header">1.</div>
+        <p>Nilai dari $\lim\limits_{x \to \infty} \left( \sqrt{4x^2 + 8x - 5} - (2x - 1) \right)$ adalah ...</p>
+        
+        <ol class="options">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+        
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp1')">Tampilkan Pembahasan</button>
+        <div id="exp1" class="explanation">
+            <strong>Kunci Jawaban: C</strong>
+            <ul>
+                <li>Ubah bentuk $(2x - 1)$ menjadi bentuk akar agar bisa menggunakan rumus limit tak hingga $\sqrt{ax^2+bx+c} - \sqrt{px^2+qx+r}$.
+                $$(2x - 1) = \sqrt{(2x - 1)^2} = \sqrt{4x^2 - 4x + 1}$$</li>
+                <li>Sehingga limitnya menjadi:
+                $$\lim_{x \to \infty} \left( \sqrt{4x^2 + 8x - 5} - \sqrt{4x^2 - 4x + 1} \right)$$</li>
+                <li>Karena koefisien $x^2$ pada kedua akar sama ($a = p = 4$), maka kita dapat menggunakan rumus cepat $\frac{b - q}{2\sqrt{a}}$:
+                $$\text{Limit} = \frac{8 - (-4)}{2\sqrt{4}} = \frac{12}{2(2)} = \frac{12}{4} = 3$$</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 2 -->
+    <div class="question">
+        <div class="question-header">2.</div>
+        <p>Berapakah nilai dari $\lim\limits_{x \to c} \frac{x^2 - c^2}{x - c}$?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>$c = 4$</li>
+            <li>$c^2 - 16 = 0$</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp2')">Tampilkan Pembahasan</button>
+        <div id="exp2" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Selesaikan bentuk limit terlebih dahulu:
+                $$\lim_{x \to c} \frac{(x-c)(x+c)}{x-c} = \lim_{x \to c} (x+c) = 2c$$
+                Artinya, kita hanya perlu mengetahui nilai $c$ secara pasti untuk menjawab soal.</li>
+                <li><strong>Pernyataan (1):</strong> $c = 4 \implies$ Nilai limit $= 2(4) = 8$. (CUKUP)</li>
+                <li><strong>Pernyataan (2):</strong> $c^2 - 16 = 0 \implies c = 4$ atau $c = -4$. Karena ada dua kemungkinan nilai $c$, nilai limit bisa $8$ atau $-8$. (TIDAK CUKUP)</li>
+                <li>Jadi, pernyataan (1) saja cukup, namun pernyataan (2) saja tidak cukup.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 3 -->
+    <div class="question">
+        <div class="question-header">3.</div>
+        <p>Diketahui suatu fungsi memenuhi $F\left(\sqrt{3+\sqrt{x-2}}\right) = x^2 - 2x$ untuk $x \ge 2$. Nilai dari $F(3)$ adalah ...</p>
+        
+        <ol class="options">
+            <li>1368</li>
+            <li>1260</li>
+            <li>1040</li>
+            <li>986</li>
+            <li>824</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp3')">Tampilkan Pembahasan</button>
+        <div id="exp3" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Kita diminta mencari nilai $F(3)$, maka samakan input fungsi dengan angka 3:
+                $$\sqrt{3+\sqrt{x-2}} = 3$$</li>
+                <li>Kuadratkan kedua ruas:
+                $$3 + \sqrt{x-2} = 9 \implies \sqrt{x-2} = 6$$</li>
+                <li>Kuadratkan lagi kedua ruas:
+                $$x - 2 = 36 \implies x = 38$$</li>
+                <li>Substitusi nilai $x = 38$ ke persamaan hasil fungsi:
+                $$F(3) = (38)^2 - 2(38) = 1444 - 76 = 1368$$</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 4 -->
+    <div class="question">
+        <div class="question-header">4.</div>
+        <p>Diketahui fungsi $f(x) = 2x - 3$ dan fungsi linear $g(x) = ax + b$. Jika diketahui $(g \circ f)^{-1}(x) = \frac{x+5}{4}$, tentukan hubungan antara kuantitas P dan Q berikut.</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>$a^2 + b^2$</td>
+                    <td>$5$</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp4')">Tampilkan Pembahasan</button>
+        <div id="exp4" class="explanation">
+            <strong>Kunci Jawaban: C</strong>
+            <ul>
+                <li>Pertama, tentukan $(g \circ f)(x)$:
+                $$h(x) = (g \circ f)(x) = g(f(x)) = a(2x - 3) + b = 2ax - 3a + b$$</li>
+                <li>Cari invers dari fungsi $h(x) = 2ax + (b - 3a)$:
+                $$y = 2ax + b - 3a \implies 2ax = y + 3a - b \implies x = \frac{y + 3a - b}{2a}$$
+                $$h^{-1}(x) = \frac{x + 3a - b}{2a}$$</li>
+                <li>Diketahui dari soal bahwa $h^{-1}(x) = \frac{x+5}{4}$. Maka, dengan menyamakan posisi penyebut dan pembilang:
+                $$2a = 4 \implies a = 2$$
+                $$3a - b = 5 \implies 3(2) - b = 5 \implies 6 - 5 = b \implies b = 1$$</li>
+                <li>Nilai Kuantitas P: $a^2 + b^2 = 2^2 + 1^2 = 4 + 1 = 5$.</li>
+                <li>Karena P = 5 dan Q = 5, maka kuantitas P sama dengan kuantitas Q.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 5 -->
+    <div class="question">
+        <div class="question-header">5.</div>
+        <p>Diketahui $f$ dan $g$ merupakan fungsi riil sedemikian sehingga $f(g(x)) = 2x^2 - 4x + 5$ dan $g(x-1) = x+2$. Perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>$g(x) = x + 3$</li>
+            <li>$f(x) = 2x^2 - 16x + 35$</li>
+            <li>$f(2) = 11$</li>
+            <li>Nilai minimum dari $f(x)$ adalah $3$</li>
+        </ol>
+        <p>Manakah di antara pernyataan di atas yang benar?</p>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp5')">Tampilkan Pembahasan</button>
+        <div id="exp5" class="explanation">
+            <strong>Kunci Jawaban: E</strong>
+            <ul>
+                <li>Langkah 1: Cari fungsi $g(x)$.<br>
+                Misalkan $u = x - 1 \implies x = u + 1$. Substitusi ke persamaan $g$:
+                $$g(u) = (u + 1) + 2 = u + 3 \implies g(x) = x + 3 \text{ (Pernyataan 1 Benar)}$$</li>
+                <li>Langkah 2: Cari fungsi $f(x)$.<br>
+                Diketahui $f(x+3) = 2x^2 - 4x + 5$. Misalkan $v = x + 3 \implies x = v - 3$.
+                $$ \begin{aligned} f(v) &= 2(v - 3)^2 - 4(v - 3) + 5 \\ &= 2(v^2 - 6v + 9) - 4v + 12 + 5 \\ &= 2v^2 - 12v + 18 - 4v + 17 \\ &= 2v^2 - 16v + 35 \end{aligned} $$
+                Jadi, $f(x) = 2x^2 - 16x + 35$ (Pernyataan 2 Benar).</li>
+                <li>Langkah 3: Cek $f(2)$.<br>
+                $f(2) = 2(2)^2 - 16(2) + 35 = 8 - 32 + 35 = 11$ (Pernyataan 3 Benar).</li>
+                <li>Langkah 4: Cek nilai minimum fungsi kuadrat $f(x)$.<br>
+                Absis titik puncak $x_p = \frac{-b}{2a} = \frac{-(-16)}{2(2)} = 4$.<br>
+                Nilai minimum $y_p = f(4) = 2(4)^2 - 16(4) + 35 = 32 - 64 + 35 = 3$ (Pernyataan 4 Benar).</li>
+                <li>Karena keempat pernyataan benar, jawaban yang tepat adalah E.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 6 -->
+    <div class="question">
+        <div class="question-header">6.</div>
+        <p>Jika rata-rata $20$ bilangan bulat nonnegatif berbeda adalah $20$, maka bilangan terbesar yang mungkin adalah ...</p>
+        
+        <ol class="options">
+            <li>210</li>
+            <li>229</li>
+            <li>230</li>
+            <li>239</li>
+            <li>240</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp6')">Tampilkan Pembahasan</button>
+        <div id="exp6" class="explanation">
+            <strong>Kunci Jawaban: B</strong>
+            <ul>
+                <li>Total jumlah ke-20 bilangan tersebut adalah: $20 \times 20 = 400$.</li>
+                <li>Untuk mendapatkan satu bilangan yang paling besar (maksimal), maka 19 bilangan lainnya haruslah bilangan sekecil mungkin. Karena bilangannya harus bulat, nonnegatif (mulai dari 0), dan <strong>berbeda</strong>, maka 19 bilangan terkecil tersebut adalah:
+                $$0, 1, 2, 3, \dots, 18$$</li>
+                <li>Jumlah dari 19 bilangan terkecil ini adalah deret aritmetika:
+                $$S_{19} = \frac{19}{2}(0 + 18) = 19 \times 9 = 171$$</li>
+                <li>Maka, bilangan terbesarnya adalah: $400 - 171 = 229$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 7 -->
+    <div class="question">
+        <div class="question-header">7.</div>
+        <p>Sebuah keluarga mempunyai 5 orang anak. Anak tertua berumur 2 kali dari umur anak termuda, sedangkan 3 anak yang lainnya masing-masing berumur kurang 3 tahun dari anak tertua, lebih 4 tahun dari anak termuda, dan kurang 5 tahun dari anak tertua. Jika rata-rata umur mereka adalah 16 tahun, maka kuadrat dari selisih umur anak kedua dan anak ketiga adalah ...</p>
+        
+        <ol class="options">
+            <li>4</li>
+            <li>6,25</li>
+            <li>9</li>
+            <li>12,25</li>
+            <li>20,25</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp7')">Tampilkan Pembahasan</button>
+        <div id="exp7" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Misalkan umur anak tertua adalah $T$ dan umur anak termuda adalah $M$. Diketahui $T = 2M \implies M = 0,5T$.</li>
+                <li>Umur 3 anak yang lain:<br>
+                - Anak A: $T - 3$<br>
+                - Anak B: $M + 4 = 0,5T + 4$<br>
+                - Anak C: $T - 5$</li>
+                <li>Total umur kelima anak = $5 \times 16 = 80$.
+                $$T + M + A + B + C = 80$$
+                $$T + 0,5T + (T - 3) + (0,5T + 4) + (T - 5) = 80$$
+                $$4T - 4 = 80 \implies 4T = 84 \implies T = 21$$</li>
+                <li>Maka, nilai umurnya satu persatu adalah: $T = 21$; $M = 10,5$; Anak A $= 18$; Anak B $= 14,5$; Anak C $= 16$.</li>
+                <li>Jika diurutkan dari yang tertua ke termuda: 21, 18, 16, 14.5, 10.5.</li>
+                <li>Anak kedua berusia 18 dan anak ketiga berusia 16. Selisih umur mereka adalah $18 - 16 = 2$. Kuadrat dari selisihnya adalah $2^2 = 4$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 8 -->
+    <div class="question">
+        <div class="question-header">8.</div>
+        <p>Lima bilangan bulat positif berbeda memiliki median 10. Apakah rata-rata kelima bilangan tersebut lebih dari 12?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Jangkauan bilangan tersebut adalah 15.</li>
+            <li>Selisih antara bilangan terbesar dan median sama dengan dua kali selisih median dan bilangan terkecil.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp8')">Tampilkan Pembahasan</button>
+        <div id="exp8" class="explanation">
+            <strong>Kunci Jawaban: E</strong>
+            <ul>
+                <li>Misalkan kelima bilangan urut tersebut adalah $a < b < 10 < d < e$. Untuk rata-rata $> 12$, maka total jumlah $a+b+10+d+e > 60$.</li>
+                <li><strong>Cek (1):</strong> $e - a = 15$. Jika $a=8, e=23$ dan $b=9, d=22$, total $= 8+9+10+22+23 = 72$ (rata-rata $>12$). Namun, jika $a=1, e=16$ dan $b=2, d=11$, total $= 1+2+10+11+16 = 40$ (rata-rata $<12$). Tidak Cukup.</li>
+                <li><strong>Cek (2):</strong> $e - 10 = 2(10 - a) \implies e + 2a = 30$. Ini juga memunculkan berbagai kemungkinan kombinasi yang bisa menghasilkan rata-rata $>12$ maupun $<12$. Tidak Cukup.</li>
+                <li><strong>Cek (1) &amp; (2) Bersama:</strong> Substitusi $e = a + 15$ ke persamaan kedua. $(a+15) + 2a = 30 \implies 3a = 15 \implies a = 5$, sehingga $e = 20$. Formasinya menjadi $5 < b < 10 < d < 20$.</li>
+                <li>Cek kemungkinan rata-rata: Jika $b=9, d=19$, jumlah $= 5+9+10+19+20 = 63$ (rata-rata $12,6 > 12$). Jika $b=6, d=11$, jumlah $= 5+6+10+11+20 = 52$ (rata-rata $10,4 < 12$).</li>
+                <li>Ternyata gabungan dua pernyataan tetap menghasilkan dua kemungkinan yang berlawanan. Jadi, informasi tidak cukup.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 9 -->
+    <div class="question">
+        <div class="question-header">9.</div>
+        <p>Diketahui bahwa sistem persamaan linear berikut memiliki penyelesaian $(x, y)$ yang tidak hanya di $(0,0)$.</p>
+        <p>$$\begin{cases} (a-1)x + 2y = 0 \\ 3x + ay = 0 \end{cases}$$</p>
+        <p>Perhatikan pernyataan berikut yang berkaitan dengan nilai $a$ yang memenuhi:</p>
+        <ol style="list-style-type: decimal;">
+            <li>Terdapat nilai $a$ yang merupakan bilangan negatif.</li>
+            <li>Jumlah semua nilai $a$ yang memenuhi adalah $1$.</li>
+            <li>Hasil kali semua nilai $a$ yang memenuhi adalah $-6$.</li>
+            <li>Selisih nilai $a$ terbesar dan terkecil adalah $5$.</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang benar dari empat pernyataan di atas?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp9')">Tampilkan Pembahasan</button>
+        <div id="exp9" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Agar sistem persamaan linier homogen ini memiliki solusi selain $(0,0)$, determinan matriks koefisiennya harus sama dengan nol.
+                $$\begin{vmatrix} a-1 & 2 \\ 3 & a \end{vmatrix} = 0 \implies (a-1)(a) - (2)(3) = 0$$
+                $$a^2 - a - 6 = 0 \implies (a-3)(a+2) = 0$$</li>
+                <li>Didapatkan akar-akar nilai $a$ adalah $a_1 = 3$ dan $a_2 = -2$.</li>
+                <li>Mari kita cek setiap pernyataan:<br>
+                (1) Terdapat nilai $a$ negatif: Benar (ada $a = -2$).<br>
+                (2) Jumlah semua nilai $a = 3 + (-2) = 1$: Benar.<br>
+                (3) Hasil kali semua nilai $a = 3 \times (-2) = -6$: Benar.<br>
+                (4) Selisih $a$ terbesar dan terkecil $= 3 - (-2) = 5$: Benar.</li>
+                <li>Keempat pernyataan di atas terbukti benar.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 10 -->
+    <div class="question">
+        <div class="question-header">10.</div>
+        <p>Ibu membeli dua jenis barang, yaitu Barang A dan Barang B di sebuah toko. Barang A mendapat diskon 20% dan Barang B mendapat diskon 30%. Total harga awal kedua barang tersebut sebelum diskon adalah Rp500.000,00. Toko membebankan pajak 10% dari total harga setelah diskon. Jika Ibu membayar sebesar Rp396.000,00, selisih harga awal Barang A dan Barang B adalah ...</p>
+        
+        <ol class="options">
+            <li>Rp100.000,00</li>
+            <li>Rp150.000,00</li>
+            <li>Rp200.000,00</li>
+            <li>Rp250.000,00</li>
+            <li>Rp300.000,00</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp10')">Tampilkan Pembahasan</button>
+        <div id="exp10" class="explanation">
+            <strong>Kunci Jawaban: E</strong>
+            <ul>
+                <li>Misalkan harga awal Barang A adalah $A$ dan Barang B adalah $B$. Persamaan 1: $A + B = 500.000$.</li>
+                <li>Harga setelah diskon adalah $0,8A$ dan $0,7B$. Pajak yang dibebankan adalah 10% (pengali $1,1$).<br>
+                Persamaan 2: $1,1 \times (0,8A + 0,7B) = 396.000$
+                $$0,8A + 0,7B = \frac{396.000}{1,1} \implies 0,8A + 0,7B = 360.000$$</li>
+                <li>Kalikan 10 pada Persamaan 2 agar mudah dieliminasi dengan Persamaan 1:
+                $$8A + 7B = 3.600.000$$</li>
+                <li>Kalikan Persamaan 1 dengan 7:
+                $$7A + 7B = 3.500.000$$</li>
+                <li>Kurangkan kedua persamaan tersebut, sehingga diperoleh:
+                $$A = 100.000$$</li>
+                <li>Maka $B = 500.000 - 100.000 = 400.000$. Selisih harganya adalah $400.000 - 100.000 = \text{Rp300.000,00}$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 11 -->
+    <div class="question">
+        <div class="question-header">11.</div>
+        <p>Kurva $y = x^2 - 4x - 5$ dipotong oleh garis lurus $y = mx + c$ di dua titik berbeda, yaitu $A$ dan $B$. Apakah koordinat titik tengah dari ruas garis $AB$ berada di kuadran IV?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>Garis lurus tersebut melalui titik $(0, -2)$.</li>
+            <li>Garis lurus tersebut sejajar dengan sumbu-$x$.</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp11')">Tampilkan Pembahasan</button>
+        <div id="exp11" class="explanation">
+            <strong>Kunci Jawaban: C</strong>
+            <ul>
+                <li>Substitusi garis ke kurva: $x^2 - (4+m)x - (5+c) = 0$.</li>
+                <li>Koordinat titik tengah dari garis AB dapat ditentukan dari $x_m = \frac{x_1+x_2}{2} = \frac{4+m}{2}$ dan $y_m = m x_m + c$. Agar berada di kuadran IV, nilai $x_m > 0$ dan $y_m < 0$. Syarat "dipotong di dua titik berbeda" artinya nilai diskriminan $D > 0$.</li>
+                <li><strong>Cek (1):</strong> Garis lurus melalui $(0, -2) \implies c = -2$. Persamaan garis menjadi $y = mx - 2$. Jika dimisalkan gradien $m=0$, maka $x_m = 2$ dan $y_m = -2$ (Kuadran IV). Namun jika dimisalkan $m=10$, maka $x_m = 7$ dan $y_m = 68$ (Kuadran I). Karena letak titik tengah masih bergantung dan berubah-ubah berdasarkan gradien $m$, pernyataan (1) saja tidak cukup.</li>
+                <li><strong>Cek (2):</strong> Garis lurus sejajar sumbu-x $\implies m = 0$. Persamaan garis $y = c$. Maka titik tengahnya adalah $x_m = 2$ dan $y_m = c$. Syarat $D > 0$ menghasilkan $16 - 4(-5-c) > 0 \implies 36 + 4c > 0 \implies c > -9$. Jika $c=1$, titiknya di $(2, 1)$ (Kuadran I). Jika $c=-2$, titiknya di $(2, -2)$ (Kuadran IV). Pernyataan (2) saja tidak cukup.</li>
+                <li><strong>Cek (1) &amp; (2) Bersama:</strong> Digabungkan akan menjadi $m=0$ dan $c=-2$. Koordinat titik tengahnya adalah $x_m = 2$ dan $y_m = -2$, yaitu di $(2, -2)$ yang mana pasti selalu berada di Kuadran IV. (Cek diskriminan: $D = 16 - 4(-3) = 28 > 0$, terbukti bahwa kurva saling memotong).</li>
+                <li>Kesimpulannya, DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan secara pasti.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 12 -->
+    <div class="question">
+        <div class="question-header">12.</div>
+        <p>Diberikan matriks $A = \begin{pmatrix} 2 & 1 \\ 4 & 3 \end{pmatrix}$ dan $B = \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix}$. Jika terdapat matriks $C$ sedemikian sehingga memenuhi persamaan $AC = B$, perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>Determinan matriks $A$ adalah $2$.</li>
+            <li>Determinan matriks $C$ adalah $1$.</li>
+            <li>Matriks $C = \begin{pmatrix} 1,5 & -2,5 \\ -2 & 4 \end{pmatrix}$.</li>
+            <li>Invers matriks $C$ adalah $\begin{pmatrix} 4 & -2,5 \\ -2 & 1,5 \end{pmatrix}$.</li>
+        </ol>
+        <p>Manakah di antara pernyataan berikut yang benar?</p>
+
+        <ol class="options">
+            <li>Pernyataan 1, 2, dan 3 benar.</li>
+            <li>Pernyataan 1 dan 3 benar.</li>
+            <li>Pernyataan 2 dan 4 benar.</li>
+            <li>Hanya pernyataan 4 yang benar.</li>
+            <li>Semua pernyataan benar.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp12')">Tampilkan Pembahasan</button>
+        <div id="exp12" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>(1) $\text{det}(A) = (2)(3) - (1)(4) = 6 - 4 = 2$. (Benar)</li>
+                <li>(2) Karena $AC = B$, maka $\text{det}(A) \times \text{det}(C) = \text{det}(B)$. $\text{det}(B) = (1)(2) - (0)(-1) = 2$. Maka $2 \times \text{det}(C) = 2 \implies \text{det}(C) = 1$. (Benar)</li>
+                <li>(3) Cari nilai $C = A^{-1}B = \frac{1}{2} \begin{pmatrix} 3 & -1 \\ -4 & 2 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix} = \frac{1}{2} \begin{pmatrix} 3 & -5 \\ -4 & 8 \end{pmatrix} = \begin{pmatrix} 1,5 & -2,5 \\ -2 & 4 \end{pmatrix}$. (Benar)</li>
+                <li>(4) Invers dari matriks $C = \frac{1}{1} \begin{pmatrix} 4 & 2,5 \\ 2 & 1,5 \end{pmatrix} = \begin{pmatrix} 4 & 2,5 \\ 2 & 1,5 \end{pmatrix}$. Tanda minus pada opsi jawaban menjadikannya salah. (Salah)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 13 -->
+    <div class="question">
+        <div class="question-header">13.</div>
+        <p>Diketahui matriks $A = \begin{pmatrix} 3 & 1 \\ 5 & 2 \end{pmatrix}$ dan $B = \begin{pmatrix} -1 & 2 \\ 1 & 1 \end{pmatrix}$.</p>
+        <p>Berdasarkan informasi di atas, tentukan hubungan antara kuantitas P dan Q berikut.</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>P</th>
+                    <th>Q</th>
+                </tr>
+                <tr>
+                    <td>Determinan matriks $(A^{-1} B)^{-1}$</td>
+                    <td>$-1$</td>
+                </tr>
+            </table>
+        </div>
+
+        <ol class="options">
+            <li>Kuantitas P lebih besar daripada kuantitas Q.</li>
+            <li>Kuantitas P lebih kecil daripada kuantitas Q.</li>
+            <li>Kuantitas P sama dengan kuantitas Q.</li>
+            <li>Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp13')">Tampilkan Pembahasan</button>
+        <div id="exp13" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Gunakan sifat determinan matriks: $|(A^{-1}B)^{-1}| = |B^{-1}A| = \frac{|A|}{|B|}$.</li>
+                <li>Kita cari masing-masing determinannya:
+                $$|A| = (3)(2) - (5)(1) = 6 - 5 = 1$$
+                $$|B| = (-1)(1) - (1)(2) = -1 - 2 = -3$$</li>
+                <li>Nilai Kuantitas P adalah $\frac{1}{-3} = -\frac{1}{3}$. </li>
+                <li>Nilai Kuantitas Q adalah $-1$.</li>
+                <li>Karena $-\frac{1}{3}$ lebih mendekati nol (lebih besar) daripada $-1$, maka P $>$ Q.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 14 -->
+    <div class="question">
+        <div class="question-header">14.</div>
+        <p>Diketahui suku ke-2, suku ke-4, dan suku ke-5 dari suatu barisan aritmetika dengan beda bukan nol, berturut-turut membentuk suatu barisan geometri. Jika suku ke-3 barisan aritmetika tersebut adalah 12, maka nilai suku pertamanya adalah ...</p>
+        
+        <ol class="options">
+            <li>16</li>
+            <li>20</li>
+            <li>24</li>
+            <li>28</li>
+            <li>32</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp14')">Tampilkan Pembahasan</button>
+        <div id="exp14" class="explanation">
+            <strong>Kunci Jawaban: B</strong>
+            <ul>
+                <li>Suku ke-2, ke-4, dan ke-5 barisan aritmetika adalah $(a+b), (a+3b), (a+4b)$. Karena mereka membentuk barisan geometri berturut-turut, berlaku sifat $(U_{\text{tengah}})^2 = U_{\text{awal}} \times U_{\text{akhir}}$:
+                $$(a+3b)^2 = (a+b)(a+4b)$$
+                $$a^2 + 6ab + 9b^2 = a^2 + 5ab + 4b^2$$
+                $$ab + 5b^2 = 0 \implies b(a + 5b) = 0$$</li>
+                <li>Karena beda bukan nol ($b \ne 0$), maka $a = -5b$.</li>
+                <li>Diketahui suku ke-3 barisan aritmetika adalah 12, maka:
+                $$U_3 = a + 2b = 12$$
+                $$(-5b) + 2b = 12 \implies -3b = 12 \implies b = -4$$</li>
+                <li>Maka nilai $a = -5(-4) = 20$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 15 -->
+    <div class="question">
+        <div class="question-header">15.</div>
+        <p>Pada suatu barisan geometri dengan suku-suku positif dan rasio $r > 1$, diketahui bahwa $\frac{u_1+u_2+u_3}{u_4+u_5+u_6} = \frac{1}{27}$. Jika nilai dari $u_2 \cdot u_4 = 144$, maka nilai dari $u_4 + u_2$ adalah ...</p>
+        
+        <ol class="options">
+            <li>$12$</li>
+            <li>$16$</li>
+            <li>$24$</li>
+            <li>$36$</li>
+            <li>$40$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp15')">Tampilkan Pembahasan</button>
+        <div id="exp15" class="explanation">
+            <strong>Kunci Jawaban: E</strong>
+            <ul>
+                <li>Jabarkan pecahan dengan memfaktorkan $r^3$:
+                $$\frac{u_1+u_2+u_3}{u_4+u_5+u_6} = \frac{a(1+r+r^2)}{ar^3(1+r+r^2)} = \frac{1}{r^3}$$</li>
+                <li>Diketahui pecahan tersebut sama dengan $\frac{1}{27}$, maka $r^3 = 27 \implies r = 3$.</li>
+                <li>Gunakan persamaan kedua untuk mencari $a$:
+                $$u_2 \cdot u_4 = (ar)(ar^3) = a^2 r^4 = 144$$
+                $$a^2 (3)^4 = 144 \implies a^2 (81) = 144 \implies a^2 = \frac{144}{81} = \frac{16}{9} \implies a = \frac{4}{3} \text{ (karena suku-suku bernilai positif)}$$</li>
+                <li>Maka nilai suku-sukunya adalah:
+                $$u_2 = ar = \frac{4}{3} \times 3 = 4$$
+                $$u_4 = ar^3 = \frac{4}{3} \times 27 = 36$$</li>
+                <li>Sehingga nilai $u_4 + u_2 = 36 + 4 = 40$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 16 -->
+    <div class="question">
+        <div class="question-header">16.</div>
+        <p>Berapakah nilai dari $2^x$?</p>
+        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <ol style="list-style-type: decimal;">
+            <li>$4^x - 3(2^x) + 2 = 0$</li>
+            <li>$x > 0$</li>
+        </ol>
+
+        <ol class="options">
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp16')">Tampilkan Pembahasan</button>
+        <div id="exp16" class="explanation">
+            <strong>Kunci Jawaban: C</strong>
+            <ul>
+                <li><strong>Pernyataan (1):</strong> Misalkan $y = 2^x$, maka persamaannya menjadi $y^2 - 3y + 2 = 0 \implies (y-1)(y-2) = 0$. Terdapat dua kemungkinan nilai untuk $2^x$, yaitu 1 atau 2. Maka, pernyataan (1) saja tidak cukup.</li>
+                <li><strong>Pernyataan (2):</strong> Hanya menyatakan $x>0$ tanpa persamaan yang mengikat. Tentu tidak cukup.</li>
+                <li><strong>Pernyataan (1) &amp; (2) Bersama:</strong> Digabungkan, jika $2^x = 1 \implies x = 0$ (tidak memenuhi syarat $x>0$). Jika $2^x = 2 \implies x = 1$ (memenuhi $x>0$). Maka kita bisa mendapat kesimpulan pasti bahwa nilai $2^x$ adalah 2. Diperlukan dua pernyataan bersama-sama.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 17 -->
+    <div class="question">
+        <div class="question-header">17.</div>
+        <p>Diberikan persamaan eksponensial $3^{2x+1} - 10(3^x) + 3 = 0$. Jika $x_1$ dan $x_2$ adalah akar-akar persamaan tersebut dengan $x_1 < x_2$, perhatikan pernyataan berikut:</p>
+        <ol style="list-style-type: decimal;">
+            <li>$x_1 + x_2 = 0$</li>
+            <li>$x_1 \cdot x_2 = -1$</li>
+            <li>$x_2 - x_1 = 2$</li>
+            <li>$3^{x_1} + 3^{x_2} = \frac{10}{3}$</li>
+        </ol>
+        <p>Berapa banyak pernyataan yang benar dari empat pernyataan di atas?</p>
+
+        <ol class="options">
+            <li>4</li>
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+            <li>0</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp17')">Tampilkan Pembahasan</button>
+        <div id="exp17" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Misalkan $y = 3^x$, maka bentuk $3^{2x+1} = 3 \cdot (3^x)^2 = 3y^2$. Persamaan kuadratnya menjadi:
+                $$3y^2 - 10y + 3 = 0 \implies (3y - 1)(y - 3) = 0$$</li>
+                <li>Nilai $y_1 = \frac{1}{3} \implies 3^x = 3^{-1} \implies x_1 = -1$ (Karena $x_1 < x_2$).<br>
+                Nilai $y_2 = 3 \implies 3^x = 3^1 \implies x_2 = 1$.</li>
+                <li>Kita cek masing-masing pernyataan:<br>
+                (1) $x_1 + x_2 = -1 + 1 = 0$ (Benar)<br>
+                (2) $x_1 \cdot x_2 = (-1) \cdot (1) = -1$ (Benar)<br>
+                (3) $x_2 - x_1 = 1 - (-1) = 2$ (Benar)<br>
+                (4) $3^{x_1} + 3^{x_2} = 3^{-1} + 3^1 = \frac{1}{3} + 3 = \frac{10}{3}$ (Benar)</li>
+                <li>Keempat pernyataan benar.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 18 -->
+    <div class="question">
+        <div class="question-header">18.</div>
+        <p>Jika $^2\log 3 = a$ dan $^3\log 5 = b$, maka nilai dari $^{15}\log 20$ jika dinyatakan dalam $a$ dan $b$ adalah ...</p>
+        
+        <ol class="options">
+            <li>$\frac{ab+2}{a(b+1)}$</li>
+            <li>$\frac{a(b+1)}{ab+2}$</li>
+            <li>$\frac{2a+b}{a+b}$</li>
+            <li>$\frac{a+b}{2ab+1}$</li>
+            <li>$\frac{ab+1}{a(b+2)}$</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp18')">Tampilkan Pembahasan</button>
+        <div id="exp18" class="explanation">
+            <strong>Kunci Jawaban: A</strong>
+            <ul>
+                <li>Gunakan basis 3 untuk memecah logaritma:
+                $$^{15}\log 20 = \frac{^3\log 20}{^3\log 15} = \frac{^3\log(4 \times 5)}{^3\log(3 \times 5)} = \frac{^3\log 2^2 + ^3\log 5}{^3\log 3 + ^3\log 5} = \frac{2 \cdot ^3\log 2 + ^3\log 5}{1 + ^3\log 5}$$</li>
+                <li>Diketahui dari soal $^3\log 5 = b$ dan karena $^2\log 3 = a \implies ^3\log 2 = \frac{1}{a}$. Substitusikan nilai ini:
+                $$= \frac{2(1/a) + b}{1 + b} = \frac{\frac{2+ab}{a}}{1+b} = \frac{ab+2}{a(b+1)}$$</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 19 -->
+    <div class="question">
+        <div class="question-header">19.</div>
+        <p>Himpunan penyelesaian dari persamaan $(^2\log x)^2 - 3(^2\log x) + 2 = 0$ adalah $\{x_1, x_2\}$. Nilai dari $x_1 \cdot x_2$ adalah ...</p>
+        
+        <ol class="options">
+            <li>2</li>
+            <li>4</li>
+            <li>6</li>
+            <li>8</li>
+            <li>16</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp19')">Tampilkan Pembahasan</button>
+        <div id="exp19" class="explanation">
+            <strong>Kunci Jawaban: D</strong>
+            <ul>
+                <li>Misalkan $y = ^2\log x$, persamaannya menjadi:
+                $$y^2 - 3y + 2 = 0 \implies (y-1)(y-2) = 0$$</li>
+                <li>Untuk $y = 1 \implies ^2\log x = 1 \implies x_1 = 2^1 = 2$.<br>
+                Untuk $y = 2 \implies ^2\log x = 2 \implies x_2 = 2^2 = 4$.</li>
+                <li>Maka hasil kali akar-akarnya adalah $x_1 \cdot x_2 = 2 \times 4 = 8$.</li>
+                <li><em>Cara Cepat: Menggunakan rumus jumlah akar $y_1 + y_2 = -\frac{b}{a} = 3 \implies ^2\log x_1 + ^2\log x_2 = 3 \implies ^2\log(x_1 x_2) = 3 \implies x_1 x_2 = 2^3 = 8$.</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NOMOR 20 -->
+    <div class="question">
+        <div class="question-header">20.</div>
+        <p>Seorang pedagang mencampur Kopi A yang harga modalnya Rp40.000,00/kg dengan Kopi B yang harga modalnya Rp60.000,00/kg. Jika pedagang tersebut menjual kopi campuran seharga Rp54.000,00/kg dan memperoleh keuntungan sebesar 20%, berapakah rasio takaran Kopi A dan Kopi B dalam campuran tersebut?</p>
+        
+        <ol class="options">
+            <li>1 : 2</li>
+            <li>2 : 1</li>
+            <li>2 : 3</li>
+            <li>3 : 1</li>
+            <li>3 : 2</li>
+        </ol>
+
+        <button class="show-explanation-btn" onclick="toggleExplanation('exp20')">Tampilkan Pembahasan</button>
+        <div id="exp20" class="explanation">
+            <strong>Kunci Jawaban: D</strong>
+            <ul>
+                <li>Hitung dahulu harga modal dari kopi campuran tersebut berdasarkan persentase keuntungan.
+                $$\text{Harga Jual} = 120\% \times \text{Harga Modal Campuran}$$
+                $$54.000 = 1,2 \times \text{Modal} \implies \text{Modal} = \frac{54.000}{1,2} = 45.000$$</li>
+                <li>Misalkan takaran Kopi A adalah $a$ dan Kopi B adalah $b$. Rumus harga campuran adalah:
+                $$\frac{40.000a + 60.000b}{a + b} = 45.000$$
+                $$40a + 60b = 45a + 45b \implies 15b = 5a$$
+                $$\frac{a}{b} = \frac{15}{5} = \frac{3}{1}$$</li>
+                <li>Jadi, rasio takaran Kopi A terhadap Kopi B adalah 3 : 1.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleExplanation(id) {
+        var x = document.getElementById(id);
+        var btn = x.previousElementSibling;
+        if (x.style.display === "block" || x.style.display === "") {
+            x.style.display = "none";
+            btn.innerHTML = "Tampilkan Pembahasan";
+        } else {
+            x.style.display = "block";
+            btn.innerHTML = "Sembunyikan Pembahasan";
+        }
+    }
+</script>
+
+</body>
+</html>
