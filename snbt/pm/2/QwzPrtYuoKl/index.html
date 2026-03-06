@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tryout 2: Penalaran Matematika (CBT System)</title>
+    
+    <!-- MathJax untuk Matematika -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          packages: { "[+]": ["ams"] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    
+    <!-- Font Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-bg: #e0f7fa;
+        --header-accent: #2980b9; 
+        --hover-bg: #ebf5fb;
+        --selected-bg: #2980b9;
+        --selected-text: #ffffff;
+        
+        /* Warna Feedback Jawaban */
+        --correct-bg: #d4edda;
+        --correct-border: #28a745;
+        --correct-text: #155724;
+        --wrong-bg: #f8d7da;
+        --wrong-border: #dc3545;
+        --wrong-text: #721c24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        padding-bottom: 100px;
+        min-height: 100vh;
+      }
+
+      /* TIMER STYLES */
+      #timer-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50;
+        color: #ffffff;
+        padding: 15px 0;
+        text-align: center;
+        z-index: 999999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      #timer-display {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 22px;
+        background: #34495e;
+        padding: 2px 10px;
+        border-radius: 4px;
+        color: #3498db;
+      }
+      .timer-warning {
+        color: #e74c3c !important;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        50% { opacity: 0.5; }
+      }
+
+      /* Container Utama */
+      .container-wrapper {
+        background: white;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: visible;
+      }
+
+      /* --- LANDING PAGE STYLES --- */
+      #landing-page {
+        display: none;
+        text-align: center;
+      }
+      .landing-header h1 {
+        color: var(--header-accent);
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      
+      .promo-banner {
+          background-color: #fff3e0;
+          color: #d35400;
+          padding: 8px 20px;
+          border-radius: 50px;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: 1px dashed #f39c12;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .rules-box {
+        background-color: #e8f4fd;
+        border: 2px solid var(--header-accent);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px auto;
+        text-align: left;
+        max-width: 600px;
+      }
+      .rules-box h3 {
+        margin-top: 0;
+        color: var(--header-accent);
+        border-bottom: 1px solid #b2ebf2;
+        padding-bottom: 10px;
+      }
+      .rules-box ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .rules-box li {
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .identity-box-landing {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        text-align: left;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .btn-start {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 22px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-start:hover {
+        background-color: #1f618d;
+        transform: scale(1.05);
+      }
+
+      /* --- EXAM PAGE STYLES --- */
+      #exam-page {
+        display: none;
+      }
+      
+      .worksheet-header {
+        border-bottom: 3px solid var(--header-accent);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .header-left h1 {
+        font-size: 24px;
+        color: var(--header-accent);
+        margin: 0 0 5px 0;
+        font-weight: 800;
+      }
+      .header-left h2 {
+        font-size: 16px;
+        color: var(--secondary-text);
+        margin: 0;
+        font-weight: 500;
+      }
+      .header-logo {
+        height: 100px;
+        object-fit: contain;
+      }
+      .exam-info-bar {
+        background: #f1f8e9;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        border-left: 5px solid #8bc34a;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .exam-info-bar strong {
+        color: #33691e;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        width: 120px;
+        font-weight: 600;
+        color: var(--header-accent);
+      }
+      .form-group input,
+      .form-group select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      /* Grid Layout Soal */
+      .questions-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 50px;
+      }
+      @media (max-width: 768px) {
+        .container-wrapper {
+            padding: 20px;
+        }
+        .form-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+        }
+      }
+
+      /* Wacana Styles */
+      .wacana {
+          background-color: #fdfdfd;
+          padding: 25px;
+          border: 1px solid #e0e0e0;
+          border-top: 4px solid #34495e;
+          margin-bottom: 20px;
+          border-radius: 6px;
+          font-size: 15px;
+      }
+      .wacana-title {
+          font-size: 1.2em;
+          font-weight: bold;
+          color: #2c3e50;
+          margin-bottom: 15px;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 8px;
+      }
+
+      /* Styling Soal */
+      .soal-item {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        page-break-inside: avoid;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .soal-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .nomor {
+        font-weight: 800;
+        color: var(--header-accent);
+        min-width: 25px;
+      }
+      .pertanyaan {
+        flex: 1;
+        text-align: justify;
+      }
+      .kategori {
+        display: inline-block;
+        font-size: 0.8em;
+        background: #e8f4fd;
+        color: #2980b9;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      
+      .statement-list {
+          list-style-type: decimal;
+          margin-bottom: 15px;
+          padding-left: 20px;
+      }
+
+      /* Tabel Styling */
+      .table-container {
+          margin: 15px 0;
+          display: flex;
+          justify-content: center;
+          overflow-x: auto;
+      }
+      .table-container table {
+          border-collapse: collapse;
+          width: 80%;
+          max-width: 500px;
+          background: white;
+      }
+      .table-container table, .table-container th, .table-container td {
+          border: 1px solid #999;
+      }
+      .table-container th, .table-container td {
+          padding: 10px;
+          text-align: center;
+      }
+      .table-container th {
+          background-color: #e0f7fa;
+          color: var(--header-accent);
+      }
+
+      /* Pilihan Ganda Interaktif */
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 15px;
+      }
+      ol.pilihan-ganda li {
+        position: relative;
+        padding: 8px 15px 8px 40px;
+        margin-bottom: 6px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      ol.pilihan-ganda li:hover {
+        background-color: var(--hover-bg);
+        border-color: var(--header-accent);
+      }
+      ol.pilihan-ganda li.selected {
+        background-color: var(--selected-bg);
+        color: var(--selected-text);
+        border-color: var(--selected-bg);
+        font-weight: 600;
+      }
+      ol.pilihan-ganda li.selected .mjx-chtml { 
+        color: white !important;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: #eee;
+        color: #555;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      ol.pilihan-ganda li.selected::before {
+        background: white;
+        color: var(--selected-bg);
+      }
+
+      /* Styles untuk Feedback & Pembahasan */
+      .disabled-options li {
+        pointer-events: none;
+      }
+      li.correct {
+        background-color: var(--correct-bg) !important;
+        border-color: var(--correct-border) !important;
+        color: var(--correct-text) !important;
+      }
+      li.correct::before {
+        background-color: var(--correct-border) !important;
+        color: white !important;
+        content: "✓";
+        font-size: 12px;
+      }
+      li.wrong {
+        background-color: var(--wrong-bg) !important;
+        border-color: var(--wrong-border) !important;
+        color: var(--wrong-text) !important;
+      }
+      li.wrong::before {
+        background-color: var(--wrong-border) !important;
+        color: white !important;
+        content: "✕";
+        font-size: 12px;
+      }
+      
+      /* Pembahasan tersembunyi selama ujian */
+      .explanation {
+        display: none;
+        background-color: #fdfae6;
+        padding: 15px 20px;
+        border-left: 4px solid #f39c12;
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95em;
+      }
+      .explanation p:first-child {
+        margin-top: 0;
+      }
+      .explanation ul {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+      .explanation li {
+        margin-bottom: 8px;
+      }
+
+      /* Tombol Submit & Hasil */
+      .action-area {
+        margin-top: 50px;
+        text-align: center;
+        padding: 40px 20px;
+        border-top: 2px dashed #ddd;
+        position: relative;
+        background-color: white;
+      }
+      .btn-submit {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 20px 60px;
+        font-size: 20px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 6px 15px rgba(41, 128, 185, 0.4);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1f618d !important;
+        transform: translateY(-4px);
+      }
+      .btn-submit:disabled {
+        background-color: #95a5a6 !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .result-box {
+        margin-top: 30px;
+        padding: 30px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 2px solid #2980b9;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .score-display {
+        font-size: 48px;
+        font-weight: 800;
+        color: #2e7d32;
+        margin: 10px 0;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .worksheet-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+      }
+      
+      /* Detail Report Table Styling */
+      .report-table th {
+          background-color: #f8f9fa;
+          font-weight: 700;
+          color: #333;
+          border-bottom: 2px solid #dee2e6;
+      }
+      .report-table td {
+          border-bottom: 1px solid #eee;
+          vertical-align: middle;
+      }
+      .progress-bar-bg {
+          background: #e9ecef;
+          border-radius: 4px;
+          width: 100%;
+          height: 10px;         
+          margin-bottom: 5px;
+          overflow: hidden;
+      }
+      .progress-bar-fill {
+          height: 100%;
+          border-radius: 4px;
+          transition: width 1s ease-in-out;
+      }
+
+      /* Loader Layar Penuh Awal */
+      #loading-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          z-index: 10000000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+      .spinner {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid var(--header-accent);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY LOADING SESI -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-weight: bold; color: var(--header-accent); font-size: 16px;">Memeriksa Sesi Anda...</p>
+    </div>
+
+    <!-- COUNTDOWN TIMER -->
+    <div id="timer-bar">
+        <span>SISA WAKTU:</span>
+        <span id="timer-display">30:00</span>
+    </div>
+
+    <div class="container-wrapper">
+        <!-- ================= PAGE 1: LANDING & BIODATA ================= -->
+        <div id="landing-page">
+            <header class="landing-header">
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" style="height: 140px; margin-bottom: 20px;" />
+                <h1>Tryout 2: Penalaran Matematika</h1>
+                <h2>Prediksi SNBT 2026</h2>
+                <div class="promo-banner">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+            </header>
+
+            <div class="rules-box">
+                <h3>PERATURAN UJIAN</h3>
+                <ul>
+                    <li>Terdapat 20 soal Penalaran Matematika berbasis Wacana.</li>
+                    <li>Waktu pengerjaan: <strong>30 menit</strong>.</li>
+                    <li>Waktu berjalan otomatis setelah tombol "Mulai Sekarang" ditekan.</li>
+                    <li>Pastikan koneksi internet stabil.</li>
+                    <li>Setelah klik kumpulkan, <strong>Pembahasan lengkap akan otomatis muncul</strong> di bawah setiap soal.</li>
+                    <li>Jika kamu menggunakan HP, pastikan browser kamu dalam mode desktop site untuk melihat gambar optimal.</li>
+                </ul>
+            </div>
+
+            <div class="identity-box-landing">
+                <h3 style="margin-top:0; color:var(--header-accent);">BIODATA PESERTA</h3>
+                <div class="form-group">
+                  <label for="nama">Nama :</label>
+                  <input type="text" id="nama" placeholder="Masukkan nama lengkap..." />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email :</label>
+                  <input type="email" id="email" placeholder="Masukkan email..." />
+                </div>
+                <div class="form-group">
+                  <label for="hp">Nomor HP :</label>
+                  <input type="tel" id="hp" placeholder="Masukkan nomor HP/WA..." />
+                </div>
+                <div class="form-group">
+                  <label for="sekolah">Asal Sekolah :</label>
+                  <input type="text" id="sekolah" placeholder="Masukkan asal sekolah..." />
+                </div>
+            </div>
+
+            <button id="btn-start" class="btn-start">MULAI SEKARANG</button>
+        </div>
+
+        <!-- ================= PAGE 2: EXAM ================= -->
+        <div id="exam-page">
+            <header class="worksheet-header">
+                <div class="header-left">
+                    <h1>Tryout 2: Penalaran Matematika</h1>
+                    <h2>Prediksi SNBT 2026</h2>
+                    <div class="promo-banner" style="margin-top: 10px; font-size: 13px; padding: 5px 15px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+                </div>
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" />
+            </header>
+
+            <div class="exam-info-bar">
+                Peserta: <strong id="display-nama">-</strong> | Sekolah: <strong id="display-sekolah">-</strong> | HP: <strong id="display-hp">-</strong>
+            </div>
+
+            <!-- DAFTAR SOAL -->
+            <div class="questions-grid">
+                
+                <!-- ================= WACANA 1 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 1: Optimalisasi Penjadwalan Kereta Cepat</div>
+                    <p><em>Gunakan informasi berikut untuk menjawab soal nomor 1 sampai 4.</em></p>
+                    <p>Sebuah operator Kereta Cepat merencanakan penjadwalan kereta dari Stasiun A ke Stasiun B yang berjarak 150 km. Waktu tempuh antar stasiun adalah 30 menit. Satu rangkaian kereta terdiri dari 8 gerbong, di mana setiap gerbong memiliki kapasitas maksimal 80 penumpang. </p>
+                    <p>Grafik di bawah ini menunjukkan proyeksi fluktuasi jumlah penumpang yang menunggu keberangkatan di Stasiun A setiap jamnya dari pukul 05:00 hingga 10:00.</p>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <svg width="100%" style="max-width: 600px; height: auto;" viewBox="0 0 650 300" xmlns="http://www.w3.org/2000/svg">
+                            <text x="325" y="20" font-size="16" font-weight="bold" text-anchor="middle" font-family="sans-serif">Proyeksi Jumlah Penumpang di Stasiun A</text>
+                            
+                            <!-- Horizontal Grid Lines & Y-axis labels -->
+                            <line x1="80" y1="250" x2="600" y2="250" stroke="#ccc" stroke-width="1"/>
+                            <text x="70" y="254" font-size="12" text-anchor="end" font-family="sans-serif">0</text>
+                            
+                            <line x1="80" y1="205.5" x2="600" y2="205.5" stroke="#ccc" stroke-width="1"/>
+                            <text x="70" y="209.5" font-size="12" text-anchor="end" font-family="sans-serif">1000</text>
+                            
+                            <line x1="80" y1="161.1" x2="600" y2="161.1" stroke="#ccc" stroke-width="1"/>
+                            <text x="70" y="165.1" font-size="12" text-anchor="end" font-family="sans-serif">2000</text>
+                            
+                            <line x1="80" y1="116.7" x2="600" y2="116.7" stroke="#ccc" stroke-width="1"/>
+                            <text x="70" y="120.7" font-size="12" text-anchor="end" font-family="sans-serif">3000</text>
+                            
+                            <line x1="80" y1="72.2" x2="600" y2="72.2" stroke="#ccc" stroke-width="1"/>
+                            <text x="70" y="76.2" font-size="12" text-anchor="end" font-family="sans-serif">4000</text>
+                            
+                            <text x="20" y="150" font-size="14" text-anchor="middle" transform="rotate(-90 20 150)" font-family="sans-serif">Jumlah Penumpang</text>
+
+                            <!-- Vertical Grid Lines & X-axis labels -->
+                            <line x1="100" y1="250" x2="100" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="100" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">05:00</text>
+
+                            <line x1="196" y1="250" x2="196" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="196" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">06:00</text>
+
+                            <line x1="292" y1="250" x2="292" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="292" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">07:00</text>
+
+                            <line x1="388" y1="250" x2="388" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="388" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">08:00</text>
+
+                            <line x1="484" y1="250" x2="484" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="484" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">09:00</text>
+
+                            <line x1="580" y1="250" x2="580" y2="50" stroke="#ccc" stroke-width="1"/>
+                            <text x="580" y="270" font-size="12" text-anchor="middle" font-family="sans-serif">10:00</text>
+
+                            <text x="340" y="295" font-size="14" text-anchor="middle" font-family="sans-serif">Waktu Keberangkatan</text>
+
+                            <!-- Axes -->
+                            <line x1="80" y1="250" x2="600" y2="250" stroke="black" stroke-width="2"/>
+                            <line x1="80" y1="250" x2="80" y2="50" stroke="black" stroke-width="2"/>
+
+                            <!-- Data Line and Points -->
+                            <polyline points="100,227.8 196,107.8 292,72.2 388,125.6 484,196.7 580,223.3" fill="none" stroke="blue" stroke-width="3"/>
+                            
+                            <circle cx="100" cy="227.8" r="4" fill="blue"/>
+                            <text x="100" y="217.8" font-size="12" text-anchor="middle" font-family="sans-serif">500</text>
+
+                            <circle cx="196" cy="107.8" r="4" fill="blue"/>
+                            <text x="196" y="97.8" font-size="12" text-anchor="middle" font-family="sans-serif">3200</text>
+
+                            <circle cx="292" cy="72.2" r="4" fill="blue"/>
+                            <text x="292" y="62.2" font-size="12" text-anchor="middle" font-family="sans-serif">4000</text>
+
+                            <circle cx="388" cy="125.6" r="4" fill="blue"/>
+                            <text x="388" y="115.6" font-size="12" text-anchor="middle" font-family="sans-serif">2800</text>
+
+                            <circle cx="484" cy="196.7" r="4" fill="blue"/>
+                            <text x="484" y="186.7" font-size="12" text-anchor="middle" font-family="sans-serif">1200</text>
+
+                            <circle cx="580" cy="223.3" r="4" fill="blue"/>
+                            <text x="580" y="213.3" font-size="12" text-anchor="middle" font-family="sans-serif">600</text>
+                        </svg>
+                    </div>
+
+                    <p>Pihak stasiun menerapkan aturan bahwa interval antar keberangkatan kereta (<em>headway</em>) di jam sibuk (06:00 - 08:00) harus konstan dan dirancang sedemikian rupa agar tidak ada penumpang yang menumpuk melebihi kapasitas stasiun pada jam tersebut.</p>
+                </div>
+
+                <!-- Soal 1 -->
+                <div class="soal-item" data-qnum="1">
+                    <div class="soal-header">
+                        <span class="nomor">1.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Analisis Data</span><br>
+                            Berdasarkan data grafik pada masa puncak jam sibuk (pukul 07:00), berapa interval waktu keberangkatan maksimum yang diizinkan agar seluruh penumpang pada jam tersebut dapat terangkut tanpa tersisa?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">8 menit</li>
+                        <li data-option="B">9,6 menit</li>
+                        <li data-option="C">10 menit</li>
+                        <li data-option="D">12 menit</li>
+                        <li data-option="E">15 menit</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: B</strong></p>
+                        <p>Kapasitas maksimal satu rangkaian kereta adalah $8 \text{ gerbong} \times 80 \text{ orang} = 640 \text{ penumpang/kereta}$.</p>
+                        <p>Pada pukul 07:00, terdapat 4.000 penumpang. Agar seluruh penumpang dapat terangkut dalam kurun waktu 1 jam (60 menit) tanpa tersisa, kecepatan pelayanan (<em>throughput</em>) per jam harus lebih besar atau sama dengan jumlah penumpang.</p>
+                        <p>Jika $n$ adalah jumlah keberangkatan yang dibutuhkan dalam 1 jam:<br>
+                        $$n = \frac{4000}{640} = 6,25 \text{ kereta/jam}$$</p>
+                        <p>Interval waktu (<em>headway</em>) maksimum yang diizinkan (dengan satuan menit per kereta):<br>
+                        $$\text{Interval} \le \frac{60 \text{ menit}}{6,25 \text{ kereta}} = 9,6 \text{ menit/kereta}$$</p>
+                        <p>Jadi, jarak waktu antarkereta tidak boleh lebih lambat dari 9,6 menit.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 2 -->
+                <div class="soal-item" data-qnum="2">
+                    <div class="soal-header">
+                        <span class="nomor">2.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Analisis Data</span><br>
+                            Apakah 8 rangkaian kereta cukup untuk melayani operasional Stasiun A selama masa jam sibuk tanpa menimbulkan penumpukan penumpang?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top:10px;">
+                                <li>(1) Waktu yang dibutuhkan sebuah rangkaian kereta untuk putar balik (turnaround) di stasiun tujuan dan siap berangkat kembali adalah 20 menit.</li>
+                                <li>(2) Pada jam sibuk, terdapat penambahan 2 gerbong ekstra untuk setiap rangkaian kereta.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <p>Untuk mengetahui apakah jumlah armada (8 kereta) cukup, kita harus mengetahui <strong>Waktu Siklus (Cycle Time)</strong> dari satu kereta secara utuh: $\text{A ke B} \rightarrow \text{Putar Balik} \rightarrow \text{B ke A} \rightarrow \text{Putar Balik}$.</p>
+                        <ul>
+                            <li><strong>Cek Pernyataan (1):</strong> Waktu siklus total = $30 + 20 + 30 + 20 = 100 \text{ menit}$. Interval (headway) yang dibutuhkan di jam sibuk adalah 9,6 menit (dari hitungan soal nomor 1). Maka, kebutuhan jumlah armada $N = \frac{100}{9,6} \approx 10,4$ (dibulatkan butuh 11 rangkaian). Karena ketersediaan $8 < 11$, kita bisa menjawab secara pasti: <strong>TIDAK CUKUP</strong>. Karena memberikan jawaban pasti, Pernyataan (1) <strong>cukup</strong>.</li>
+                            <li><strong>Cek Pernyataan (2):</strong> Kapasitas menjadi 10 gerbong ($800$ orang/kereta). Interval minimum = $60 / (4000/800) = 12$ menit. Namun, tanpa mengetahui <em>waktu turnaround</em>, Waktu Siklus tetap tak diketahui sehingga kita sama sekali tidak bisa menghitung kebutuhan armada. Pernyataan (2) <strong>tidak cukup</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Soal 3 -->
+                <div class="soal-item" data-qnum="3">
+                    <div class="soal-header">
+                        <span class="nomor">3.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Analisis Data</span><br>
+                            Perhatikan empat pernyataan berikut terkait efisiensi kapasitas:
+                            <ol class="statement-list">
+                                <li>Rata-rata penumpang per jam dari pukul 05:00 hingga 10:00 adalah 2050 orang.</li>
+                                <li>Selisih jumlah kereta minimum yang dibutuhkan pada pukul 07:00 dibandingkan pukul 09:00 adalah 4 rangkaian kereta.</li>
+                                <li>Jika kapasitas stasiun maksimal menampung 3500 orang, maka stasiun mengalami <em>overcapacity</em> pada pukul 07:00 jika kereta terlambat 1 jam.</li>
+                                <li>Persentase lonjakan penumpang dari pukul 05:00 ke pukul 06:00 adalah 540%.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: B</strong></p>
+                        <p>Mari kita analisis kebenaran setiap pernyataan:</p>
+                        <ol class="statement-list">
+                            <li><strong>BENAR.</strong> Rata-rata = $\frac{500 + 3200 + 4000 + 2800 + 1200 + 600}{6} = \frac{12300}{6} = 2050$.</li>
+                            <li><strong>SALAH.</strong> Kebutuhan kereta pkl 07:00 (4000 org) = $4000 / 640 = 6,25 \rightarrow \text{7 kereta}$. Kebutuhan pkl 09:00 (1200 org) = $1200 / 640 = 1,87 \rightarrow \text{2 kereta}$. Selisihnya adalah $7 - 2 = 5$ kereta, bukan 4.</li>
+                            <li><strong>BENAR.</strong> Pukul 07:00 terdapat 4000 penumpang mengantre. Jika kereta berhenti (terlambat), maka penumpukan murni sebanyak 4000 orang. Karena $4000 > 3500$ (kapasitas stasiun), terjadi <em>overcapacity</em>.</li>
+                            <li><strong>BENAR.</strong> Kenaikan dari 500 ke 3200 orang. Persentase = $\frac{3200 - 500}{500} \times 100\% = \frac{2700}{5} \times 100\% = 540\%$.</li>
+                        </ol>
+                        <p>Ada 3 pernyataan yang benar (Pernyataan 1, 3, dan 4).</p>
+                    </div>
+                </div>
+
+                <!-- Soal 4 -->
+                <div class="soal-item" data-qnum="4">
+                    <div class="soal-header">
+                        <span class="nomor">4.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Analisis Data</span><br>
+                            Jika pihak pengelola memutuskan untuk menerapkan harga tiket yang berbanding terbalik dengan kepadatan penumpang (tiket lebih murah saat sepi), manakah di antara pernyataan berikut yang benar?
+                            <ol class="statement-list">
+                                <li>Harga tiket pada pukul 09:00 akan lebih mahal dibandingkan pada pukul 10:00.</li>
+                                <li>Harga tiket paling murah dijual pada pukul 05:00.</li>
+                                <li>Tiket pada pukul 07:00 adalah yang paling mahal sepanjang hari.</li>
+                                <li>Rasio harga tiket pukul 06:00 dan 08:00 adalah $7 : 8$ (dengan asumsi perbandingan murni berbalik nilai).</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: D</strong></p>
+                        <p>Konsep <strong>berbanding terbalik</strong> berarti: <em>Kepadatan meningkat $\rightarrow$ Harga menurun</em>, atau $\text{Harga} \propto \frac{1}{\text{Kepadatan}}$.</p>
+                        <ol class="statement-list">
+                            <li><strong>SALAH.</strong> Pukul 09:00 (1200 org) lebih padat dari pukul 10:00 (600 org), maka tiket pukul 09:00 seharusnya lebih <em>murah</em>.</li>
+                            <li><strong>SALAH.</strong> Pukul 05:00 (500 org) adalah titik paling sepi, sehingga harganya justru akan menjadi yang <em>paling mahal</em>.</li>
+                            <li><strong>SALAH.</strong> Pukul 07:00 adalah paling padat, sehingga harganya akan menjadi yang <em>paling murah</em>.</li>
+                            <li><strong>BENAR.</strong> Kepadatan pukul 06:00 adalah 3200 dan pukul 08:00 adalah 2800. Rasio kepadatan = $3200 : 2800 = 8 : 7$. Karena harga berbanding terbalik, maka rasio harga tiket pukul 06:00 : 08:00 adalah kebalikannya, yaitu $7 : 8$.</li>
+                        </ol>
+                        <p>Hanya pernyataan 4 yang benar.</p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 2 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 2: Analisis Efisiensi Panel Surya Rumah Tangga</div>
+                    <p><em>Gunakan informasi berikut untuk menjawab soal nomor 5 sampai 8.</em></p>
+                    <p>Keluarga Pak Budi ingin berinvestasi memasang panel surya di atap rumahnya. Biaya pemasangan awal (<em>investment cost</em>) adalah Rp 30.000.000,00. Panel surya tersebut mampu menghasilkan rata-rata daya sebesar 3.000 Watt (3 kW) per jam. Rata-rata intensitas cahaya matahari efektif di wilayah tersebut adalah 5 jam per hari. </p>
+                    <p>Harga listrik dari PLN saat ini adalah Rp 1.500,00 per kWh (Kilowatt-hour). Jika keluarga Pak Budi mengkonsumsi seluruh energi yang dihasilkan panel surya tersebut, maka mereka dapat menghemat tagihan listrik bulanan mereka. (Asumsikan 1 bulan = 30 hari).</p>
+                </div>
+
+                <!-- Soal 5 -->
+                <div class="soal-item" data-qnum="5">
+                    <div class="soal-header">
+                        <span class="nomor">5.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial & Keuangan</span><br>
+                            Jika tidak ada biaya perawatan tambahan selama beberapa tahun ke depan, pada bulan ke berapakah <em>break-even point</em> (titik impas) dari investasi panel surya keluarga Pak Budi akan tercapai?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Bulan ke-38</li>
+                        <li data-option="B">Bulan ke-40</li>
+                        <li data-option="C">Bulan ke-42</li>
+                        <li data-option="D">Bulan ke-45</li>
+                        <li data-option="E">Bulan ke-50</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: D</strong></p>
+                        <p>Produksi harian panel surya: $3 \text{ kW} \times 5 \text{ jam} = 15 \text{ kWh}$.<br>
+                        Produksi bulanan: $15 \text{ kWh} \times 30 \text{ hari} = 450 \text{ kWh}$.<br>
+                        Nilai penghematan tagihan per bulan: $450 \text{ kWh} \times \text{Rp } 1.500 = \text{Rp } 675.000$.</p>
+                        <p>Waktu pengembalian modal (<em>Break-Even Point</em>):<br>
+                        $$\text{BEP} = \frac{\text{Biaya Investasi}}{\text{Penghematan Bulanan}} = \frac{30.000.000}{675.000} = 44,44 \text{ bulan}$$</p>
+                        <p>Artinya, modal akan sepenuhnya kembali saat menginjak/berjalan di bulan ke-45.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 6 -->
+                <div class="soal-item" data-qnum="6">
+                    <div class="soal-header">
+                        <span class="nomor">6.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial & Keuangan</span><br>
+                            Pak Budi berencana menambah peralatan elektronik di rumahnya. Apakah penambahan peralatan ini akan memperpanjang waktu pengembalian modal (titik impas) pemasangan panel surya?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top:10px;">
+                                <li>(1) Kapasitas produksi panel surya milik Pak Budi selalu terpakai 100% oleh peralatan elektronik yang sudah ada di rumah sebelum penambahan.</li>
+                                <li>(2) Peralatan elektronik baru yang ditambahkan memiliki konsumsi daya total 2 kWh per hari.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <p>Titik impas (BEP) bergantung pada <em>besarnya uang listrik yang bisa digantikan (dihemat) oleh produksi maksimal panel surya</em>.</p>
+                        <ul>
+                            <li><strong>Cek Pernyataan (1):</strong> Disebutkan kapasitas produksi panel surya sudah terpakai 100% sebelumnya. Artinya, plafon maksimal penghematan (Rp 675.000/bulan) sudah tercapai mutlak. Menambah alat hanya akan menambah tagihan PLN yang dibayar mandiri, <strong>tidak akan memengaruhi besaran penghematan dari panel surya</strong>. Sehingga kita bisa menjawab secara pasti: <strong>TIDAK, BEP tidak akan diperpanjang/berubah</strong>. Pernyataan (1) cukup.</li>
+                            <li><strong>Cek Pernyataan (2):</strong> Hanya memberi info daya tambahan sebesar 2 kWh/hari. Tanpa mengetahui apakah masih ada "slot listrik" panel yang terbuang sebelumnya atau tidak, kita tidak bisa menyimpulkan apakah nilai penghematan ikut naik atau tetap. Pernyataan (2) tidak cukup.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Soal 7 -->
+                <div class="soal-item" data-qnum="7">
+                    <div class="soal-header">
+                        <span class="nomor">7.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial & Keuangan</span><br>
+                            Pak Budi membeli sistem panel surya tersebut dengan sistem kredit berbunga majemuk 10% per tahun dari harga pokok pemasangan, yang akan dilunasi sekaligus pada akhir tahun kedua. Perhatikan pernyataan berikut:
+                            <ol class="statement-list">
+                                <li>Total biaya yang harus dibayar Pak Budi di akhir tahun kedua adalah Rp 36.300.000,00.</li>
+                                <li>Penghematan listrik kumulatif selama 2 tahun pertama adalah Rp 16.200.000,00.</li>
+                                <li>Waktu titik impas (<em>break-even point</em>) akan bergeser menjadi lebih dari 4,5 tahun akibat sistem kredit tersebut.</li>
+                                <li>Nilai bunga majemuk di tahun kedua lebih besar daripada nilai bunga di tahun pertama.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: B</strong></p>
+                        <p>Pembahasan:</p>
+                        <ol class="statement-list">
+                            <li><strong>BENAR.</strong> Dengan bunga majemuk $10\%$ per tahun:<br>
+                            Total utang $= M \times (1+r)^2 = 30.000.000 \times (1,10)^2 = 30.000.000 \times 1,21 = \text{Rp } 36.300.000$.</li>
+                            <li><strong>BENAR.</strong> Penghematan bulanan adalah Rp 675.000. Selama 2 tahun (24 bulan) $= 24 \times 675.000 = \text{Rp } 16.200.000$.</li>
+                            <li><strong>SALAH.</strong> BEP baru = $36.300.000 / 675.000 = 53,78$ bulan. Karena 1 tahun = 12 bulan, maka $53,78 \text{ bulan} = 4,48 \text{ tahun}$. Waktu 4,48 tahun masih <strong>di bawah</strong> 4,5 tahun (4,5 tahun = 54 bulan).</li>
+                            <li><strong>BENAR.</strong> Pada bunga majemuk, pokok utang di tahun kedua lebih besar daripada awal (karena bunga tahun 1 terakumulasi). Sehingga, nilai nominal bunga tahun kedua pasti lebih besar. (Tahun 1 bunganya 3jt, Tahun 2 bunganya 3,3jt).</li>
+                        </ol>
+                        <p>Terdapat 3 pernyataan benar (1, 2, dan 4).</p>
+                    </div>
+                </div>
+
+                <!-- Soal 8 -->
+                <div class="soal-item" data-qnum="8">
+                    <div class="soal-header">
+                        <span class="nomor">8.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial & Keuangan</span><br>
+                            Misalkan efisiensi panel surya menurun (<em>degradasi</em>) sebesar 2% setiap tahunnya dari kapasitas produksi tahun sebelumnya. Manakah di antara pernyataan berikut yang benar?
+                            <ol class="statement-list">
+                                <li>Produksi listrik panel surya tersebut mengikuti model barisan aritmetika.</li>
+                                <li>Pada tahun ke-3, kapasitas harian panel surya menjadi $(15 \times 0,98^2)$ kWh.</li>
+                                <li>Model matematika untuk total penghematan bulanan di tahun ke-$n$ adalah sebuah fungsi eksponensial turun.</li>
+                                <li>Pada tahun ke-50, kapasitas panel surya akan bernilai negatif.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 3 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: C</strong></p>
+                        <p>Degradasi 2% beruntun dari sisa tahun sebelumnya menyiratkan adanya rasio konstan (pengali $100\% - 2\% = 98\% = 0,98$).</p>
+                        <ol class="statement-list">
+                            <li><strong>SALAH.</strong> Karena polanya berbentuk pengali konstan (rasio) dan bukan selisih yang konstan (beda), maka model tersebut adalah <strong>barisan geometri/eksponensial</strong>, bukan aritmetika.</li>
+                            <li><strong>BENAR.</strong> Menilik pola barisan: $U_1 = 15$ (Tahun 1). Di tahun ke-2, $U_2 = 15 \times 0,98$. Di tahun ke-3, $U_3 = 15 \times 0,98^2$.</li>
+                            <li><strong>BENAR.</strong> Fungsi eksponensial berbentuk $f(n) = a \cdot r^n$. Karena $0 < r < 1$ (yaitu 0,98), ini disebut fungsi peluruhan atau eksponensial turun.</li>
+                            <li><strong>SALAH.</strong> Nilai fungsi eksponensial peluruhan hanya akan terus mendekati nol secara asimtotik, tetapi <strong>tidak akan pernah bernilai negatif</strong>.</li>
+                        </ol>
+                        <p>Pernyataan yang benar adalah 2 dan 3.</p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 3 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 3: Dinamika Populasi dan Ecological Footprint</div>
+                    <p><em>Gunakan informasi berikut untuk menjawab soal nomor 9 sampai 12.</em></p>
+                    <p>Sebuah kota mandiri memiliki populasi awal sebanyak 100.000 jiwa pada tahun 2024. Tingkat pertumbuhan populasi di kota tersebut konstan sebesar 5% per tahun. Ketersediaan cadangan air tanah di kota tersebut saat ini mampu menyuplai 12.000.000 liter per hari. Saat ini, rata-rata konsumsi air bersih harian penduduk kota adalah 100 liter per kapita.</p>
+                </div>
+
+                <!-- Soal 9 -->
+                <div class="soal-item" data-qnum="9">
+                    <div class="soal-header">
+                        <span class="nomor">9.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar & Fungsi Terapan</span><br>
+                            Pemerintah kota mengkhawatirkan terjadinya defisit pasokan air bersih di masa depan. Kapan krisis air pertama kali akan terjadi di kota tersebut?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top:10px;">
+                                <li>(1) Terjadi penurunan kapasitas suplai air tanah sebesar 1.000.000 liter setiap tahunnya akibat kerusakan lingkungan.</li>
+                                <li>(2) Tingkat konsumsi air bersih per kapita diasumsikan tidak pernah berubah di masa depan.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: C</strong></p>
+                        <p>Untuk mengetahui kapan <em>krisis</em> air tiba, kita mencari waktu $(t)$ di mana kurva kebutuhan air bersilangan melebihi kurva pasokan air ($\text{Kebutuhan} > \text{Pasokan}$).</p>
+                        <ul>
+                            <li><strong>Tanpa Pernyataan (1):</strong> Kita tidak tahu apakah pasokan air 12 juta liter itu akan konstan seiring waktu atau menyusut.</li>
+                            <li><strong>Tanpa Pernyataan (2):</strong> Kita tidak tahu proyeksi tren konsumsi warganya. Jika konsumsi per kapita ditekan turun atau malah membengkak seiring modernisasi kota, perhitungannya mustahil dilakukan.</li>
+                        </ul>
+                        <p>Dengan menggabungkan keduanya:<br>
+                        Fungsi Suplai: $S(t) = 12.000.000 - 1.000.000t$.<br>
+                        Fungsi Konsumsi: $K(t) = (100.000 \times 1,05^t) \times 100 \text{ liter} = 10.000.000 \times 1,05^t$.<br>
+                        Dari pertidaksamaan $10.000.000(1,05)^t > 12.000.000 - 1.000.000t$, nilai eksak $t$ bisa diprediksi. Jadi <strong>keduanya bersama-sama</strong> dibutuhkan.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 10 -->
+                <div class="soal-item" data-qnum="10">
+                    <div class="soal-header">
+                        <span class="nomor">10.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar & Fungsi Terapan</span><br>
+                            Jika tidak ada perubahan pada kapasitas pasokan air bersih (tetap 12 juta liter/hari), dan pola pertumbuhan populasi dibiarkan natural (5% per tahun), perhatikan proyeksi pernyataan berikut:
+                            <ol class="statement-list">
+                                <li>Pada tahun 2025, total konsumsi air kota tersebut mencapai 10.500.000 liter per hari.</li>
+                                <li>Persamaan fungsi kebutuhan air harian kota tersebut pada tahun ke-$t$ sesudah 2024 adalah $K(t) = 10.000.000 \times (1,05)^t$.</li>
+                                <li>Krisis air (kebutuhan $>$ pasokan) akan terjadi dalam waktu kurang dari 4 tahun sejak 2024. (Petunjuk: $1,05^4 \approx 1,215$).</li>
+                                <li>Jika angka konsumsi per kapita berhasil ditekan menjadi 80 liter/hari, krisis air dapat ditunda setidaknya lebih dari 10 tahun. (Petunjuk: $1,05^{10} \approx 1,628$).</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <ol class="statement-list">
+                            <li><strong>BENAR.</strong> Di tahun 2025 ($t=1$), populasi = $100.000 \times 1,05 = 105.000$ jiwa. Konsumsi = $105.000 \times 100 \text{ L} = 10.500.000 \text{ L}$.</li>
+                            <li><strong>BENAR.</strong> Mengikuti deret eksponensial $K(t) = \text{Konsumsi Awal} \times (1 + r)^t = 10.000.000 \times (1,05)^t$.</li>
+                            <li><strong>BENAR.</strong> Untuk mencari kapan krisis, kita butuh $K(t) > 12.000.000$. Secara rasio: $1,05^t > \frac{12}{10} = 1,20$. Menggunakan <em>continuous compounding</em> riil, persilangan terjadi pada $1,05^{3,74} \approx 1,2$, artinya suplai air gagal memenuhi permintaan pada tahun ke-3,74. Waktu tersebut berjalan tepat "di bawah 4 tahun". Di awal/akhir t=4 sudah pasti defisit ($12.155.000 > 12.000.000$).</li>
+                            <li><strong>SALAH.</strong> Jika ditekan ke 80 L: $K_{baru} = 8.000.000 \times 1,05^t$. Mencari krisis: $8 \times 1,05^t > 12 \implies 1,05^t > 1,5$. Karena rasio $1,05^{10} \approx 1,628 > 1,5$, bahkan rasio akan tembus 1,5 sekitar tahun ke-8 atau 9. Berarti krisis tiba <strong>sebelum</strong> tahun ke-10 (tidak mampu ditunda $>10$ tahun).</li>
+                        </ol>
+                        <p>Pernyataan yang benar adalah 1, 2, dan 3.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 11 -->
+                <div class="soal-item" data-qnum="11">
+                    <div class="soal-header">
+                        <span class="nomor">11.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar & Fungsi Terapan</span><br>
+                            Untuk mencegah krisis air, pemerintah berencana membangun sumur resapan setiap tahun agar daya dukung pasokan air kota bertambah mengikuti barisan aritmetika sebesar $b$ liter/hari di setiap tahunnya. Jika krisis air ditargetkan TIDAK akan pernah terjadi hingga populasi mencapai dua kali lipat dari tahun 2024, berapakah tambahan pasokan air minimal yang harus diciptakan setiap tahunnya (selama 14 tahun, asumsi waktu untuk populasi <em>double</em>)?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$\approx 571.428$ liter/hari/tahun</li>
+                        <li data-option="B">$\approx 600.000$ liter/hari/tahun</li>
+                        <li data-option="C">$\approx 714.285$ liter/hari/tahun</li>
+                        <li data-option="D">$\approx 857.000$ liter/hari/tahun</li>
+                        <li data-option="E">$\approx 1.000.000$ liter/hari/tahun</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <p>Saat populasi menjadi <em>double</em> (2 kali lipat dari 100.000), populasi = 200.000 jiwa (terjadi di tahun ke-14).<br>
+                        Kebutuhan konsumsi harian saat itu $= 200.000 \times 100 \text{ L} = 20.000.000 \text{ L/hari}$.<br>
+                        Kapasitas pasokan awal (Tahun 0) $= 12.000.000 \text{ L/hari}$.<br>
+                        Defisit yang harus dikejar secara linier selama 14 tahun adalah:<br>
+                        $\text{Defisit} = 20.000.000 - 12.000.000 = 8.000.000 \text{ L}$.<br>
+                        Karena dibangun selama 14 iterasi tahunan dengan beda ($b$) aritmetika, maka penambahan kapasitas akan terjadi sebanyak 14 kali:<br>
+                        $14 \times b = 8.000.000$<br>
+                        $b = \frac{8.000.000}{14} \approx 571.428,57 \text{ liter/hari/tahun}$.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 12 -->
+                <div class="soal-item" data-qnum="12">
+                    <div class="soal-header">
+                        <span class="nomor">12.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar & Fungsi Terapan</span><br>
+                            Dinamika <em>Ecological Footprint</em> untuk perumahan baru di kota tersebut mengikuti fungsi kuadrat $E(p) = -0,02p^2 + 4p + 100$ di mana $p$ adalah kepadatan penduduk (jiwa/hektar) dan $E$ adalah tingkat polusi udara. Berapakah kepadatan penduduk yang menghasilkan polusi udara terburuk di kota mandiri tersebut?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">50 jiwa/hektar</li>
+                        <li data-option="B">100 jiwa/hektar</li>
+                        <li data-option="C">150 jiwa/hektar</li>
+                        <li data-option="D">200 jiwa/hektar</li>
+                        <li data-option="E">250 jiwa/hektar</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: B</strong></p>
+                        <p>Tingkat polusi udara terburuk (E mencapai nilai maksimum) terjadi di titik stasioner (puncak) dari fungsi kuadrat.<br>
+                        Bentuk umum fungsi kuadrat adalah $f(x) = ax^2 + bx + c$. Di sini $a = -0,02$, $b = 4$.<br>
+                        Sumbu simetri untuk nilai maksimum/minimum (turunan $E'(p) = 0$):<br>
+                        $$p_{max} = \frac{-b}{2a}$$<br>
+                        $$p_{max} = \frac{-4}{2(-0,02)} = \frac{-4}{-0,04} = 100$$<br>
+                        Maka, polusi terburuk tercipta ketika kepadatan mencapai 100 jiwa/hektar.</p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 4 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 4: Algoritma Rekomendasi E-Commerce</div>
+                    <p><em>Gunakan informasi berikut untuk menjawab soal nomor 13 sampai 16.</em></p>
+                    <p>Sebuah <em>e-commerce</em> memberikan label "Best Seller" berdasarkan Algoritma Sistem Rating yang menggunakan nilai rata-rata terbobot (<em>weighted average</em>). Kriteria dan bobotnya adalah sebagai berikut:</p>
+                    <ul>
+                        <li>Kualitas Produk (K): bobot 50% (rentang nilai 1-100)</li>
+                        <li>Ulasan Positif (U): bobot 30% (rentang nilai 1-100)</li>
+                        <li>Kecepatan Pengiriman (P): bobot 20% (rentang nilai 1-100)</li>
+                    </ul>
+                    <p>Berikut adalah data performa empat toko yang menjual produk serupa:</p>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Toko</th>
+                                    <th>Kualitas (K)</th>
+                                    <th>Ulasan (U)</th>
+                                    <th>Kecepatan (P)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Produk A</td><td>90</td><td>70</td><td>80</td></tr>
+                                <tr><td>Produk B</td><td>80</td><td>90</td><td>70</td></tr>
+                                <tr><td>Produk C</td><td>70</td><td>80</td><td>100</td></tr>
+                                <tr><td>Produk D</td><td>85</td><td>85</td><td>85</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Soal 13 -->
+                <div class="soal-item" data-qnum="13">
+                    <div class="soal-header">
+                        <span class="nomor">13.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Jika pihak pengembang <em>e-commerce</em> memodifikasi algoritma sehingga bobot Kualitas diturunkan menjadi 30%, Kecepatan dinaikkan menjadi 40%, dan Ulasan tetap 30%, manakah di antara pernyataan berikut yang benar?
+                            <ol class="statement-list">
+                                <li>Skor akhir Produk A menjadi 80.</li>
+                                <li>Produk C menjadi pemegang posisi teratas ("Best Seller").</li>
+                                <li>Skor akhir Produk D tidak berubah sama sekali meskipun bobot dimodifikasi.</li>
+                                <li>Produk B memiliki skor terendah di algoritma baru ini.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: E</strong></p>
+                        <p>Sistem modifikasi skor = $(0,3 \times K) + (0,3 \times U) + (0,4 \times P)$.<br>
+                        Mari hitung ulang:</p>
+                        <ul>
+                            <li><strong>A</strong>: $0,3(90) + 0,3(70) + 0,4(80) = 27 + 21 + 32 = \mathbf{80}$.</li>
+                            <li><strong>B</strong>: $0,3(80) + 0,3(90) + 0,4(70) = 24 + 27 + 28 = \mathbf{79}$.</li>
+                            <li><strong>C</strong>: $0,3(70) + 0,3(80) + 0,4(100) = 21 + 24 + 40 = \mathbf{85}$.</li>
+                            <li><strong>D</strong>: $0,3(85) + 0,3(85) + 0,4(85) = 25,5 + 25,5 + 34 = \mathbf{85}$.</li>
+                        </ul>
+                        <p>Cek klaim:</p>
+                        <ol class="statement-list">
+                            <li>Skor A menjadi 80 $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Skor C melejit menjadi 85, menyamai D sebagai nilai tertinggi/teratas bersama $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Skor D sejak awal stabil di angka $(0,5\cdot85 + 0,3\cdot85 + 0,2\cdot85 = 85)$ karena skor unsurnya identik (85 semua) $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Skor B = 79, merupakan yang paling rendah dibanding A(80), C(85), dan D(85) $\rightarrow$ <strong>BENAR</strong>.</li>
+                        </ol>
+                        <p>Karena semua pernyataan benar, jawabannya E.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 14 -->
+                <div class="soal-item" data-qnum="14">
+                    <div class="soal-header">
+                        <span class="nomor">14.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Berdasarkan sistem pembobotan awal (K: 50%, U: 30%, P: 20%), perhatikan pernyataan berikut:
+                            <ol class="statement-list">
+                                <li>Skor akhir Produk D adalah yang tertinggi di antara semua toko.</li>
+                                <li>Selisih skor akhir Produk A dan Produk B adalah 1 poin.</li>
+                                <li>Produk C menempati peringkat terbawah berdasarkan sistem skor ini.</li>
+                                <li>Jika Produk B mampu meningkatkan kecepatan pengirimannya menjadi nilai 100, ia akan mengalahkan Produk D.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <p>Perhitungan skor algoritma awal:</p>
+                        <ul>
+                            <li><strong>A</strong>: $0,5(90) + 0,3(70) + 0,2(80) = 45 + 21 + 16 = \mathbf{82}$.</li>
+                            <li><strong>B</strong>: $0,5(80) + 0,3(90) + 0,2(70) = 40 + 27 + 14 = \mathbf{81}$.</li>
+                            <li><strong>C</strong>: $0,5(70) + 0,3(80) + 0,2(100) = 35 + 24 + 20 = \mathbf{79}$.</li>
+                            <li><strong>D</strong>: $0,5(85) + 0,3(85) + 0,2(85) = \mathbf{85}$.</li>
+                        </ul>
+                        <p>Analisis pernyataan:</p>
+                        <ol class="statement-list">
+                            <li>D memiliki skor 85, rekor tertinggi awal. (<strong>BENAR</strong>).</li>
+                            <li>Skor A (82) dan Skor B (81). Selisih = $82 - 81 = 1$. (<strong>BENAR</strong>).</li>
+                            <li>C memiliki skor terendah (79). (<strong>BENAR</strong>).</li>
+                            <li>Jika $P_B$ dinaikkan ke 100 $\rightarrow$ Skor B $= 0,5(80) + 0,3(90) + 0,2(100) = 40 + 27 + 20 = 87$. Skor 87 berhasil melampaui Skor D (85). (<strong>BENAR</strong>).</li>
+                        </ol>
+                        <p>Keempat pernyataan tersebut benar. (Ada 4)</p>
+                    </div>
+                </div>
+
+                <!-- Soal 15 -->
+                <div class="soal-item" data-qnum="15">
+                    <div class="soal-header">
+                        <span class="nomor">15.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Sebuah toko baru, Produk E, ingin langsung mendapatkan label "Best Seller" (mengalahkan skor tertinggi saat ini di antara Produk A, B, C, dan D) menggunakan bobot algoritma awal. Jika nilai Kualitas Produk E adalah 80 dan Ulasannya 80, berapakah nilai minimal <em>Kecepatan Pengiriman</em> yang harus dicapai Produk E (dalam bilangan bulat)?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">90</li>
+                        <li data-option="B">95</li>
+                        <li data-option="C">96</li>
+                        <li data-option="D">98</li>
+                        <li data-option="E">Tidak mungkin mencapainya meskipun nilai kecepatan maksimal (100).</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: E</strong></p>
+                        <p>Skor pemuncak "Best Seller" saat ini adalah Produk D dengan nilai 85.<br>
+                        Produk E ingin skor akhirnya $> 85$. Misalkan P adalah Kecepatan Pengiriman.<br>
+                        $$\text{Skor E} = (0,5 \times 80) + (0,3 \times 80) + (0,2 \times P) > 85$$<br>
+                        $$40 + 24 + 0,2P > 85$$<br>
+                        $$64 + 0,2P > 85$$<br>
+                        $$0,2P > 21 \implies P > \frac{21}{0,2} \implies P > 105$$<br>
+                        Nilai Kecepatan yang dibutuhkan untuk melampaui produk D adalah > 105. Namun, rentang maksimal rating ulasan/kecepatan di dalam sistem e-commerce secara tertulis hanyalah 1-100. Sehingga hal tersebut <strong>mustahil dicapai</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 16 -->
+                <div class="soal-item" data-qnum="16">
+                    <div class="soal-header">
+                        <span class="nomor">16.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Toko Produk C merasa tidak puas dengan posisinya dan melakukan perbaikan besar-besaran. Apakah Produk C berhasil menduduki peringkat pertama?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top:10px;">
+                                <li>(1) Kualitas Produk C meningkat sehingga skor Kualitasnya bertambah 20 poin.</li>
+                                <li>(2) Skor ulasan Produk C turun menjadi 70 karena terdapat protes dari pembeli sebelumnya.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: D</strong></p>
+                        <p>Target produk C (Skor Awal 79) adalah untuk mengalahkan angka 85.</p>
+                        <ul>
+                            <li><strong>Cek Pernyataan (1):</strong> Tambahan nilai "K" sebanyak +20 (dari 70 menjadi 90). Skor bobot K akan bertambah $0,5 \times 20 = 10$ poin ekstra dari total skor awalnya.<br>
+                            Skor akhir baru $= 79 + 10 = 89$. Karena $89 > 85$, kita bisa dengan yakin menjawab <strong>"YA, Berhasil"</strong>. Pernyataan (1) SAJA cukup.</li>
+                            <li><strong>Cek Pernyataan (2):</strong> Ulasan justru merosot dari 80 ke 70. Tanpa dihitung pun, penurunan ini akan menyeret skor akhirnya menjadi lebih kecil dari batas asalnya yang sudah di bawah standar, dipastikan tidak dapat menyusul 85. Kita bisa menjawab tegas <strong>"TIDAK, Gagal"</strong>. Maka, (2) SAJA cukup.</li>
+                        </ul>
+                        <p>Masing-masing pernyataan berdiri sendiri secara independen sudah memadai.</p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 5 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 5: Simulasi Dosis Obat Berdasarkan Luas Permukaan Tubuh</div>
+                    <p><em>Gunakan informasi berikut untuk menjawab soal nomor 17 sampai 20.</em></p>
+                    <p>Dalam dunia medis, memberikan dosis obat berisiko tinggi kepada pasien anak-anak tidak cukup hanya didasarkan pada berat badan, tetapi harus menggunakan metrik Luas Permukaan Tubuh atau <em>Body Surface Area</em> (BSA). Salah satu rumus yang paling umum digunakan adalah Rumus Mosteller:</p>
+                    <p style="text-align: center;">$$BSA \ (m^2) = \sqrt{\frac{\text{Tinggi Badan (cm)} \times \text{Berat Badan (kg)}}{3600}}$$</p>
+                    <p>Setelah BSA diketahui, dosis obat untuk anak disesuaikan dari dosis standar dewasa ($BSA \approx 1,73 \ m^2$) menggunakan persamaan proporsional:</p>
+                    <p style="text-align: center;">$$\text{Dosis Anak} = \left(\frac{BSA_{anak}}{1,73}\right) \times \text{Dosis Dewasa}$$</p>
+                </div>
+
+                <!-- Soal 17 -->
+                <div class="soal-item" data-qnum="17">
+                    <div class="soal-header">
+                        <span class="nomor">17.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Pengukuran dan Proporsi Medis</span><br>
+                            Seorang pasien anak memiliki tinggi badan 120 cm dan berat badan 30 kg. Berapakah Luas Permukaan Tubuh (BSA) pasien tersebut menurut rumus Mosteller?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$0,80 \ m^2$</li>
+                        <li data-option="B">$1,00 \ m^2$</li>
+                        <li data-option="C">$1,20 \ m^2$</li>
+                        <li data-option="D">$1,44 \ m^2$</li>
+                        <li data-option="E">$1,50 \ m^2$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: B</strong></p>
+                        <p>Mensubstitusikan nilai variabel pada rumus Mosteller:<br>
+                        $$BSA = \sqrt{\frac{120 \text{ cm} \times 30 \text{ kg}}{3600}}$$<br>
+                        $$BSA = \sqrt{\frac{3600}{3600}} = \sqrt{1}$$<br>
+                        $$BSA = 1,00 \ m^2$$</p>
+                    </div>
+                </div>
+
+                <!-- Soal 18 -->
+                <div class="soal-item" data-qnum="18">
+                    <div class="soal-header">
+                        <span class="nomor">18.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Pengukuran dan Proporsi Medis</span><br>
+                            Dosis standar dewasa untuk suatu obat kemoterapi adalah 519 mg per hari. Berapakah dosis aman yang harus diberikan kepada pasien anak pada soal no. 17 di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">150 mg</li>
+                        <li data-option="B">240 mg</li>
+                        <li data-option="C">300 mg</li>
+                        <li data-option="D">360 mg</li>
+                        <li data-option="E">420 mg</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: C</strong></p>
+                        <p>Menerapkan formula proporsi yang tertera pada wacana:<br>
+                        $$\text{Dosis Anak} = \left( \frac{BSA_{anak}}{1,73} \right) \times \text{Dosis Dewasa}$$<br>
+                        $$\text{Dosis Anak} = \left( \frac{1,00}{1,73} \right) \times 519$$<br>
+                        Karena $1,73 \times 300 = 519$, maka persamaannya menjadi:<br>
+                        $$\text{Dosis Anak} = 1 \times 300 = 300 \text{ mg}$$</p>
+                    </div>
+                </div>
+
+                <!-- Soal 19 -->
+                <div class="soal-item" data-qnum="19">
+                    <div class="soal-header">
+                        <span class="nomor">19.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Pengukuran dan Proporsi Medis</span><br>
+                            Seorang perawat salah membaca data rekam medis. Tinggi badan anak yang seharusnya diukur $h$ cm dicatat sebagai $1,21 h$ cm. Berapa persentase kesalahan (<em>error</em>) pengukuran Luas Permukaan Tubuh (BSA) yang dihasilkan akibat kelalaian ini?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">10% lebih tinggi</li>
+                        <li data-option="B">11% lebih tinggi</li>
+                        <li data-option="C">21% lebih tinggi</li>
+                        <li data-option="D">10% lebih rendah</li>
+                        <li data-option="E">12,1% lebih tinggi</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: A</strong></p>
+                        <p>Hubungan antara BSA dan tinggi badan $(h)$ di dalam Rumus Mosteller berada dalam fungsi akar kuadrat ($BSA \propto \sqrt{h}$).<br>
+                        $$BSA_{baru} = \sqrt{\frac{(1,21 h) \times w}{3600}}$$<br>
+                        $$BSA_{baru} = \sqrt{1,21} \times \sqrt{\frac{h \times w}{3600}}$$<br>
+                        $$BSA_{baru} = 1,1 \times BSA_{asli}$$<br>
+                        Menjadi 1,1 kali lipat ekuivalen dengan $110\%$. Peningkatan yang terjadi (kesalahan selisih) adalah sebesar $110\% - 100\% = 10\%$ lebih tinggi dari seharusnya.</p>
+                    </div>
+                </div>
+
+                <!-- Soal 20 -->
+                <div class="soal-item" data-qnum="20">
+                    <div class="soal-header">
+                        <span class="nomor">20.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Pengukuran dan Proporsi Medis</span><br>
+                            Dosis sebuah obat antibiotik untuk pasien anak diketahui sebesar 200 mg, sementara dosis dewasa obat tersebut adalah 346 mg. Jika pasien anak tersebut diketahui memiliki tinggi badan tepat 100 cm, berapakah berat badan pasien tersebut berdasarkan rumusan medis di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">16 kg</li>
+                        <li data-option="B">25 kg</li>
+                        <li data-option="C">30 kg</li>
+                        <li data-option="D">36 kg</li>
+                        <li data-option="E">40 kg</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Kunci Jawaban: D</strong></p>
+                        <p>Langkah pertama, cari BSA anak menggunakan proporsi terbalik:<br>
+                        $$\text{Dosis Anak} = \left( \frac{BSA}{1,73} \right) \times \text{Dosis Dewasa}$$<br>
+                        $$200 = \frac{BSA}{1,73} \times 346$$<br>
+                        Karena $346 / 1,73 = 200$, maka:<br>
+                        $$200 = BSA \times 200 \implies BSA = 1,00 \ m^2$$<br>
+                        Langkah kedua, masukkan nilai BSA ke rumus Mosteller untuk mencari berat badan ($w$):<br>
+                        $$1,00 = \sqrt{\frac{100 \times w}{3600}}$$<br>
+                        Kuadratkan kedua ruas persamaan:<br>
+                        $$1^2 = \frac{100 \times w}{3600}$$<br>
+                        $$1 = \frac{w}{36} \implies w = 36 \text{ kg}$$<br>
+                        Berat badan pasien anak tersebut adalah 36 kg.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ACTION AREA: Submit Button & Result -->
+            <div class="action-area">
+                <button id="submitBtn" class="btn-submit">KUMPULKAN JAWABAN</button>
+                
+                <div id="resultBox" class="result-box">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="margin:0; color:#2e7d32; font-size: 20px;">LAPORAN HASIL TRYOUT</h3>
+                        <div class="score-display">SKOR: <span id="scoreValue">0</span></div>
+                    </div>
+                    
+                    <div class="stats-summary" style="display: flex; justify-content: center; gap: 15px; margin: 15px 0 30px 0; flex-wrap: wrap;">
+                        <div style="background: var(--correct-bg); color: var(--correct-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--correct-border);">Benar: <span id="count-benar">0</span></div>
+                        <div style="background: var(--wrong-bg); color: var(--wrong-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--wrong-border);">Salah: <span id="count-salah">0</span></div>
+                        <div style="background: #e2e3e5; color: #383d41; padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid #c8cbcf;">Kosong: <span id="count-kosong">0</span></div>
+                    </div>
+
+                    <div class="analysis-box" style="text-align: left; background: white; padding: 0;">
+                        <h4 style="margin-top: 0; color: var(--header-accent); border-bottom: 2px solid var(--header-accent); padding-bottom: 10px; font-size: 18px;">Analisis Kemampuan per Topik</h4>
+                        
+                        <div style="overflow-x: auto; margin-top: 15px;">
+                            <table class="report-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left;">Topik / Materi</th>
+                                        <th style="padding: 12px;">Total Soal</th>
+                                        <th style="padding: 12px; color: #28a745;">Benar</th>
+                                        <th style="padding: 12px; color: #dc3545;">Salah/Kosong</th>
+                                        <th style="padding: 12px; width: 30%;">Persentase</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topic-breakdown-body">
+                                    <!-- Injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 5px solid var(--header-accent);">
+                            <p style="margin-top: 0; margin-bottom: 10px; font-size: 15px;"><strong>💡 Rekomendasi Belajar:</strong></p>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;" id="recommendation-list">
+                                <!-- Injected by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px dashed #ccc;">
+                        <p style="margin:0; font-weight: 600; color: #d35400; font-size: 16px;">⬇ Silahkan gulir ke atas untuk melihat pembahasan dari setiap soal ⬇</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="worksheet-footer">
+                <b>Tryout 2 - Penalaran Matematika</b><br>
+                <i>CBT System Interface</i><br>
+                <p style="color: #2980b9; font-weight: 600; margin-top: 10px; font-size: 14px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CUSTOM MODAL -->
+    <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 25px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <h3 id="modalTitle" style="margin-top: 0; color: var(--header-accent);">Konfirmasi</h3>
+            <p id="modalMessage" style="margin-bottom: 20px; color: #555;">Pesan disini</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button id="modalBtnCancel" style="padding: 10px 20px; border: none; background: #eee; color: #333; border-radius: 4px; cursor: pointer; font-weight: bold;">Batal</button>
+                <button id="modalBtnConfirm" style="padding: 10px 20px; border: none; background: var(--header-accent); color: white; border-radius: 4px; cursor: pointer; font-weight: bold;">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Interaktif (Module Base Storage) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      // ==========================================
+      // PASTE WEB APP URL KAMU DI SINI ↓
+      // ==========================================
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUsq1r7U-xmZ6w7uaNKsaXJjVdBpL78BSvN6nttgNy_jXE5zFAU7sxSqxjYIPvO9bvug/exec";
+
+      // Kunci Jawaban Penalaran Matematika Tryout Baru (20 Soal)
+      const answerKey = {
+        1: 'B', 2: 'A', 3: 'B', 4: 'D', 5: 'D',
+        6: 'A', 7: 'B', 8: 'C', 9: 'C', 10: 'A',
+        11: 'A', 12: 'B', 13: 'E', 14: 'A', 15: 'E',
+        16: 'D', 17: 'B', 18: 'C', 19: 'A', 20: 'D'
+      };
+
+      // Inisialisasi Variabel DOM
+      const landingPage = document.getElementById('landing-page');
+      const examPage = document.getElementById('exam-page');
+      const btnStart = document.getElementById('btn-start');
+      const timerBar = document.getElementById('timer-bar');
+      const loadingOverlay = document.getElementById('loading-overlay');
+      
+      const namaInput = document.getElementById('nama');
+      const emailInput = document.getElementById('email');
+      const hpInput = document.getElementById('hp');
+      const sekolahInput = document.getElementById('sekolah');
+
+      const options = document.querySelectorAll('.pilihan-ganda li');
+      const submitBtn = document.getElementById('submitBtn');
+      const timerDisplay = document.getElementById('timer-display');
+      
+      // Modal Variabel
+      const modal = document.getElementById('customModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalBtnCancel = document.getElementById('modalBtnCancel');
+      const modalBtnConfirm = document.getElementById('modalBtnConfirm');
+
+      let isSubmitted = false;
+      let timerInterval;
+      
+      // Firebase State
+      let db, auth, userId, appId, docRef;
+      let state = {
+          status: 'not_started', // not_started | in_progress | completed
+          endTime: null,
+          answers: {},
+          userData: null
+      };
+
+      async function initStorage() {
+          try {
+              if (typeof __firebase_config === 'undefined' || !__firebase_config) throw new Error("Firebase Config missing");
+              const firebaseConfig = JSON.parse(__firebase_config);
+              appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+              
+              const app = initializeApp(firebaseConfig);
+              auth = getAuth(app);
+              db = getFirestore(app);
+
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                  await signInWithCustomToken(auth, __initial_auth_token);
+              } else {
+                  await signInAnonymously(auth);
+              }
+              
+              userId = auth.currentUser.uid;
+              docRef = doc(db, 'artifacts', appId, 'users', userId, 'tryout2_state_pm');
+              
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  state = docSnap.data();
+              }
+          } catch (e) {
+              console.warn("Storage tidak tersedia, menggunakan sesi lokal memori.", e);
+          }
+          handleInitialState();
+      }
+
+      function handleInitialState() {
+          loadingOverlay.style.display = 'none';
+
+          if (state.status === 'completed') {
+              // Jika sudah selesai, langsung lompat ke halaman hasil
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'none';
+              processSubmission(true, true); // (auto, isRestoring)
+          } else if (state.status === 'in_progress') {
+              // Jika ter-refresh saat masih mengerjakan
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'flex';
+              document.body.style.paddingTop = '80px';
+              startTimer(); // Melanjutkan waktu
+          } else {
+              // Baru pertama kali buka
+              landingPage.style.display = 'block';
+          }
+      }
+
+      function restoreUserData(userData) {
+          if (!userData) return;
+          document.getElementById('display-nama').textContent = userData.nama || "-";
+          document.getElementById('display-sekolah').textContent = userData.sekolah || "-";
+          document.getElementById('display-hp').textContent = userData.hp || "-";
+      }
+
+      function restoreAnswers(answers) {
+          if (!answers) return;
+          const soalItems = document.querySelectorAll('.soal-item');
+          soalItems.forEach(item => {
+              const qNum = item.getAttribute('data-qnum');
+              if (answers[qNum]) {
+                  const option = item.querySelector(`li[data-option="${answers[qNum]}"]`);
+                  if (option) option.classList.add('selected');
+              }
+          });
+      }
+
+      // Mulai inisialisasi Firebase saat DOM Load
+      initStorage();
+
+      // LOGIKA TOMBOL MULAI
+      btnStart.addEventListener('click', async function() {
+          const nama = namaInput.value.trim() || "Peserta Anonim";
+          const email = emailInput.value.trim() || "-";
+          const hp = hpInput.value.trim() || "-";
+          const sekolah = sekolahInput.value.trim() || "-";
+
+          // Fitur Pengecualian / Admin Bypass
+          if (email.toLowerCase() === "riansyahdhanardi@gmail.com") {
+              // Jika email admin dimasukkan, reset status
+              state.status = 'in_progress';
+              state.answers = {};
+              state.userData = { nama, email, hp, sekolah };
+              state.endTime = Date.now() + 30 * 60000;
+              isSubmitted = false;
+
+              // Hapus semua pilihan yang sudah terpilih (reset visual UI)
+              const options = document.querySelectorAll('.pilihan-ganda li');
+              options.forEach(opt => {
+                  opt.classList.remove('selected', 'correct', 'wrong');
+              });
+              const olLists = document.querySelectorAll('.pilihan-ganda');
+              olLists.forEach(ol => {
+                  ol.classList.remove('disabled-options');
+              });
+              const explanations = document.querySelectorAll('.explanation');
+              explanations.forEach(exp => {
+                  exp.style.display = 'none';
+              });
+              
+              // Reset Result Box
+              document.getElementById('resultBox').style.display = 'none';
+              document.getElementById('submitBtn').style.display = 'inline-block';
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          } else {
+             // Alur Normal Peserta
+              state.userData = { nama, email, hp, sekolah };
+              state.status = 'in_progress';
+              // 30 Menit = 30 * 60000 ms (Disesuaikan request)
+              state.endTime = Date.now() + 30 * 60000;
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          }
+
+          restoreUserData(state.userData);
+          landingPage.style.display = 'none';
+          examPage.style.display = 'block';
+          timerBar.style.display = 'flex';
+          document.body.style.paddingTop = '80px'; 
+          startTimer();
+          window.scrollTo(0, 0);
+      });
+
+      function startTimer() { 
+          timerInterval = setInterval(updateTimer, 1000); 
+          updateTimer(); // Panggil sekali langsung agar tidak delay
+      }
+
+      function updateTimer() {
+          if (isSubmitted || state.status === 'completed') {
+              clearInterval(timerInterval);
+              return;
+          }
+
+          const now = Date.now();
+          const timeDiff = state.endTime - now;
+
+          if (timeDiff <= 0) {
+              clearInterval(timerInterval);
+              timerDisplay.textContent = "00:00";
+              handleTimeUp();
+              return;
+          }
+
+          const remainingSeconds = Math.floor(timeDiff / 1000);
+          const minutes = Math.floor(remainingSeconds / 60);
+          const seconds = remainingSeconds % 60;
+
+          timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (remainingSeconds < 300) {
+              timerDisplay.classList.add('timer-warning');
+          } else {
+              timerDisplay.classList.remove('timer-warning');
+          }
+      }
+
+      function handleTimeUp() {
+          showModal("Waktu Habis!", "Waktu ujian anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
+              processSubmission(true, false);
+          });
+      }
+
+      function showModal(title, message, showCancel, onConfirm) {
+          modalTitle.textContent = title;
+          modalMessage.textContent = message;
+          modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
+          modal.style.display = 'flex';
+          
+          modalBtnConfirm.onclick = function() {
+              modal.style.display = 'none';
+              if(onConfirm) onConfirm();
+          };
+          modalBtnCancel.onclick = function() {
+              modal.style.display = 'none';
+          };
+      }
+
+      // Klik Pilihan Ganda (Menyimpan Otomatis)
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return; 
+          
+          const siblings = this.parentNode.children;
+          for (let sibling of siblings) {
+            sibling.classList.remove('selected');
+          }
+          this.classList.add('selected');
+
+          // Ambil nomor soal
+          const questionItem = this.closest('.soal-item');
+          const qNum = questionItem.getAttribute('data-qnum');
+          const answer = this.getAttribute('data-option');
+          
+          // Simpan State lokal & Cloud
+          if(qNum) {
+              if(!state.answers) state.answers = {};
+              state.answers[qNum] = answer;
+              if(docRef) {
+                  updateDoc(docRef, { answers: state.answers }).catch(()=>{});
+              }
+          }
+        });
+      });
+
+      // Klik Tombol Submit Manual
+      submitBtn.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return;
+          showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengulangi ujian.", true, function() {
+              processSubmission(false, false);
+          });
+      });
+
+      function processSubmission(isAutoSubmit, isRestoring = false) {
+          if(isSubmitted) return;
+          isSubmitted = true;
+          clearInterval(timerInterval);
+
+          timerBar.style.display = "none";
+          
+          // Set status Selesai
+          state.status = 'completed';
+          if (docRef && !isRestoring) {
+              updateDoc(docRef, { status: 'completed' }).catch(()=>{});
+          }
+
+          let correctCount = 0;
+          let wrongCount = 0;
+          let emptyCount = 0;
+          const categoryStats = {};
+
+          const soalItems = document.querySelectorAll('.soal-item');
+          
+          soalItems.forEach((item, index) => {
+              const questionNumber = index + 1;
+              const correctAnswer = answerKey[questionNumber];
+              const selectedOption = item.querySelector('li.selected');
+              
+              // Analisis Kategori
+              const catEl = item.querySelector('.kategori');
+              const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
+              if (!categoryStats[categoryName]) {
+                  categoryStats[categoryName] = { total: 0, correct: 0, wrong: 0, empty: 0 };
+              }
+              categoryStats[categoryName].total++;
+
+              // Kunci UI
+              item.querySelector('ol').classList.add('disabled-options');
+
+              if (selectedOption) {
+                  const userAnswer = selectedOption.getAttribute('data-option');
+                  
+                  if (userAnswer === correctAnswer) {
+                      correctCount++;
+                      categoryStats[categoryName].correct++;
+                      selectedOption.classList.add('correct');
+                      selectedOption.classList.remove('selected');
+                  } else {
+                      wrongCount++;
+                      categoryStats[categoryName].wrong++;
+                      selectedOption.classList.add('wrong');
+                      selectedOption.classList.remove('selected');
+                      const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                      if (correctEl) correctEl.classList.add('correct');
+                  }
+              } else {
+                  emptyCount++;
+                  categoryStats[categoryName].empty++;
+                  const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                  if (correctEl) correctEl.classList.add('correct');
+              }
+          });
+
+          // Skoring (Skala 100)
+          const finalScore = Math.round((correctCount / 20) * 100);
+          
+          // ==========================================
+          // KIRIM DATA KE GOOGLE SHEETS
+          // ==========================================
+          if (!isRestoring && state.userData.email !== "riansyahdhanardi@gmail.com") {
+              submitBtn.innerText = "MENGIRIM JAWABAN...";
+              submitBtn.style.backgroundColor = "#95a5a6";
+              submitBtn.disabled = true;
+              
+              // Susun data yang akan dikirim ke Sheets
+              let dataToSend = {
+                  nama: state.userData.nama,
+                  email: state.userData.email,
+                  hp: state.userData.hp,
+                  sekolah: state.userData.sekolah,
+                  score: finalScore,
+                  benar: correctCount,
+                  salah: wrongCount,
+                  kosong: emptyCount
+              };
+              
+              // Loop masukin jawaban tiap nomor
+              for (let i = 1; i <= 20; i++) {
+                  dataToSend['soal_' + i] = state.answers[i] || "";
+              }
+
+              // Proses pengiriman (fetch) ke Apps Script
+              fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  body: JSON.stringify(dataToSend),
+                  // Jangan pakai mode 'no-cors' atau header khusus agar JSON bisa diparse dengan baik oleh Apps Script
+              })
+              .then(response => response.json())
+              .then(result => {
+                  console.log("Data sukses terkirim ke server:", result);
+                  submitBtn.style.display = "none";
+              })
+              .catch(error => {
+                  console.error('Error saat mengirim data (Cek koneksi/URL SCRIPT):', error);
+                  submitBtn.style.display = "none";
+              });
+              
+          } else {
+              // Bypass untuk admin atau saat memulihkan sesi (reload)
+              submitBtn.style.display = "none";
+          }
+
+          // Animasi Angka Skor
+          let currentScore = 0;
+          const scoreEl = document.getElementById('scoreValue');
+          const scoreInterval = setInterval(() => {
+              if (currentScore >= finalScore) {
+                  clearInterval(scoreInterval);
+                  scoreEl.textContent = finalScore;
+              } else {
+                  currentScore += Math.ceil((finalScore - currentScore) / 5) || 1;
+                  scoreEl.textContent = currentScore;
+              }
+          }, 30);
+          
+          document.getElementById('count-benar').textContent = correctCount;
+          document.getElementById('count-salah').textContent = wrongCount;
+          document.getElementById('count-kosong').textContent = emptyCount;
+
+          // Buat Laporan Tabel
+          const tbody = document.getElementById('topic-breakdown-body');
+          tbody.innerHTML = '';
+          
+          let strengths = [];
+          let weaknesses = [];
+          let moderates = [];
+
+          for (const [cat, data] of Object.entries(categoryStats)) {
+              const percentage = Math.round((data.correct / data.total) * 100);
+              const errors = data.wrong + data.empty;
+              
+              if (percentage >= 70) strengths.push(cat);
+              else if (percentage <= 40) weaknesses.push(cat);
+              else moderates.push(cat);
+
+              let barColor = '#dc3545'; // Merah
+              if (percentage >= 70) barColor = '#28a745'; // Hijau
+              else if (percentage > 40) barColor = '#f39c12'; // Kuning
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                  <td style="padding: 12px; text-align: left; font-weight: 600; color: #444;">${cat}</td>
+                  <td style="padding: 12px;">${data.total}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #28a745;">${data.correct}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #dc3545;">${errors}</td>
+                  <td style="padding: 12px;">
+                      <div class="progress-bar-bg">
+                          <div class="progress-bar-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+                      </div>
+                      <span style="font-size: 12px; font-weight: bold; color: #555;">${percentage}%</span>
+                  </td>
+              `;
+              tbody.appendChild(tr);
+          }
+
+          // Generate Teks Rekomendasi
+          const recList = document.getElementById('recommendation-list');
+          recList.innerHTML = '';
+
+          if (strengths.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #27ae60; font-weight: bold;">💪 Pertahankan:</span> Pemahaman nalar matematis di wacana <em>${strengths.join(", ")}</em> kamu sudah sangat baik. Lanjutkan latihannya!</li>`;
+          }
+          if (moderates.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #d35400; font-weight: bold;">⚖️ Cukup Baik:</span> Kamu cukup paham logika untuk wacana <em>${moderates.join(", ")}</em>, tapi jangan lengah. Tingkatkan lagi penalaran dan ketelitian datanya.</li>`;
+          }
+          if (weaknesses.length > 0) {
+              recList.innerHTML += `<li><span style="color: #c0392b; font-weight: bold;">⚠️ Tingkatkan:</span> Nalurimu di soal <em>${weaknesses.join(", ")}</em> masih kurang maksimal. Yuk, lebih teliti lagi membaca wacana dan data yang disajikan!</li>`;
+          }
+
+          // Buka Semua Pembahasan
+          const explanations = document.querySelectorAll('.explanation');
+          explanations.forEach(exp => {
+              exp.style.display = 'block';
+          });
+
+          const resultBox = document.getElementById('resultBox');
+          resultBox.style.display = 'block';
+          
+          setTimeout(() => {
+              if(!isRestoring) {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+          }, 200);
+      }
+    </script>
+</body>
+</html>
