@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tryout 2: Pengetahuan Kuantitatif (CBT System)</title>
+    
+    <!-- MathJax untuk Matematika -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          packages: { "[+]": ["ams"] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    
+    <!-- Font Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-bg: #e0f7fa;
+        --header-accent: #2980b9; 
+        --hover-bg: #ebf5fb;
+        --selected-bg: #2980b9;
+        --selected-text: #ffffff;
+        
+        /* Warna Feedback Jawaban */
+        --correct-bg: #d4edda;
+        --correct-border: #28a745;
+        --correct-text: #155724;
+        --wrong-bg: #f8d7da;
+        --wrong-border: #dc3545;
+        --wrong-text: #721c24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        padding-bottom: 100px;
+        min-height: 100vh;
+      }
+
+      /* TIMER STYLES */
+      #timer-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50;
+        color: #ffffff;
+        padding: 15px 0;
+        text-align: center;
+        z-index: 999999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      #timer-display {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 22px;
+        background: #34495e;
+        padding: 2px 10px;
+        border-radius: 4px;
+        color: #3498db;
+      }
+      .timer-warning {
+        color: #e74c3c !important;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        50% { opacity: 0.5; }
+      }
+
+      /* Container Utama */
+      .container-wrapper {
+        background: white;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: visible;
+      }
+
+      /* --- LANDING PAGE STYLES --- */
+      #landing-page {
+        display: none; /* Disembunyikan dulu sampai pengecekan sesi selesai */
+        text-align: center;
+      }
+      .landing-header h1 {
+        color: var(--header-accent);
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      
+      /* Promo Banner Styling */
+      .promo-banner {
+          background-color: #fff3e0;
+          color: #d35400;
+          padding: 8px 20px;
+          border-radius: 50px;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: 1px dashed #f39c12;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .rules-box {
+        background-color: #e8f4fd;
+        border: 2px solid var(--header-accent);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px auto;
+        text-align: left;
+        max-width: 600px;
+      }
+      .rules-box h3 {
+        margin-top: 0;
+        color: var(--header-accent);
+        border-bottom: 1px solid #b2ebf2;
+        padding-bottom: 10px;
+      }
+      .rules-box ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .rules-box li {
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .identity-box-landing {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        text-align: left;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .btn-start {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 22px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-start:hover {
+        background-color: #1f618d;
+        transform: scale(1.05);
+      }
+
+      /* --- EXAM PAGE STYLES --- */
+      #exam-page {
+        display: none;
+      }
+      
+      .worksheet-header {
+        border-bottom: 3px solid var(--header-accent);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .header-left h1 {
+        font-size: 24px;
+        color: var(--header-accent);
+        margin: 0 0 5px 0;
+        font-weight: 800;
+      }
+      .header-left h2 {
+        font-size: 16px;
+        color: var(--secondary-text);
+        margin: 0;
+        font-weight: 500;
+      }
+      .header-logo {
+        height: 100px;
+        object-fit: contain;
+      }
+      .exam-info-bar {
+        background: #f1f8e9;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        border-left: 5px solid #8bc34a;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .exam-info-bar strong {
+        color: #33691e;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        width: 120px;
+        font-weight: 600;
+        color: var(--header-accent);
+      }
+      .form-group input,
+      .form-group select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      /* Grid Layout Soal - Diubah jadi 1 Kolom ke bawah */
+      .questions-grid {
+        display: block;
+        margin-bottom: 50px;
+      }
+      @media (max-width: 768px) {
+        .container-wrapper {
+            padding: 20px;
+        }
+        .form-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+        }
+      }
+
+      /* Styling Soal */
+      .soal-item {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        page-break-inside: avoid;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .soal-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .nomor {
+        font-weight: 800;
+        color: var(--header-accent);
+        min-width: 25px;
+      }
+      .pertanyaan {
+        flex: 1;
+        text-align: justify;
+      }
+      .kategori {
+        display: inline-block;
+        font-size: 0.8em;
+        background: #e8f4fd;
+        color: #2980b9;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .gambar-soal {
+        max-width: 100%;
+        height: auto;
+        margin: 10px auto;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        padding: 5px;
+        display: block;
+      }
+      
+      /* Style Tabel */
+      .table-container {
+        margin: 15px 0;
+        display: flex;
+        justify-content: center;
+      }
+      table.soal-table {
+        border-collapse: collapse;
+        width: 90%;
+        max-width: 450px;
+      }
+      table.soal-table, table.soal-table th, table.soal-table td {
+        border: 1px solid #999;
+      }
+      table.soal-table th, table.soal-table td {
+        padding: 10px;
+        text-align: center;
+      }
+      table.soal-table th {
+        background-color: #f2f2f2;
+      }
+
+      /* Pilihan Ganda Interaktif */
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 15px;
+      }
+      ol.pilihan-ganda li {
+        position: relative;
+        padding: 8px 15px 8px 40px;
+        margin-bottom: 6px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      ol.pilihan-ganda li:hover {
+        background-color: var(--hover-bg);
+        border-color: var(--header-accent);
+      }
+      ol.pilihan-ganda li.selected {
+        background-color: var(--selected-bg);
+        color: var(--selected-text);
+        border-color: var(--selected-bg);
+        font-weight: 600;
+      }
+      ol.pilihan-ganda li.selected .mjx-chtml { 
+         color: white !important;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: #eee;
+        color: #555;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      ol.pilihan-ganda li.selected::before {
+        background: white;
+        color: var(--selected-bg);
+      }
+
+      /* Styles untuk Feedback & Pembahasan */
+      .disabled-options li {
+        pointer-events: none;
+      }
+      li.correct {
+        background-color: var(--correct-bg) !important;
+        border-color: var(--correct-border) !important;
+        color: var(--correct-text) !important;
+      }
+      li.correct::before {
+        background-color: var(--correct-border) !important;
+        color: white !important;
+        content: "✓";
+        font-size: 12px;
+      }
+      li.wrong {
+        background-color: var(--wrong-bg) !important;
+        border-color: var(--wrong-border) !important;
+        color: var(--wrong-text) !important;
+      }
+      li.wrong::before {
+        background-color: var(--wrong-border) !important;
+        color: white !important;
+        content: "✕";
+        font-size: 12px;
+      }
+      
+      /* Pembahasan tersembunyi selama ujian */
+      .explanation {
+        display: none;
+        background-color: #fdfae6;
+        padding: 15px 20px;
+        border-left: 4px solid #f39c12;
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95em;
+      }
+      .explanation ul {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+      .explanation li {
+        margin-bottom: 8px;
+      }
+
+      /* Tombol Submit & Hasil */
+      .action-area {
+        margin-top: 50px;
+        text-align: center;
+        padding: 40px 20px;
+        border-top: 2px dashed #ddd;
+        position: relative;
+        background-color: white;
+      }
+      .btn-submit {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 20px 60px;
+        font-size: 20px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 6px 15px rgba(41, 128, 185, 0.4);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1f618d !important;
+        transform: translateY(-4px);
+      }
+      .btn-submit:disabled {
+        background-color: #95a5a6 !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .result-box {
+        margin-top: 30px;
+        padding: 30px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 2px solid #2980b9;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .score-display {
+        font-size: 48px;
+        font-weight: 800;
+        color: #2e7d32;
+        margin: 10px 0;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .worksheet-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+      }
+      
+      /* Detail Report Table Styling */
+      .report-table th {
+          background-color: #f8f9fa;
+          font-weight: 700;
+          color: #333;
+          border-bottom: 2px solid #dee2e6;
+      }
+      .report-table td {
+          border-bottom: 1px solid #eee;
+          vertical-align: middle;
+      }
+      .progress-bar-bg {
+          background: #e9ecef;
+          border-radius: 4px;
+          width: 100%;
+          height: 10px;
+          margin-bottom: 5px;
+          overflow: hidden;
+      }
+      .progress-bar-fill {
+          height: 100%;
+          border-radius: 4px;
+          transition: width 1s ease-in-out;
+      }
+
+      /* Loader Layar Penuh Awal */
+      #loading-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          z-index: 10000000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+      .spinner {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid var(--header-accent);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    
+    <!-- OVERLAY LOADING SESI -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-weight: bold; color: var(--header-accent); font-size: 16px;">Memeriksa Sesi Anda...</p>
+    </div>
+
+    <!-- COUNTDOWN TIMER -->
+    <div id="timer-bar">
+        <span>SISA WAKTU:</span>
+        <span id="timer-display">25:00</span>
+    </div>
+
+    <div class="container-wrapper">
+        <!-- ================= PAGE 1: LANDING & BIODATA ================= -->
+        <div id="landing-page">
+            <header class="landing-header">
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" style="height: 140px; margin-bottom: 20px;" />
+                <h1>Tryout 2: Pengetahuan Kuantitatif</h1>
+                <h2>Prediksi SNBT 2026</h2>
+                <div class="promo-banner">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+            </header>
+
+            <div class="rules-box">
+                <h3>PERATURAN UJIAN</h3>
+                <ul>
+                    <li>Terdapat 20 soal pengetahuan kuantitatif.</li>
+                    <li>Waktu pengerjaan: <strong>25 menit</strong>.</li>
+                    <li>Waktu berjalan otomatis setelah tombol "Mulai Sekarang" ditekan.</li>
+                    <li>Pastikan koneksi internet stabil.</li>
+                    <li>Setelah klik kumpulkan, <strong>Pembahasan lengkap akan otomatis muncul</strong> di bawah setiap soal.</li>
+                    <li>Jika kamu menggunakan HP, pastikan browser kamu dalam mode desktop site.</li>
+                </ul>
+            </div>
+
+            <div class="identity-box-landing">
+                <h3 style="margin-top:0; color:var(--header-accent);">BIODATA PESERTA</h3>
+                <div class="form-group">
+                  <label for="nama">Nama :</label>
+                  <input type="text" id="nama" placeholder="Masukkan nama lengkap..." />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email :</label>
+                  <input type="email" id="email" placeholder="Masukkan email..." />
+                </div>
+                <div class="form-group">
+                  <label for="hp">Nomor HP :</label>
+                  <input type="tel" id="hp" placeholder="Masukkan nomor HP/WA..." />
+                </div>
+                <div class="form-group">
+                  <label for="sekolah">Asal Sekolah :</label>
+                  <input type="text" id="sekolah" placeholder="Masukkan asal sekolah..." />
+                </div>
+            </div>
+
+            <button id="btn-start" class="btn-start">MULAI SEKARANG</button>
+        </div>
+
+        <!-- ================= PAGE 2: EXAM ================= -->
+        <div id="exam-page">
+            <header class="worksheet-header">
+                <div class="header-left">
+                    <h1>Tryout 2: Pengetahuan Kuantitatif</h1>
+                    <h2>Prediksi SNBT 2026</h2>
+                    <div class="promo-banner" style="margin-top: 10px; font-size: 13px; padding: 5px 15px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+                </div>
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" />
+            </header>
+
+            <div class="exam-info-bar">
+                Peserta: <strong id="display-nama">-</strong> | Sekolah: <strong id="display-sekolah">-</strong> | HP: <strong id="display-hp">-</strong>
+            </div>
+
+            <!-- DAFTAR SOAL -->
+            <div class="questions-grid">
+                <!-- KOLOM KIRI (1-10) -->
+                <div class="kolom">
+                    
+                    <!-- NOMOR 1 -->
+                    <div class="soal-item" data-qnum="1">
+                        <div class="soal-header">
+                            <span class="nomor">1.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Limit Fungsi</span><br>
+                                Nilai dari $\lim\limits_{x \to \infty} \left( \sqrt{4x^2 + 8x - 5} - (2x - 1) \right)$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1</li>
+                            <li data-option="B">2</li>
+                            <li data-option="C">3</li>
+                            <li data-option="D">4</li>
+                            <li data-option="E">5</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: C</strong>
+                            <ul>
+                                <li>Ubah bentuk $(2x - 1)$ menjadi bentuk akar agar bisa menggunakan rumus limit tak hingga $\sqrt{ax^2+bx+c} - \sqrt{px^2+qx+r}$.
+                                $$(2x - 1) = \sqrt{(2x - 1)^2} = \sqrt{4x^2 - 4x + 1}$$</li>
+                                <li>Sehingga limitnya menjadi:
+                                $$\lim_{x \to \infty} \left( \sqrt{4x^2 + 8x - 5} - \sqrt{4x^2 - 4x + 1} \right)$$</li>
+                                <li>Karena koefisien $x^2$ pada kedua akar sama ($a = p = 4$), maka kita dapat menggunakan rumus cepat $\frac{b - q}{2\sqrt{a}}$:
+                                $$\text{Limit} = \frac{8 - (-4)}{2\sqrt{4}} = \frac{12}{2(2)} = \frac{12}{4} = 3$$</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 2 -->
+                    <div class="soal-item" data-qnum="2">
+                        <div class="soal-header">
+                            <span class="nomor">2.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Limit Fungsi</span><br>
+                                Berapakah nilai dari $\lim\limits_{x \to c} \frac{x^2 - c^2}{x - c}$?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>$c = 4$</li>
+                                    <li>$c^2 - 16 = 0$</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Selesaikan bentuk limit terlebih dahulu:
+                                $$\lim_{x \to c} \frac{(x-c)(x+c)}{x-c} = \lim_{x \to c} (x+c) = 2c$$
+                                Artinya, kita hanya perlu mengetahui nilai $c$ secara pasti untuk menjawab soal.</li>
+                                <li><strong>Pernyataan (1):</strong> $c = 4 \implies$ Nilai limit $= 2(4) = 8$. (CUKUP)</li>
+                                <li><strong>Pernyataan (2):</strong> $c^2 - 16 = 0 \implies c = 4$ atau $c = -4$. Karena ada dua kemungkinan nilai $c$, nilai limit bisa $8$ atau $-8$. (TIDAK CUKUP)</li>
+                                <li>Jadi, pernyataan (1) saja cukup, namun pernyataan (2) saja tidak cukup.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 3 -->
+                    <div class="soal-item" data-qnum="3">
+                        <div class="soal-header">
+                            <span class="nomor">3.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Fungsi dan Komposisi</span><br>
+                                Diketahui suatu fungsi memenuhi $F\left(\sqrt{3+\sqrt{x-2}}\right) = x^2 - 2x$ untuk $x \ge 2$. Nilai dari $F(3)$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1368</li>
+                            <li data-option="B">1260</li>
+                            <li data-option="C">1040</li>
+                            <li data-option="D">986</li>
+                            <li data-option="E">824</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Kita diminta mencari nilai $F(3)$, maka samakan input fungsi dengan angka 3:
+                                $$\sqrt{3+\sqrt{x-2}} = 3$$</li>
+                                <li>Kuadratkan kedua ruas:
+                                $$3 + \sqrt{x-2} = 9 \implies \sqrt{x-2} = 6$$</li>
+                                <li>Kuadratkan lagi kedua ruas:
+                                $$x - 2 = 36 \implies x = 38$$</li>
+                                <li>Substitusi nilai $x = 38$ ke persamaan hasil fungsi:
+                                $$F(3) = (38)^2 - 2(38) = 1444 - 76 = 1368$$</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 4 -->
+                    <div class="soal-item" data-qnum="4">
+                        <div class="soal-header">
+                            <span class="nomor">4.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Fungsi dan Komposisi</span><br>
+                                Diketahui fungsi $f(x) = 2x - 3$ dan fungsi linear $g(x) = ax + b$. Jika diketahui $(g \circ f)^{-1}(x) = \frac{x+5}{4}$, tentukan hubungan antara kuantitas P dan Q berikut.
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr>
+                                            <th>P</th>
+                                            <th>Q</th>
+                                        </tr>
+                                        <tr>
+                                            <td>$a^2 + b^2$</td>
+                                            <td>$5$</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: C</strong>
+                            <ul>
+                                <li>Pertama, tentukan $(g \circ f)(x)$:
+                                $$h(x) = (g \circ f)(x) = g(f(x)) = a(2x - 3) + b = 2ax - 3a + b$$</li>
+                                <li>Cari invers dari fungsi $h(x) = 2ax + (b - 3a)$:
+                                $$y = 2ax + b - 3a \implies 2ax = y + 3a - b \implies x = \frac{y + 3a - b}{2a}$$
+                                $$h^{-1}(x) = \frac{x + 3a - b}{2a}$$</li>
+                                <li>Diketahui dari soal bahwa $h^{-1}(x) = \frac{x+5}{4}$. Maka, dengan menyamakan posisi penyebut dan pembilang:
+                                $$2a = 4 \implies a = 2$$
+                                $$3a - b = 5 \implies 3(2) - b = 5 \implies 6 - 5 = b \implies b = 1$$</li>
+                                <li>Nilai Kuantitas P: $a^2 + b^2 = 2^2 + 1^2 = 4 + 1 = 5$.</li>
+                                <li>Karena P = 5 dan Q = 5, maka kuantitas P sama dengan kuantitas Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 5 -->
+                    <div class="soal-item" data-qnum="5">
+                        <div class="soal-header">
+                            <span class="nomor">5.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Fungsi dan Komposisi</span><br>
+                                Diketahui $f$ dan $g$ merupakan fungsi riil sedemikian sehingga $f(g(x)) = 2x^2 - 4x + 5$ dan $g(x-1) = x+2$. Perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>$g(x) = x + 3$</li>
+                                    <li>$f(x) = 2x^2 - 16x + 35$</li>
+                                    <li>$f(2) = 11$</li>
+                                    <li>Nilai minimum dari $f(x)$ adalah $3$</li>
+                                </ol>
+                                Manakah di antara pernyataan di atas yang benar?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                            <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                            <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                            <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: E</strong>
+                            <ul>
+                                <li>Langkah 1: Cari fungsi $g(x)$.<br>
+                                Misalkan $u = x - 1 \implies x = u + 1$. Substitusi ke persamaan $g$:
+                                $$g(u) = (u + 1) + 2 = u + 3 \implies g(x) = x + 3 \text{ (Pernyataan 1 Benar)}$$</li>
+                                <li>Langkah 2: Cari fungsi $f(x)$.<br>
+                                Diketahui $f(x+3) = 2x^2 - 4x + 5$. Misalkan $v = x + 3 \implies x = v - 3$.
+                                $$ \begin{aligned} f(v) &= 2(v - 3)^2 - 4(v - 3) + 5 \\ &= 2(v^2 - 6v + 9) - 4v + 12 + 5 \\ &= 2v^2 - 12v + 18 - 4v + 17 \\ &= 2v^2 - 16v + 35 \end{aligned} $$
+                                Jadi, $f(x) = 2x^2 - 16x + 35$ (Pernyataan 2 Benar).</li>
+                                <li>Langkah 3: Cek $f(2)$.<br>
+                                $f(2) = 2(2)^2 - 16(2) + 35 = 8 - 32 + 35 = 11$ (Pernyataan 3 Benar).</li>
+                                <li>Langkah 4: Cek nilai minimum fungsi kuadrat $f(x)$.<br>
+                                Absis titik puncak $x_p = \frac{-b}{2a} = \frac{-(-16)}{2(2)} = 4$.<br>
+                                Nilai minimum $y_p = f(4) = 2(4)^2 - 16(4) + 35 = 32 - 64 + 35 = 3$ (Pernyataan 4 Benar).</li>
+                                <li>Karena keempat pernyataan benar, jawaban yang tepat adalah E.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 6 -->
+                    <div class="soal-item" data-qnum="6">
+                        <div class="soal-header">
+                            <span class="nomor">6.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Statistika</span><br>
+                                Jika rata-rata $20$ bilangan bulat nonnegatif berbeda adalah $20$, maka bilangan terbesar yang mungkin adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">210</li>
+                            <li data-option="B">229</li>
+                            <li data-option="C">230</li>
+                            <li data-option="D">239</li>
+                            <li data-option="E">240</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: B</strong>
+                            <ul>
+                                <li>Total jumlah ke-20 bilangan tersebut adalah: $20 \times 20 = 400$.</li>
+                                <li>Untuk mendapatkan satu bilangan yang paling besar (maksimal), maka 19 bilangan lainnya haruslah bilangan sekecil mungkin. Karena bilangannya harus bulat, nonnegatif (mulai dari 0), dan <strong>berbeda</strong>, maka 19 bilangan terkecil tersebut adalah:
+                                $$0, 1, 2, 3, \dots, 18$$</li>
+                                <li>Jumlah dari 19 bilangan terkecil ini adalah deret aritmetika:
+                                $$S_{19} = \frac{19}{2}(0 + 18) = 19 \times 9 = 171$$</li>
+                                <li>Maka, bilangan terbesarnya adalah: $400 - 171 = 229$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 7 -->
+                    <div class="soal-item" data-qnum="7">
+                        <div class="soal-header">
+                            <span class="nomor">7.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aljabar Sistem Persamaan</span><br>
+                                Sebuah keluarga mempunyai 5 orang anak. Anak tertua berumur 2 kali dari umur anak termuda, sedangkan 3 anak yang lainnya masing-masing berumur kurang 3 tahun dari anak tertua, lebih 4 tahun dari anak termuda, dan kurang 5 tahun dari anak tertua. Jika rata-rata umur mereka adalah 16 tahun, maka kuadrat dari selisih umur anak kedua dan anak ketiga adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li>
+                            <li data-option="B">6,25</li>
+                            <li data-option="C">9</li>
+                            <li data-option="D">12,25</li>
+                            <li data-option="E">20,25</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Misalkan umur anak tertua adalah $T$ dan umur anak termuda adalah $M$. Diketahui $T = 2M \implies M = 0,5T$.</li>
+                                <li>Umur 3 anak yang lain:<br>
+                                - Anak A: $T - 3$<br>
+                                - Anak B: $M + 4 = 0,5T + 4$<br>
+                                - Anak C: $T - 5$</li>
+                                <li>Total umur kelima anak = $5 \times 16 = 80$.
+                                $$T + M + A + B + C = 80$$
+                                $$T + 0,5T + (T - 3) + (0,5T + 4) + (T - 5) = 80$$
+                                $$4T - 4 = 80 \implies 4T = 84 \implies T = 21$$</li>
+                                <li>Maka, nilai umurnya satu persatu adalah: $T = 21$; $M = 10,5$; Anak A $= 18$; Anak B $= 14,5$; Anak C $= 16$.</li>
+                                <li>Jika diurutkan dari yang tertua ke termuda: 21, 18, 16, 14.5, 10.5.</li>
+                                <li>Anak kedua berusia 18 dan anak ketiga berusia 16. Selisih umur mereka adalah $18 - 16 = 2$. Kuadrat dari selisihnya adalah $2^2 = 4$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 8 -->
+                    <div class="soal-item" data-qnum="8">
+                        <div class="soal-header">
+                            <span class="nomor">8.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Statistika</span><br>
+                                Lima bilangan bulat positif berbeda memiliki median 10. Apakah rata-rata kelima bilangan tersebut lebih dari 12?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>Jangkauan bilangan tersebut adalah 15.</li>
+                                    <li>Selisih antara bilangan terbesar dan median sama dengan dua kali selisih median dan bilangan terkecil.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: E</strong>
+                            <ul>
+                                <li>Misalkan kelima bilangan urut tersebut adalah $a < b < 10 < d < e$. Untuk rata-rata $> 12$, maka total jumlah $a+b+10+d+e > 60$.</li>
+                                <li><strong>Cek (1):</strong> $e - a = 15$. Jika $a=8, e=23$ dan $b=9, d=22$, total $= 8+9+10+22+23 = 72$ (rata-rata $>12$). Namun, jika $a=1, e=16$ dan $b=2, d=11$, total $= 1+2+10+11+16 = 40$ (rata-rata $<12$). Tidak Cukup.</li>
+                                <li><strong>Cek (2):</strong> $e - 10 = 2(10 - a) \implies e + 2a = 30$. Ini juga memunculkan berbagai kemungkinan kombinasi yang bisa menghasilkan rata-rata $>12$ maupun $<12$. Tidak Cukup.</li>
+                                <li><strong>Cek (1) &amp; (2) Bersama:</strong> Substitusi $e = a + 15$ ke persamaan kedua. $(a+15) + 2a = 30 \implies 3a = 15 \implies a = 5$, sehingga $e = 20$. Formasinya menjadi $5 < b < 10 < d < 20$.</li>
+                                <li>Cek kemungkinan rata-rata: Jika $b=9, d=19$, jumlah $= 5+9+10+19+20 = 63$ (rata-rata $12,6 > 12$). Jika $b=6, d=11$, jumlah $= 5+6+10+11+20 = 52$ (rata-rata $10,4 < 12$).</li>
+                                <li>Ternyata gabungan dua pernyataan tetap menghasilkan dua kemungkinan yang berlawanan. Jadi, informasi tidak cukup.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 9 -->
+                    <div class="soal-item" data-qnum="9">
+                        <div class="soal-header">
+                            <span class="nomor">9.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aljabar Sistem Persamaan / Matriks</span><br>
+                                Diketahui bahwa sistem persamaan linear berikut memiliki penyelesaian $(x, y)$ yang tidak hanya di $(0,0)$.
+                                $$\begin{cases} (a-1)x + 2y = 0 \\ 3x + ay = 0 \end{cases}$$
+                                Perhatikan pernyataan berikut yang berkaitan dengan nilai $a$ yang memenuhi:
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>Terdapat nilai $a$ yang merupakan bilangan negatif.</li>
+                                    <li>Jumlah semua nilai $a$ yang memenuhi adalah $1$.</li>
+                                    <li>Hasil kali semua nilai $a$ yang memenuhi adalah $-6$.</li>
+                                    <li>Selisih nilai $a$ terbesar dan terkecil adalah $5$.</li>
+                                </ol>
+                                Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li>
+                            <li data-option="B">3</li>
+                            <li data-option="C">2</li>
+                            <li data-option="D">1</li>
+                            <li data-option="E">0</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Agar sistem persamaan linier homogen ini memiliki solusi selain $(0,0)$, determinan matriks koefisiennya harus sama dengan nol.
+                                $$
+                                \begin{aligned}
+                                \begin{vmatrix} a-1 & 2 \\ 3 & a \end{vmatrix} &= 0 \\
+                                (a-1)(a) - (2)(3) &= 0 \\
+                                a^2 - a - 6 &= 0 \\
+                                (a-3)(a+2) &= 0
+                                \end{aligned}
+                                $$
+                                </li>
+                                <li>Didapatkan akar-akar nilai $a$ adalah $a_1 = 3$ dan $a_2 = -2$.</li>
+                                <li>Mari kita cek setiap pernyataan:<br>
+                                (1) Terdapat nilai $a$ negatif: Benar (ada $a = -2$).<br>
+                                (2) Jumlah semua nilai $a = 3 + (-2) = 1$: Benar.<br>
+                                (3) Hasil kali semua nilai $a = 3 \times (-2) = -6$: Benar.<br>
+                                (4) Selisih $a$ terbesar dan terkecil $= 3 - (-2) = 5$: Benar.</li>
+                                <li>Keempat pernyataan di atas terbukti benar.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 10 -->
+                    <div class="soal-item" data-qnum="10">
+                        <div class="soal-header">
+                            <span class="nomor">10.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aritmetika Sosial</span><br>
+                                Ibu membeli dua jenis barang, yaitu Barang A dan Barang B di sebuah toko. Barang A mendapat diskon 20% dan Barang B mendapat diskon 30%. Total harga awal kedua barang tersebut sebelum diskon adalah Rp500.000,00. Toko membebankan pajak 10% dari total harga setelah diskon. Jika Ibu membayar sebesar Rp396.000,00, selisih harga awal Barang A dan Barang B adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp100.000,00</li>
+                            <li data-option="B">Rp150.000,00</li>
+                            <li data-option="C">Rp200.000,00</li>
+                            <li data-option="D">Rp250.000,00</li>
+                            <li data-option="E">Rp300.000,00</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: E</strong>
+                            <ul>
+                                <li>Misalkan harga awal Barang A adalah $A$ dan Barang B adalah $B$. Persamaan 1: $A + B = 500.000$.</li>
+                                <li>Harga setelah diskon adalah $0,8A$ dan $0,7B$. Pajak yang dibebankan adalah 10% (pengali $1,1$).<br>
+                                Persamaan 2: $1,1 \times (0,8A + 0,7B) = 396.000$
+                                $$0,8A + 0,7B = \frac{396.000}{1,1} \implies 0,8A + 0,7B = 360.000$$</li>
+                                <li>Kalikan 10 pada Persamaan 2 agar mudah dieliminasi dengan Persamaan 1:
+                                $$8A + 7B = 3.600.000$$</li>
+                                <li>Kalikan Persamaan 1 dengan 7:
+                                $$7A + 7B = 3.500.000$$</li>
+                                <li>Kurangkan kedua persamaan tersebut, sehingga diperoleh:
+                                $$A = 100.000$$</li>
+                                <li>Maka $B = 500.000 - 100.000 = 400.000$. Selisih harganya adalah $400.000 - 100.000 = \text{Rp300.000,00}$.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN (11-20) -->
+                <div class="kolom">
+                    
+                    <!-- NOMOR 11 -->
+                    <div class="soal-item" data-qnum="11">
+                        <div class="soal-header">
+                            <span class="nomor">11.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Geometri Analitik / Fungsi Kuadrat</span><br>
+                                Kurva $y = x^2 - 4x - 5$ dipotong oleh garis lurus $y = mx + c$ di dua titik berbeda, yaitu $A$ dan $B$. Apakah koordinat titik tengah dari ruas garis $AB$ berada di kuadran IV?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>Garis lurus tersebut melalui titik $(0, -2)$.</li>
+                                    <li>Garis lurus tersebut sejajar dengan sumbu-$x$.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: C</strong>
+                            <ul>
+                                <li>Substitusi garis ke kurva: $x^2 - (4+m)x - (5+c) = 0$.</li>
+                                <li>Koordinat titik tengah dari garis AB dapat ditentukan dari $x_m = \frac{x_1+x_2}{2} = \frac{4+m}{2}$ dan $y_m = m x_m + c$. Agar berada di kuadran IV, nilai $x_m > 0$ dan $y_m < 0$. Syarat "dipotong di dua titik berbeda" artinya nilai diskriminan $D > 0$.</li>
+                                <li><strong>Cek (1):</strong> Garis lurus melalui $(0, -2) \implies c = -2$. Persamaan garis menjadi $y = mx - 2$. Jika dimisalkan gradien $m=0$, maka $x_m = 2$ dan $y_m = -2$ (Kuadran IV). Namun jika dimisalkan $m=10$, maka $x_m = 7$ dan $y_m = 68$ (Kuadran I). Karena letak titik tengah masih bergantung dan berubah-ubah berdasarkan gradien $m$, pernyataan (1) saja tidak cukup.</li>
+                                <li><strong>Cek (2):</strong> Garis lurus sejajar sumbu-x $\implies m = 0$. Persamaan garis $y = c$. Maka titik tengahnya adalah $x_m = 2$ dan $y_m = c$. Syarat $D > 0$ menghasilkan $16 - 4(-5-c) > 0 \implies 36 + 4c > 0 \implies c > -9$. Jika $c=1$, titiknya di $(2, 1)$ (Kuadran I). Jika $c=-2$, titiknya di $(2, -2)$ (Kuadran IV). Pernyataan (2) saja tidak cukup.</li>
+                                <li><strong>Cek (1) &amp; (2) Bersama:</strong> Digabungkan akan menjadi $m=0$ dan $c=-2$. Koordinat titik tengahnya adalah $x_m = 2$ dan $y_m = -2$, yaitu di $(2, -2)$ yang mana pasti selalu berada di Kuadran IV. (Cek diskriminan: $D = 16 - 4(-3) = 28 > 0$, terbukti bahwa kurva saling memotong).</li>
+                                <li>Kesimpulannya, DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan secara pasti.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 12 -->
+                    <div class="soal-item" data-qnum="12">
+                        <div class="soal-header">
+                            <span class="nomor">12.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Matriks</span><br>
+                                Diberikan matriks $A = \begin{pmatrix} 2 & 1 \\ 4 & 3 \end{pmatrix}$ dan $B = \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix}$. Jika terdapat matriks $C$ sedemikian sehingga memenuhi persamaan $AC = B$, perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>Determinan matriks $A$ adalah $2$.</li>
+                                    <li>Determinan matriks $C$ adalah $1$.</li>
+                                    <li>Matriks $C = \begin{pmatrix} 1,5 & -2,5 \\ -2 & 4 \end{pmatrix}$.</li>
+                                    <li>Invers matriks $C$ adalah $\begin{pmatrix} 4 & -2,5 \\ -2 & 1,5 \end{pmatrix}$.</li>
+                                </ol>
+                                Manakah di antara pernyataan berikut yang benar?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                            <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                            <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                            <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>(1) $\text{det}(A) = (2)(3) - (1)(4) = 6 - 4 = 2$. (Benar)</li>
+                                <li>(2) Karena $AC = B$, maka $\text{det}(A) \times \text{det}(C) = \text{det}(B)$. $\text{det}(B) = (1)(2) - (0)(-1) = 2$. Maka $2 \times \text{det}(C) = 2 \implies \text{det}(C) = 1$. (Benar)</li>
+                                <li>(3) Cari nilai $C = A^{-1}B = \frac{1}{2} \begin{pmatrix} 3 & -1 \\ -4 & 2 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ 0 & 2 \end{pmatrix} = \frac{1}{2} \begin{pmatrix} 3 & -5 \\ -4 & 8 \end{pmatrix} = \begin{pmatrix} 1,5 & -2,5 \\ -2 & 4 \end{pmatrix}$. (Benar)</li>
+                                <li>(4) Invers dari matriks $C = \frac{1}{1} \begin{pmatrix} 4 & 2,5 \\ 2 & 1,5 \end{pmatrix} = \begin{pmatrix} 4 & 2,5 \\ 2 & 1,5 \end{pmatrix}$. Tanda minus pada opsi jawaban menjadikannya salah. (Salah)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 13 -->
+                    <div class="soal-item" data-qnum="13">
+                        <div class="soal-header">
+                            <span class="nomor">13.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Matriks</span><br>
+                                Diketahui matriks $A = \begin{pmatrix} 3 & 1 \\ 5 & 2 \end{pmatrix}$ dan $B = \begin{pmatrix} -1 & 2 \\ 1 & 1 \end{pmatrix}$.<br><br>
+                                Berdasarkan informasi di atas, tentukan hubungan antara kuantitas P dan Q berikut.
+                                <div class="table-container">
+                                    <table class="soal-table">
+                                        <tr>
+                                            <th>P</th>
+                                            <th>Q</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Determinan matriks $(A^{-1} B)^{-1}$</td>
+                                            <td>$-1$</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Gunakan sifat determinan matriks: $|(A^{-1}B)^{-1}| = |B^{-1}A| = \frac{|A|}{|B|}$.</li>
+                                <li>Kita cari masing-masing determinannya:
+                                $$|A| = (3)(2) - (5)(1) = 6 - 5 = 1$$
+                                $$|B| = (-1)(1) - (1)(2) = -1 - 2 = -3$$</li>
+                                <li>Nilai Kuantitas P adalah $\frac{1}{-3} = -\frac{1}{3}$. </li>
+                                <li>Nilai Kuantitas Q adalah $-1$.</li>
+                                <li>Karena $-\frac{1}{3}$ lebih mendekati nol (lebih besar) daripada $-1$, maka P $>$ Q.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 14 -->
+                    <div class="soal-item" data-qnum="14">
+                        <div class="soal-header">
+                            <span class="nomor">14.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Barisan dan Deret</span><br>
+                                Diketahui suku ke-2, suku ke-4, dan suku ke-5 dari suatu barisan aritmetika dengan beda bukan nol, berturut-turut membentuk suatu barisan geometri. Jika suku ke-3 barisan aritmetika tersebut adalah 12, maka nilai suku pertamanya adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">16</li>
+                            <li data-option="B">20</li>
+                            <li data-option="C">24</li>
+                            <li data-option="D">28</li>
+                            <li data-option="E">32</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: B</strong>
+                            <ul>
+                                <li>Suku ke-2, ke-4, dan ke-5 barisan aritmetika adalah $(a+b), (a+3b), (a+4b)$. Karena mereka membentuk barisan geometri berturut-turut, berlaku sifat $(U_{\text{tengah}})^2 = U_{\text{awal}} \times U_{\text{akhir}}$:
+                                $$(a+3b)^2 = (a+b)(a+4b)$$
+                                $$a^2 + 6ab + 9b^2 = a^2 + 5ab + 4b^2$$
+                                $$ab + 5b^2 = 0 \implies b(a + 5b) = 0$$</li>
+                                <li>Karena beda bukan nol ($b \ne 0$), maka $a = -5b$.</li>
+                                <li>Diketahui suku ke-3 barisan aritmetika adalah 12, maka:
+                                $$U_3 = a + 2b = 12$$
+                                $$(-5b) + 2b = 12 \implies -3b = 12 \implies b = -4$$</li>
+                                <li>Maka nilai $a = -5(-4) = 20$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 15 -->
+                    <div class="soal-item" data-qnum="15">
+                        <div class="soal-header">
+                            <span class="nomor">15.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Barisan dan Deret</span><br>
+                                Pada suatu barisan geometri dengan suku-suku positif dan rasio $r > 1$, diketahui bahwa $\frac{u_1+u_2+u_3}{u_4+u_5+u_6} = \frac{1}{27}$. Jika nilai dari $u_2 \cdot u_4 = 144$, maka nilai dari $u_4 + u_2$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$12$</li>
+                            <li data-option="B">$16$</li>
+                            <li data-option="C">$24$</li>
+                            <li data-option="D">$36$</li>
+                            <li data-option="E">$40$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: E</strong>
+                            <ul>
+                                <li>Jabarkan pecahan dengan memfaktorkan $r^3$:
+                                $$\frac{u_1+u_2+u_3}{u_4+u_5+u_6} = \frac{a(1+r+r^2)}{ar^3(1+r+r^2)} = \frac{1}{r^3}$$</li>
+                                <li>Diketahui pecahan tersebut sama dengan $\frac{1}{27}$, maka $r^3 = 27 \implies r = 3$.</li>
+                                <li>Gunakan persamaan kedua untuk mencari $a$:
+                                $$u_2 \cdot u_4 = (ar)(ar^3) = a^2 r^4 = 144$$
+                                $$a^2 (3)^4 = 144 \implies a^2 (81) = 144 \implies a^2 = \frac{144}{81} = \frac{16}{9} \implies a = \frac{4}{3} \text{ (karena suku-suku bernilai positif)}$$</li>
+                                <li>Maka nilai suku-sukunya adalah:
+                                $$u_2 = ar = \frac{4}{3} \times 3 = 4$$
+                                $$u_4 = ar^3 = \frac{4}{3} \times 27 = 36$$</li>
+                                <li>Sehingga nilai $u_4 + u_2 = 36 + 4 = 40$.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 16 -->
+                    <div class="soal-item" data-qnum="16">
+                        <div class="soal-header">
+                            <span class="nomor">16.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Eksponen</span><br>
+                                Berapakah nilai dari $2^x$?<br><br>
+                                Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>$4^x - 3(2^x) + 2 = 0$</li>
+                                    <li>$x > 0$</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                            <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                            <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                            <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                            <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: C</strong>
+                            <ul>
+                                <li><strong>Pernyataan (1):</strong> Misalkan $y = 2^x$, maka persamaannya menjadi $y^2 - 3y + 2 = 0 \implies (y-1)(y-2) = 0$. Terdapat dua kemungkinan nilai untuk $2^x$, yaitu 1 atau 2. Maka, pernyataan (1) saja tidak cukup.</li>
+                                <li><strong>Pernyataan (2):</strong> Hanya menyatakan $x>0$ tanpa persamaan yang mengikat. Tentu tidak cukup.</li>
+                                <li><strong>Pernyataan (1) &amp; (2) Bersama:</strong> Digabungkan, jika $2^x = 1 \implies x = 0$ (tidak memenuhi syarat $x>0$). Jika $2^x = 2 \implies x = 1$ (memenuhi $x>0$). Maka kita bisa mendapat kesimpulan pasti bahwa nilai $2^x$ adalah 2. Diperlukan dua pernyataan bersama-sama.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 17 -->
+                    <div class="soal-item" data-qnum="17">
+                        <div class="soal-header">
+                            <span class="nomor">17.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Eksponen</span><br>
+                                Diberikan persamaan eksponensial $3^{2x+1} - 10(3^x) + 3 = 0$. Jika $x_1$ dan $x_2$ adalah akar-akar persamaan tersebut dengan $x_1 < x_2$, perhatikan pernyataan berikut:
+                                <ol style="list-style-type: decimal; margin-left: 20px;">
+                                    <li>$x_1 + x_2 = 0$</li>
+                                    <li>$x_1 \cdot x_2 = -1$</li>
+                                    <li>$x_2 - x_1 = 2$</li>
+                                    <li>$3^{x_1} + 3^{x_2} = \frac{10}{3}$</li>
+                                </ol>
+                                Berapa banyak pernyataan yang benar dari empat pernyataan di atas?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li>
+                            <li data-option="B">3</li>
+                            <li data-option="C">2</li>
+                            <li data-option="D">1</li>
+                            <li data-option="E">0</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Misalkan $y = 3^x$, maka bentuk $3^{2x+1} = 3 \cdot (3^x)^2 = 3y^2$. Persamaan kuadratnya menjadi:
+                                $$3y^2 - 10y + 3 = 0 \implies (3y - 1)(y - 3) = 0$$</li>
+                                <li>Nilai $y_1 = \frac{1}{3} \implies 3^x = 3^{-1} \implies x_1 = -1$ (Karena $x_1 < x_2$).<br>
+                                Nilai $y_2 = 3 \implies 3^x = 3^1 \implies x_2 = 1$.</li>
+                                <li>Kita cek masing-masing pernyataan:<br>
+                                (1) $x_1 + x_2 = -1 + 1 = 0$ (Benar)<br>
+                                (2) $x_1 \cdot x_2 = (-1) \cdot (1) = -1$ (Benar)<br>
+                                (3) $x_2 - x_1 = 1 - (-1) = 2$ (Benar)<br>
+                                (4) $3^{x_1} + 3^{x_2} = 3^{-1} + 3^1 = \frac{1}{3} + 3 = \frac{10}{3}$ (Benar)</li>
+                                <li>Keempat pernyataan benar.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 18 -->
+                    <div class="soal-item" data-qnum="18">
+                        <div class="soal-header">
+                            <span class="nomor">18.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Logaritma</span><br>
+                                Jika $^2\log 3 = a$ dan $^3\log 5 = b$, maka nilai dari $^{15}\log 20$ jika dinyatakan dalam $a$ dan $b$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\frac{ab+2}{a(b+1)}$</li>
+                            <li data-option="B">$\frac{a(b+1)}{ab+2}$</li>
+                            <li data-option="C">$\frac{2a+b}{a+b}$</li>
+                            <li data-option="D">$\frac{a+b}{2ab+1}$</li>
+                            <li data-option="E">$\frac{ab+1}{a(b+2)}$</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: A</strong>
+                            <ul>
+                                <li>Gunakan basis 3 untuk memecah logaritma:
+                                $$^{15}\log 20 = \frac{^3\log 20}{^3\log 15} = \frac{^3\log(4 \times 5)}{^3\log(3 \times 5)} = \frac{^3\log 2^2 + ^3\log 5}{^3\log 3 + ^3\log 5} = \frac{2 \cdot ^3\log 2 + ^3\log 5}{1 + ^3\log 5}$$</li>
+                                <li>Diketahui dari soal $^3\log 5 = b$ dan karena $^2\log 3 = a \implies ^3\log 2 = \frac{1}{a}$. Substitusikan nilai ini:
+                                $$= \frac{2(1/a) + b}{1 + b} = \frac{\frac{2+ab}{a}}{1+b} = \frac{ab+2}{a(b+1)}$$</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 19 -->
+                    <div class="soal-item" data-qnum="19">
+                        <div class="soal-header">
+                            <span class="nomor">19.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Logaritma</span><br>
+                                Himpunan penyelesaian dari persamaan $(^2\log x)^2 - 3(^2\log x) + 2 = 0$ adalah $\{x_1, x_2\}$. Nilai dari $x_1 \cdot x_2$ adalah ...
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">2</li>
+                            <li data-option="B">4</li>
+                            <li data-option="C">6</li>
+                            <li data-option="D">8</li>
+                            <li data-option="E">16</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: D</strong>
+                            <ul>
+                                <li>Misalkan $y = ^2\log x$, persamaannya menjadi:
+                                $$y^2 - 3y + 2 = 0 \implies (y-1)(y-2) = 0$$</li>
+                                <li>Untuk $y = 1 \implies ^2\log x = 1 \implies x_1 = 2^1 = 2$.<br>
+                                Untuk $y = 2 \implies ^2\log x = 2 \implies x_2 = 2^2 = 4$.</li>
+                                <li>Maka hasil kali akar-akarnya adalah $x_1 \cdot x_2 = 2 \times 4 = 8$.</li>
+                                <li><em>Cara Cepat: Menggunakan rumus jumlah akar $y_1 + y_2 = -\frac{b}{a} = 3 \implies ^2\log x_1 + ^2\log x_2 = 3 \implies ^2\log(x_1 x_2) = 3 \implies x_1 x_2 = 2^3 = 8$.</em></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- NOMOR 20 -->
+                    <div class="soal-item" data-qnum="20">
+                        <div class="soal-header">
+                            <span class="nomor">20.</span>
+                            <div class="pertanyaan">
+                                <span class="kategori">Aritmetika Sosial</span><br>
+                                Seorang pedagang mencampur Kopi A yang harga modalnya Rp40.000,00/kg dengan Kopi B yang harga modalnya Rp60.000,00/kg. Jika pedagang tersebut menjual kopi campuran seharga Rp54.000,00/kg dan memperoleh keuntungan sebesar 20%, berapakah rasio takaran Kopi A dan Kopi B dalam campuran tersebut?
+                            </div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1 : 2</li>
+                            <li data-option="B">2 : 1</li>
+                            <li data-option="C">2 : 3</li>
+                            <li data-option="D">3 : 1</li>
+                            <li data-option="E">3 : 2</li>
+                        </ol>
+                        <div class="explanation">
+                            <strong>Kunci Jawaban: D</strong>
+                            <ul>
+                                <li>Hitung dahulu harga modal dari kopi campuran tersebut berdasarkan persentase keuntungan.
+                                $$\text{Harga Jual} = 120\% \times \text{Harga Modal Campuran}$$
+                                $$54.000 = 1,2 \times \text{Modal} \implies \text{Modal} = \frac{54.000}{1,2} = 45.000$$</li>
+                                <li>Misalkan takaran Kopi A adalah $a$ dan Kopi B adalah $b$. Rumus harga campuran adalah:
+                                $$\frac{40.000a + 60.000b}{a + b} = 45.000$$
+                                $$40a + 60b = 45a + 45b \implies 15b = 5a$$
+                                $$\frac{a}{b} = \frac{15}{5} = \frac{3}{1}$$</li>
+                                <li>Jadi, rasio takaran Kopi A terhadap Kopi B adalah 3 : 1.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ACTION AREA: Submit Button & Result -->
+            <div class="action-area">
+                <button id="submitBtn" class="btn-submit">KUMPULKAN JAWABAN</button>
+                
+                <div id="resultBox" class="result-box">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="margin:0; color:#2e7d32; font-size: 20px;">LAPORAN HASIL TRYOUT</h3>
+                        <div class="score-display">SKOR: <span id="scoreValue">0</span></div>
+                    </div>
+                    
+                    <div class="stats-summary" style="display: flex; justify-content: center; gap: 15px; margin: 15px 0 30px 0; flex-wrap: wrap;">
+                        <div style="background: var(--correct-bg); color: var(--correct-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--correct-border);">Benar: <span id="count-benar">0</span></div>
+                        <div style="background: var(--wrong-bg); color: var(--wrong-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--wrong-border);">Salah: <span id="count-salah">0</span></div>
+                        <div style="background: #e2e3e5; color: #383d41; padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid #c8cbcf;">Kosong: <span id="count-kosong">0</span></div>
+                    </div>
+
+                    <div class="analysis-box" style="text-align: left; background: white; padding: 0;">
+                        <h4 style="margin-top: 0; color: var(--header-accent); border-bottom: 2px solid var(--header-accent); padding-bottom: 10px; font-size: 18px;">Analisis Kemampuan per Topik</h4>
+                        
+                        <div style="overflow-x: auto; margin-top: 15px;">
+                            <table class="report-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left;">Topik / Materi</th>
+                                        <th style="padding: 12px;">Total Soal</th>
+                                        <th style="padding: 12px; color: #28a745;">Benar</th>
+                                        <th style="padding: 12px; color: #dc3545;">Salah/Kosong</th>
+                                        <th style="padding: 12px; width: 30%;">Persentase</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topic-breakdown-body">
+                                    <!-- Injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 5px solid var(--header-accent);">
+                            <p style="margin-top: 0; margin-bottom: 10px; font-size: 15px;"><strong>💡 Rekomendasi Belajar:</strong></p>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;" id="recommendation-list">
+                                <!-- Injected by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px dashed #ccc;">
+                        <p style="margin:0; font-weight: 600; color: #d35400; font-size: 16px;">⬇ Silahkan gulir ke atas untuk melihat pembahasan dari setiap soal ⬇</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="worksheet-footer">
+                <b>Tryout 1 - Pengetahuan Kuantitatif</b><br>
+                <i>CBT System Interface</i><br>
+                <p style="color: #2980b9; font-weight: 600; margin-top: 10px; font-size: 14px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CUSTOM MODAL -->
+    <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 25px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <h3 id="modalTitle" style="margin-top: 0; color: var(--header-accent);">Konfirmasi</h3>
+            <p id="modalMessage" style="margin-bottom: 20px; color: #555;">Pesan disini</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button id="modalBtnCancel" style="padding: 10px 20px; border: none; background: #eee; color: #333; border-radius: 4px; cursor: pointer; font-weight: bold;">Batal</button>
+                <button id="modalBtnConfirm" style="padding: 10px 20px; border: none; background: var(--header-accent); color: white; border-radius: 4px; cursor: pointer; font-weight: bold;">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Interaktif (Module Base Storage) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      // ==========================================
+      // URL GOOGLE APPS SCRIPT (MASUKKAN URL BARU DI BAWAH INI)
+      // ==========================================
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQGfFBBn1dxB70AwOIjMWqUTSt9HkuM5bCMV8bg4B37HfDSZsst2ocLNy-6kRcktMx/exec";
+
+      // Kunci Jawaban Pengetahuan Kuantitatif Asli (20 Soal)
+      const answerKey = {
+        1: 'C', 2: 'A', 3: 'A', 4: 'C', 5: 'E',
+        6: 'B', 7: 'A', 8: 'E', 9: 'A', 10: 'E',
+        11: 'C', 12: 'A', 13: 'A', 14: 'B', 15: 'E',
+        16: 'C', 17: 'A', 18: 'A', 19: 'D', 20: 'D'
+      };
+
+      // Inisialisasi Variabel DOM
+      const landingPage = document.getElementById('landing-page');
+      const examPage = document.getElementById('exam-page');
+      const btnStart = document.getElementById('btn-start');
+      const timerBar = document.getElementById('timer-bar');
+      const loadingOverlay = document.getElementById('loading-overlay');
+      
+      const namaInput = document.getElementById('nama');
+      const emailInput = document.getElementById('email');
+      const hpInput = document.getElementById('hp');
+      const sekolahInput = document.getElementById('sekolah');
+
+      const options = document.querySelectorAll('.pilihan-ganda li');
+      const submitBtn = document.getElementById('submitBtn');
+      const timerDisplay = document.getElementById('timer-display');
+      
+      // Modal Variabel
+      const modal = document.getElementById('customModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalBtnCancel = document.getElementById('modalBtnCancel');
+      const modalBtnConfirm = document.getElementById('modalBtnConfirm');
+
+      let isSubmitted = false;
+      let timerInterval;
+      
+      // Firebase State
+      let db, auth, userId, appId, docRef;
+      let state = {
+          status: 'not_started', // not_started | in_progress | completed
+          endTime: null,
+          answers: {},
+          userData: null
+      };
+
+      async function initStorage() {
+          try {
+              if (typeof __firebase_config === 'undefined' || !__firebase_config) throw new Error("Firebase Config missing");
+              const firebaseConfig = JSON.parse(__firebase_config);
+              appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+              
+              const app = initializeApp(firebaseConfig);
+              auth = getAuth(app);
+              db = getFirestore(app);
+
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                  await signInWithCustomToken(auth, __initial_auth_token);
+              } else {
+                  await signInAnonymously(auth);
+              }
+              
+              userId = auth.currentUser.uid;
+              docRef = doc(db, 'artifacts', appId, 'users', userId, 'tryout_state');
+              
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  state = docSnap.data();
+              }
+          } catch (e) {
+              console.warn("Storage tidak tersedia, menggunakan sesi lokal memori.", e);
+          }
+          handleInitialState();
+      }
+
+      function handleInitialState() {
+          loadingOverlay.style.display = 'none';
+
+          if (state.status === 'completed') {
+              // Jika sudah selesai, langsung lompat ke halaman hasil
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'none';
+              processSubmission(true, true); // (auto, isRestoring)
+          } else if (state.status === 'in_progress') {
+              // Jika ter-refresh saat masih mengerjakan
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'flex';
+              document.body.style.paddingTop = '80px';
+              startTimer(); // Melanjutkan waktu
+          } else {
+              // Baru pertama kali buka
+              landingPage.style.display = 'block';
+          }
+      }
+
+      function restoreUserData(userData) {
+          if (!userData) return;
+          document.getElementById('display-nama').textContent = userData.nama || "-";
+          document.getElementById('display-sekolah').textContent = userData.sekolah || "-";
+          document.getElementById('display-hp').textContent = userData.hp || "-";
+      }
+
+      function restoreAnswers(answers) {
+          if (!answers) return;
+          const soalItems = document.querySelectorAll('.soal-item');
+          soalItems.forEach(item => {
+              const qNum = item.getAttribute('data-qnum');
+              if (answers[qNum]) {
+                  const option = item.querySelector(`li[data-option="${answers[qNum]}"]`);
+                  if (option) option.classList.add('selected');
+              }
+          });
+      }
+
+      // Mulai inisialisasi Firebase saat DOM Load
+      initStorage();
+
+      // LOGIKA TOMBOL MULAI
+      btnStart.addEventListener('click', async function() {
+          const nama = namaInput.value.trim() || "Peserta Anonim";
+          const email = emailInput.value.trim() || "-";
+          const hp = hpInput.value.trim() || "-";
+          const sekolah = sekolahInput.value.trim() || "-";
+
+          // Fitur Pengecualian / Admin Bypass
+          if (email.toLowerCase() === "riansyahdhanardi@gmail.com") {
+              // Jika email admin dimasukkan, reset status
+              state.status = 'in_progress';
+              state.answers = {};
+              state.userData = { nama, email, hp, sekolah };
+              state.endTime = Date.now() + 25 * 60000;
+              isSubmitted = false;
+
+              // Hapus semua pilihan yang sudah terpilih (reset visual UI)
+              const options = document.querySelectorAll('.pilihan-ganda li');
+              options.forEach(opt => {
+                  opt.classList.remove('selected', 'correct', 'wrong');
+              });
+              const olLists = document.querySelectorAll('.pilihan-ganda');
+              olLists.forEach(ol => {
+                  ol.classList.remove('disabled-options');
+              });
+              const explanations = document.querySelectorAll('.explanation');
+              explanations.forEach(exp => {
+                  exp.style.display = 'none';
+              });
+              
+              // Reset Result Box
+              document.getElementById('resultBox').style.display = 'none';
+              document.getElementById('submitBtn').style.display = 'inline-block';
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          } else {
+             // Alur Normal Peserta
+              state.userData = { nama, email, hp, sekolah };
+              state.status = 'in_progress';
+              // 25 Menit = 25 * 60000 ms
+              state.endTime = Date.now() + 25 * 60000;
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          }
+
+          restoreUserData(state.userData);
+          landingPage.style.display = 'none';
+          examPage.style.display = 'block';
+          timerBar.style.display = 'flex';
+          document.body.style.paddingTop = '80px'; 
+          startTimer();
+          window.scrollTo(0, 0);
+      });
+
+      function startTimer() {
+           timerInterval = setInterval(updateTimer, 1000);
+           updateTimer(); // Panggil sekali langsung agar tidak delay
+      }
+
+      function updateTimer() {
+          if (isSubmitted || state.status === 'completed') {
+              clearInterval(timerInterval);
+              return;
+          }
+
+          const now = Date.now();
+          const timeDiff = state.endTime - now;
+
+          if (timeDiff <= 0) {
+              clearInterval(timerInterval);
+              timerDisplay.textContent = "00:00";
+              handleTimeUp();
+              return;
+          }
+
+          const remainingSeconds = Math.floor(timeDiff / 1000);
+          const minutes = Math.floor(remainingSeconds / 60);
+          const seconds = remainingSeconds % 60;
+
+          timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (remainingSeconds < 300) {
+              timerDisplay.classList.add('timer-warning');
+          } else {
+              timerDisplay.classList.remove('timer-warning');
+          }
+      }
+
+      function handleTimeUp() {
+          showModal("Waktu Habis!", "Waktu ujian anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
+              processSubmission(true, false);
+          });
+      }
+
+      function showModal(title, message, showCancel, onConfirm) {
+          modalTitle.textContent = title;
+          modalMessage.textContent = message;
+          modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
+          modal.style.display = 'flex';
+          
+          modalBtnConfirm.onclick = function() {
+              modal.style.display = 'none';
+              if(onConfirm) onConfirm();
+          };
+          modalBtnCancel.onclick = function() {
+              modal.style.display = 'none';
+          };
+      }
+
+      // Klik Pilihan Ganda (Menyimpan Otomatis)
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return;
+           
+          const siblings = this.parentNode.children;
+          for (let sibling of siblings) {
+            sibling.classList.remove('selected');
+          }
+          this.classList.add('selected');
+
+          // Ambil nomor soal
+          const questionItem = this.closest('.soal-item');
+          const qNum = questionItem.getAttribute('data-qnum');
+          const answer = this.getAttribute('data-option');
+          
+          // Simpan State lokal & Cloud
+          if(qNum) {
+              if(!state.answers) state.answers = {};
+              state.answers[qNum] = answer;
+              if(docRef) {
+                  updateDoc(docRef, { answers: state.answers }).catch(()=>{});
+              }
+          }
+        });
+      });
+
+      // Klik Tombol Submit Manual
+      submitBtn.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return;
+          showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengulangi ujian.", true, function() {
+              processSubmission(false, false);
+          });
+      });
+
+      function processSubmission(isAutoSubmit, isRestoring = false) {
+          if(isSubmitted) return;
+          isSubmitted = true;
+          clearInterval(timerInterval);
+
+          timerBar.style.display = "none";
+          
+          // Set status Selesai
+          state.status = 'completed';
+          if (docRef && !isRestoring) {
+              updateDoc(docRef, { status: 'completed' }).catch(()=>{});
+          }
+
+          let correctCount = 0;
+          let wrongCount = 0;
+          let emptyCount = 0;
+          const categoryStats = {};
+
+          const soalItems = document.querySelectorAll('.soal-item');
+          
+          soalItems.forEach((item, index) => {
+              const questionNumber = index + 1;
+              const correctAnswer = answerKey[questionNumber];
+              const selectedOption = item.querySelector('li.selected');
+              
+              // Analisis Kategori
+              const catEl = item.querySelector('.kategori');
+              const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
+              if (!categoryStats[categoryName]) {
+                  categoryStats[categoryName] = { total: 0, correct: 0, wrong: 0, empty: 0 };
+              }
+              categoryStats[categoryName].total++;
+
+              // Kunci UI
+              item.querySelector('ol').classList.add('disabled-options');
+
+              if (selectedOption) {
+                  const userAnswer = selectedOption.getAttribute('data-option');
+                  
+                  if (userAnswer === correctAnswer) {
+                      correctCount++;
+                      categoryStats[categoryName].correct++;
+                      selectedOption.classList.add('correct');
+                      selectedOption.classList.remove('selected');
+                  } else {
+                      wrongCount++;
+                      categoryStats[categoryName].wrong++;
+                      selectedOption.classList.add('wrong');
+                      selectedOption.classList.remove('selected');
+                      const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                      if (correctEl) correctEl.classList.add('correct');
+                  }
+              } else {
+                  emptyCount++;
+                  categoryStats[categoryName].empty++;
+                  const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                  if (correctEl) correctEl.classList.add('correct');
+              }
+          });
+
+          // Skoring (Skala 100)
+          const finalScore = Math.round((correctCount / 20) * 100);
+          
+          // ==========================================
+          // KIRIM DATA KE GOOGLE SHEETS (DIAKTIFKAN KEMBALI)
+          // ==========================================
+          if (!isRestoring && state.userData.email !== "riansyahdhanardi@gmail.com") {
+              submitBtn.innerText = "SEDANG MENGIRIM DATA...";
+              submitBtn.style.backgroundColor = "#95a5a6";
+              submitBtn.disabled = true;
+              
+              let dataToSend = {
+                  nama: state.userData.nama,
+                  email: state.userData.email,
+                  hp: state.userData.hp,
+                  sekolah: state.userData.sekolah,
+                  score: finalScore,
+                  benar: correctCount,
+                  salah: wrongCount,
+                  kosong: emptyCount
+              };
+              
+              for (let i = 1; i <= 20; i++) {
+                  dataToSend['soal_' + i] = state.answers[i] || "";
+              }
+
+              fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  headers: {
+                      // Gunakan text/plain agar terhindar dari pemblokiran CORS browser
+                      'Content-Type': 'text/plain;charset=utf-8',
+                  },
+                  body: JSON.stringify(dataToSend)
+              }).then(response => {
+                  console.log("Data sukses terkirim ke server");
+              }).catch(error => {
+                  console.error('Error saat mengirim data:', error);
+              });
+          }
+          
+          // Sembunyikan submit button sesudah click
+          submitBtn.style.display = "none";
+
+          // Animasi Angka Skor
+          let currentScore = 0;
+          const scoreEl = document.getElementById('scoreValue');
+          const scoreInterval = setInterval(() => {
+              if (currentScore >= finalScore) {
+                  clearInterval(scoreInterval);
+                  scoreEl.textContent = finalScore;
+              } else {
+                  currentScore += Math.ceil((finalScore - currentScore) / 5) || 1;
+                  scoreEl.textContent = currentScore;
+              }
+          }, 30);
+          
+          document.getElementById('count-benar').textContent = correctCount;
+          document.getElementById('count-salah').textContent = wrongCount;
+          document.getElementById('count-kosong').textContent = emptyCount;
+
+          // Buat Laporan Tabel
+          const tbody = document.getElementById('topic-breakdown-body');
+          tbody.innerHTML = '';
+          
+          let strengths = [];
+          let weaknesses = [];
+          let moderates = [];
+
+          for (const [cat, data] of Object.entries(categoryStats)) {
+              const percentage = Math.round((data.correct / data.total) * 100);
+              const errors = data.wrong + data.empty;
+              
+              if (percentage >= 70) strengths.push(cat);
+              else if (percentage <= 40) weaknesses.push(cat);
+              else moderates.push(cat);
+
+              let barColor = '#dc3545'; // Merah
+              if (percentage >= 70) barColor = '#28a745'; // Hijau
+              else if (percentage > 40) barColor = '#f39c12'; // Kuning
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                  <td style="padding: 12px; text-align: left; font-weight: 600; color: #444;">${cat}</td>
+                  <td style="padding: 12px;">${data.total}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #28a745;">${data.correct}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #dc3545;">${errors}</td>
+                  <td style="padding: 12px;">
+                      <div class="progress-bar-bg">
+                          <div class="progress-bar-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+                      </div>
+                      <span style="font-size: 12px; font-weight: bold; color: #555;">${percentage}%</span>
+                  </td>
+              `;
+              tbody.appendChild(tr);
+          }
+
+          // Generate Teks Rekomendasi
+          const recList = document.getElementById('recommendation-list');
+          recList.innerHTML = '';
+
+          if (strengths.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #27ae60; font-weight: bold;">💪 Pertahankan:</span> Penguasaan materi <em>${strengths.join(", ")}</em> kamu sudah sangat baik. Lanjutkan latihan dengan soal-soal HOTS yang menantang!</li>`;
+          }
+          if (moderates.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #d35400; font-weight: bold;">⚖️ Cukup Baik:</span> Kamu cukup paham dasar materi <em>${moderates.join(", ")}</em>, tapi jangan lengah. Tingkatkan lagi kecepatan hitung dan ketelitiannya.</li>`;
+          }
+          if (weaknesses.length > 0) {
+              recList.innerHTML += `<li><span style="color: #c0392b; font-weight: bold;">⚠️ Tingkatkan:</span> Nilai kamu di materi <em>${weaknesses.join(", ")}</em> masih kurang maksimal. Yuk, gas pelajari lagi rumus dan konsep dasarnya, jangan ragu bahas bareng teman atau guru!</li>`;
+          }
+
+          // Buka Semua Pembahasan
+          const explanations = document.querySelectorAll('.explanation');
+          explanations.forEach(exp => {
+              exp.style.display = 'block';
+          });
+
+          const resultBox = document.getElementById('resultBox');
+          resultBox.style.display = 'block';
+          
+          setTimeout(() => {
+              if(!isRestoring) {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+          }, 200);
+      }
+    </script>
+</body>
+</html>
