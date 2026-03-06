@@ -1,1004 +1,1941 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tryout 1: Penalaran Matematika</title>
-    <!-- MathJax Configuration -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tryout 1: Penalaran Matematika (CBT System)</title>
+    
+    <!-- MathJax untuk Matematika -->
     <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          packages: { "[+]": ["ams"] },
+        },
+        svg: {
+          fontCache: "global",
+        },
+      };
     </script>
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    
+    <!-- Font Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
     <style>
-        body {
-            font-family: 'Noto Sans', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        h1, h2, h3 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        .instructions {
-            background-color: #e8f4fd;
-            padding: 15px;
-            border-left: 4px solid #3498db;
-            margin-bottom: 25px;
-            font-size: 0.95em;
-        }
-        .wacana {
-            background-color: #fdfdfd;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-top: 4px solid #34495e;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        .wacana-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-        .question {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        .question-header {
-            font-weight: bold;
-            color: #2980b9;
-            margin-bottom: 10px;
-        }
-        .options {
-            list-style-type: upper-alpha;
-            padding-left: 20px;
-        }
-        .options li {
-            margin-bottom: 8px;
-            padding: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border-radius: 4px;
-        }
-        .options li:hover {
-            background-color: #f0f0f0;
-        }
-        .table-container {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            max-width: 450px;
-        }
-        table, th, td {
-            border: 1px solid #999;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-bg: #e0f7fa;
+        --header-accent: #2980b9; 
+        --hover-bg: #ebf5fb;
+        --selected-bg: #2980b9;
+        --selected-text: #ffffff;
         
-        /* Tcolorbox UI Simulation */
-        .tcolorbox {
-            display: none;
-            background-color: #f2f7fc;
-            border: 2px solid #1a4c80;
-            border-radius: 6px;
-            margin-top: 15px;
-            overflow: hidden;
+        /* Warna Feedback Jawaban */
+        --correct-bg: #d4edda;
+        --correct-border: #28a745;
+        --correct-text: #155724;
+        --wrong-bg: #f8d7da;
+        --wrong-border: #dc3545;
+        --wrong-text: #721c24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        padding-bottom: 100px;
+        min-height: 100vh;
+      }
+
+      /* TIMER STYLES */
+      #timer-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50;
+        color: #ffffff;
+        padding: 15px 0;
+        text-align: center;
+        z-index: 999999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      #timer-display {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 22px;
+        background: #34495e;
+        padding: 2px 10px;
+        border-radius: 4px;
+        color: #3498db;
+      }
+      .timer-warning {
+        color: #e74c3c !important;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        50% { opacity: 0.5; }
+      }
+
+      /* Container Utama */
+      .container-wrapper {
+        background: white;
+        max-width: 900px; /* Dikecilkan sedikit agar wacana pas dibaca */
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: visible;
+      }
+
+      /* --- LANDING PAGE STYLES --- */
+      #landing-page {
+        display: none;
+        text-align: center;
+      }
+      .landing-header h1 {
+        color: var(--header-accent);
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      
+      .promo-banner {
+          background-color: #fff3e0;
+          color: #d35400;
+          padding: 8px 20px;
+          border-radius: 50px;
+          font-size: 14px;
+          font-weight: 700;
+          display: inline-block;
+          border: 1px dashed #f39c12;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .rules-box {
+        background-color: #e8f4fd;
+        border: 2px solid var(--header-accent);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px auto;
+        text-align: left;
+        max-width: 600px;
+      }
+      .rules-box h3 {
+        margin-top: 0;
+        color: var(--header-accent);
+        border-bottom: 1px solid #b2ebf2;
+        padding-bottom: 10px;
+      }
+      .rules-box ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .rules-box li {
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+      .identity-box-landing {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        text-align: left;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .btn-start {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 22px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-start:hover {
+        background-color: #1f618d;
+        transform: scale(1.05);
+      }
+
+      /* --- EXAM PAGE STYLES --- */
+      #exam-page {
+        display: none;
+      }
+      
+      .worksheet-header {
+        border-bottom: 3px solid var(--header-accent);
+        padding-bottom: 20px;        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .header-left h1 {
+        font-size: 24px;
+        color: var(--header-accent);
+        margin: 0 0 5px 0;
+        font-weight: 800;
+      }
+      .header-left h2 {
+        font-size: 16px;
+        color: var(--secondary-text);
+        margin: 0;
+        font-weight: 500;
+      }
+      .header-logo {
+        height: 100px;
+        object-fit: contain;
+      }
+      .exam-info-bar {
+        background: #f1f8e9;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        border-left: 5px solid #8bc34a;
+        font-size: 0.9em;
+        color: #555;
+      }
+      .exam-info-bar strong {
+        color: #33691e;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        width: 120px;
+        font-weight: 600;
+        color: var(--header-accent);
+      }
+      .form-group input,
+      .form-group select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      /* Grid Layout Soal - Diubah jadi 1 kolom untuk Wacana */
+      .questions-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 50px;
+      }
+      @media (max-width: 768px) {
+        .container-wrapper {
+            padding: 20px;
         }
-        .tcolorbox-title {
-            background-color: #1a4c80;
-            color: #ffffff;
-            font-weight: bold;
-            padding: 8px 15px;
+        .form-group {
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .tcolorbox-content {
-            padding: 15px;
-        }
-        .tcolorbox-content ul, .tcolorbox-content ol {
-            padding-left: 20px;
-            margin-top: 5px;
+        .form-group label {
             margin-bottom: 5px;
         }
-        .tcolorbox-content p {
-            margin-top: 5px;
-            margin-bottom: 10px;
+        .form-group input, .form-group select {
+            width: 100%;
         }
-        
-        .show-explanation-btn {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 0.9em;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        .show-explanation-btn:hover {
-            background-color: #27ae60;
-        }
-        .statement-list {
-            list-style-type: decimal;
-            margin-bottom: 15px;
-            padding-left: 20px;
-        }
+      }
+
+      /* Wacana Styles */
+      .wacana {
+          background-color: #fdfdfd;
+          padding: 25px;
+          border: 1px solid #e0e0e0;
+          border-top: 4px solid #34495e;
+          margin-bottom: 20px;
+          border-radius: 6px;
+          font-size: 15px;
+      }
+      .wacana-title {
+          font-size: 1.2em;
+          font-weight: bold;
+          color: #2c3e50;
+          margin-bottom: 15px;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 8px;
+      }
+
+      /* Styling Soal */
+      .soal-item {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        page-break-inside: avoid;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .soal-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .nomor {
+        font-weight: 800;
+        color: var(--header-accent);
+        min-width: 25px;
+      }
+      .pertanyaan {
+        flex: 1;
+        text-align: justify;
+      }
+      .kategori {
+        display: inline-block;
+        font-size: 0.8em;
+        background: #e8f4fd;
+        color: #2980b9;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      
+      .statement-list {
+          list-style-type: decimal;
+          margin-bottom: 15px;
+          padding-left: 20px;
+      }
+
+      /* Pilihan Ganda Interaktif */
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 15px;
+      }
+      ol.pilihan-ganda li {
+        position: relative;
+        padding: 8px 15px 8px 40px;
+        margin-bottom: 6px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      ol.pilihan-ganda li:hover {
+        background-color: var(--hover-bg);
+        border-color: var(--header-accent);
+      }
+      ol.pilihan-ganda li.selected {
+        background-color: var(--selected-bg);
+        color: var(--selected-text);
+        border-color: var(--selected-bg);
+        font-weight: 600;
+      }
+      ol.pilihan-ganda li.selected .mjx-chtml { 
+        color: white !important;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: #eee;
+        color: #555;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      ol.pilihan-ganda li.selected::before {
+        background: white;
+        color: var(--selected-bg);
+      }
+
+      /* Styles untuk Feedback & Pembahasan */
+      .disabled-options li {
+        pointer-events: none;
+      }
+      li.correct {
+        background-color: var(--correct-bg) !important;
+        border-color: var(--correct-border) !important;
+        color: var(--correct-text) !important;
+      }
+      li.correct::before {
+        background-color: var(--correct-border) !important;
+        color: white !important;
+        content: "✓";
+        font-size: 12px;
+      }
+      li.wrong {
+        background-color: var(--wrong-bg) !important;
+        border-color: var(--wrong-border) !important;
+        color: var(--wrong-text) !important;
+      }
+      li.wrong::before {
+        background-color: var(--wrong-border) !important;
+        color: white !important;
+        content: "✕";
+        font-size: 12px;
+      }
+      
+      /* Pembahasan tersembunyi selama ujian */
+      .explanation {
+        display: none;
+        background-color: #fdfae6;
+        padding: 15px 20px;
+        border-left: 4px solid #f39c12;
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95em;
+      }
+      .explanation ul {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+      .explanation li {
+        margin-bottom: 8px;
+      }
+
+      /* Tombol Submit & Hasil */
+      .action-area {
+        margin-top: 50px;
+        text-align: center;
+        padding: 40px 20px;
+        border-top: 2px dashed #ddd;
+        position: relative;
+        background-color: white;
+      }
+      .btn-submit {
+        background-color: var(--header-accent);
+        color: white;
+        border: none;
+        padding: 20px 60px;
+        font-size: 20px;
+        font-weight: 800;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 6px 15px rgba(41, 128, 185, 0.4);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1f618d !important;
+        transform: translateY(-4px);
+      }
+      .btn-submit:disabled {
+        background-color: #95a5a6 !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .result-box {
+        margin-top: 30px;
+        padding: 30px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 2px solid #2980b9;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .score-display {
+        font-size: 48px;
+        font-weight: 800;
+        color: #2e7d32;
+        margin: 10px 0;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .worksheet-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+      }
+      
+      /* Detail Report Table Styling */
+      .report-table th {
+          background-color: #f8f9fa;
+          font-weight: 700;
+          color: #333;
+          border-bottom: 2px solid #dee2e6;
+      }
+      .report-table td {
+          border-bottom: 1px solid #eee;
+          vertical-align: middle;
+      }
+      .progress-bar-bg {
+          background: #e9ecef;
+          border-radius: 4px;
+          width: 100%;
+          height: 10px;          margin-bottom: 5px;
+          overflow: hidden;
+      }
+      .progress-bar-fill {
+          height: 100%;
+          border-radius: 4px;
+          transition: width 1s ease-in-out;
+      }
+
+      /* Loader Layar Penuh Awal */
+      #loading-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          z-index: 10000000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+      .spinner {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid var(--header-accent);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Tryout 1: Penalaran Matematika (SNBT)</h1>
-
-    <div class="instructions">
-        <strong>Petunjuk Umum:</strong> Pilihlah satu jawaban yang paling tepat. Untuk soal perbandingan kuantitas (P dan Q), analisis kecukupan data (AKD), jumlah pernyataan benar, dan kombinasi pernyataan benar, perhatikan pola pilihan ganda baku yang telah ditentukan.
+    <!-- OVERLAY LOADING SESI -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-weight: bold; color: var(--header-accent); font-size: 16px;">Memeriksa Sesi Anda...</p>
     </div>
 
-    <!-- ========================================== -->
-    <!-- WACANA 1 -->
-    <!-- ========================================== -->
-    <div class="wacana">
-        <div class="wacana-title">Wacana 1: Paradoks Antrean (The Faster Lane Illusion)</div>
-        <p>Saat mengantre di kasir supermarket, antrean di sebelah kita sering kali terasa bergerak lebih cepat. Misalkan di sebuah supermarket terdapat 3 kasir: Kasir A, Kasir B, dan Kasir C. Waktu pelayanan setiap pelanggan diasumsikan konstan sebagai berikut:</p>
-        <ul>
-            <li>Kasir A membutuhkan waktu 3 menit per pelanggan.</li>
-            <li>Kasir B membutuhkan waktu 4 menit per pelanggan.</li>
-            <li>Kasir C membutuhkan waktu 2 menit per pelanggan.</li>
-        </ul>
-        <p>Saat Andi tiba, antrean Kasir A berisi 4 orang (orang ke-4 sedang dilayani), Kasir B berisi 2 orang, dan Kasir C berisi 5 orang. Andi memutuskan untuk bergabung di antrean Kasir B (menjadi orang ke-3).</p>
+    <!-- COUNTDOWN TIMER -->
+    <div id="timer-bar">
+        <span>SISA WAKTU:</span>
+        <span id="timer-display">30:00</span>
     </div>
 
-    <!-- NOMOR 1 -->
-    <div class="question">
-        <div class="question-header">1.</div>
-        <p>Berapa menit total waktu yang harus ditunggu Andi sejak ia mulai mengantre hingga pelayanannya selesai di Kasir B?</p>
-        
-        <ol class="options">
-            <li>4 menit</li>
-            <li>8 menit</li>
-            <li>12 menit</li>
-            <li>16 menit</li>
-            <li>20 menit</li>
-        </ol>
-        
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp1')">Tampilkan Pembahasan</button>
-        <div id="exp1" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p><strong>Logika gampangnya:</strong><br>
-                Andi masuk ke Kasir B. Di sana katanya udah ada 2 orang. Nah, Andi ini join ke antrean dan jadi orang ke-3.<br>
-                Artinya, Andi harus nunggu orang ke-1 beres, nunggu orang ke-2 beres, baru setelah itu dia dilayani.<br>
-                Karena di Kasir B setiap orang makan waktu <strong>4 menit</strong>, maka:</p>
+    <div class="container-wrapper">
+        <!-- ================= PAGE 1: LANDING & BIODATA ================= -->
+        <div id="landing-page">
+            <header class="landing-header">
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" style="height: 140px; margin-bottom: 20px;" />
+                <h1>Tryout 1: Penalaran Matematika</h1>
+                <h2>Prediksi SNBT 2026</h2>
+                <div class="promo-banner">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+            </header>
+
+            <div class="rules-box">
+                <h3>PERATURAN UJIAN</h3>
                 <ul>
-                    <li>Waktu orang ke-1 = 4 menit</li>
-                    <li>Waktu orang ke-2 = 4 menit</li>
-                    <li>Waktu pelayanannya Andi sendiri = 4 menit</li>
+                    <li>Terdapat 20 soal Penalaran Matematika berbasis Wacana.</li>
+                    <li>Waktu pengerjaan: <strong>30 menit</strong>.</li>
+                    <li>Waktu berjalan otomatis setelah tombol "Mulai Sekarang" ditekan.</li>
+                    <li>Pastikan koneksi internet stabil.</li>
+                    <li>Setelah klik kumpulkan, <strong>Pembahasan lengkap akan otomatis muncul</strong> di bawah setiap soal.</li>
+                    <li>Jika kamu menggunakan HP, pastikan browser kamu dalam mode desktop site untuk melihat gambar optimal.</li>
                 </ul>
-                <p>Total waktunya tinggal kita tambahin aja: $4 + 4 + 4 = 12$ menit. (Bisa juga dikali langsung: 3 orang $\times$ 4 menit = 12 menit).<br>
-                <strong>Jawaban: C</strong></p>
             </div>
+
+            <div class="identity-box-landing">
+                <h3 style="margin-top:0; color:var(--header-accent);">BIODATA PESERTA</h3>
+                <div class="form-group">
+                  <label for="nama">Nama :</label>
+                  <input type="text" id="nama" placeholder="Masukkan nama lengkap..." />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email :</label>
+                  <input type="email" id="email" placeholder="Masukkan email..." />
+                </div>
+                <div class="form-group">
+                  <label for="hp">Nomor HP :</label>
+                  <input type="tel" id="hp" placeholder="Masukkan nomor HP/WA..." />
+                </div>
+                <div class="form-group">
+                  <label for="sekolah">Asal Sekolah :</label>
+                  <input type="text" id="sekolah" placeholder="Masukkan asal sekolah..." />
+                </div>
+            </div>
+
+            <button id="btn-start" class="btn-start">MULAI SEKARANG</button>
         </div>
-    </div>
 
-    <!-- NOMOR 2 -->
-    <div class="question">
-        <div class="question-header">2.</div>
-        <p>Andi sedang mempertimbangkan untuk pindah ke Kasir A. Apakah waktu tunggu Andi akan menjadi <strong>lebih singkat</strong> jika ia pindah ke ujung antrean Kasir A saat ini?</p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li>(1) Kasir A mendadak harus melakukan <em>restart</em> mesin kasir yang memakan waktu 5 menit.</li>
-            <li>(2) Satu orang di depan antrean Kasir A memutuskan untuk keluar dari antrean karena barangnya tertinggal.</li>
-        </ul>
-        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+        <!-- ================= PAGE 2: EXAM ================= -->
+        <div id="exam-page">
+            <header class="worksheet-header">
+                <div class="header-left">
+                    <h1>Tryout 1: Penalaran Matematika</h1>
+                    <h2>Prediksi SNBT 2026</h2>
+                    <div class="promo-banner" style="margin-top: 10px; font-size: 13px; padding: 5px 15px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</div>
+                </div>
+                <img src="https://images2.imgbox.com/45/3d/y9FSwqh2_o.png" onerror="this.onerror=null; this.src='https://thumbs2.imgbox.com/45/3d/y9FSwqh2_t.png';" alt="Math Specialist Logo" class="header-logo" />
+            </header>
 
-        <ol class="options">
-            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
-            <li>Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
-            <li>DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
-            <li>Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
-            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
-        </ol>
+            <div class="exam-info-bar">
+                Peserta: <strong id="display-nama">-</strong> | Sekolah: <strong id="display-sekolah">-</strong> | HP: <strong id="display-hp">-</strong>
+            </div>
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp2')">Tampilkan Pembahasan</button>
-        <div id="exp2" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p><strong>Tujuan kita:</strong> Menjawab "YA" (lebih singkat) atau "TIDAK" (ngga lebih singkat). Ingat ya, kalau kita bisa jawab dengan pasti "TIDAK", itu artinya infonya <strong>CUKUP</strong>. Jangan kejebak ngira info cukup itu cuma kalau jawabannya "YA".</p>
+            <!-- DAFTAR SOAL (1 KOLOM PENUH) -->
+            <div class="questions-grid">
                 
-                <p>Di soal no 1, kita tahu waktu total di Kasir B = <strong>12 menit</strong>.<br>
-                Sekarang kita lihat Kasir A. Di Kasir A normalnya ada 4 orang. Tiap orang butuh 3 menit. Kalau Andi pindah ke Kasir A, dia jadi orang ke-5.<br>
-                Total waktu Andi di Kasir A normal = 5 orang $\times$ 3 menit = <strong>15 menit</strong>.</p>
+                <!-- ================= WACANA 1 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 1: Paradoks Antrean (The Faster Lane Illusion)</div>
+                    <p>Saat mengantre di kasir supermarket, antrean di sebelah kita sering kali terasa bergerak lebih cepat. Misalkan di sebuah supermarket terdapat 3 kasir: Kasir A, Kasir B, dan Kasir C. Waktu pelayanan setiap pelanggan diasumsikan konstan sebagai berikut:</p>
+                    <ul>
+                        <li>Kasir A membutuhkan waktu 3 menit per pelanggan.</li>
+                        <li>Kasir B membutuhkan waktu 4 menit per pelanggan.</li>
+                        <li>Kasir C membutuhkan waktu 2 menit per pelanggan.</li>
+                    </ul>
+                    <p>Saat Andi tiba, antrean Kasir A berisi 4 orang (orang ke-4 sedang dilayani), Kasir B berisi 2 orang, dan Kasir C berisi 5 orang. Andi memutuskan untuk bergabung di antrean Kasir B (menjadi orang ke-3).</p>
+                </div>
+
+                <!-- Soal 1 -->
+                <div class="soal-item" data-qnum="1">
+                    <div class="soal-header">
+                        <span class="nomor">1.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Antrean</span><br>
+                            Berapa menit total waktu yang harus ditunggu Andi sejak ia mulai mengantre hingga pelayanannya selesai di Kasir B?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4 menit</li>
+                        <li data-option="B">8 menit</li>
+                        <li data-option="C">12 menit</li>
+                        <li data-option="D">16 menit</li>
+                        <li data-option="E">20 menit</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Logika gampangnya:</strong><br>
+                        Andi masuk ke Kasir B. Di sana katanya udah ada 2 orang. Nah, Andi ini join ke antrean dan jadi orang ke-3.<br>
+                        Artinya, Andi harus nunggu orang ke-1 beres, nunggu orang ke-2 beres, baru setelah itu dia dilayani.<br>
+                        Karena di Kasir B setiap orang makan waktu <strong>4 menit</strong>, maka:</p>
+                        <ul>
+                            <li>Waktu orang ke-1 = 4 menit</li>
+                            <li>Waktu orang ke-2 = 4 menit</li>
+                            <li>Waktu pelayanannya Andi sendiri = 4 menit</li>
+                        </ul>
+                        <p>Total waktunya tinggal kita tambahin aja: $4 + 4 + 4 = 12$ menit. (Bisa juga dikali langsung: 3 orang $\times$ 4 menit = 12 menit).<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 2 -->
+                <div class="soal-item" data-qnum="2">
+                    <div class="soal-header">
+                        <span class="nomor">2.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Antrean</span><br>
+                            Andi sedang mempertimbangkan untuk pindah ke Kasir A. Apakah waktu tunggu Andi akan menjadi <strong>lebih singkat</strong> jika ia pindah ke ujung antrean Kasir A saat ini?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top:10px;">
+                                <li>(1) Kasir A mendadak harus melakukan <em>restart</em> mesin kasir yang memakan waktu 5 menit.</li>
+                                <li>(2) Satu orang di depan antrean Kasir A memutuskan untuk keluar dari antrean karena barangnya tertinggal.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p><strong>Tujuan kita:</strong> Menjawab "YA" (lebih singkat) atau "TIDAK" (ngga lebih singkat). Ingat ya, kalau kita bisa jawab dengan pasti "TIDAK", itu artinya infonya <strong>CUKUP</strong>. Jangan kejebak ngira info cukup itu cuma kalau jawabannya "YA".</p>
+                        <p>Di soal no 1, kita tahu waktu total di Kasir B = <strong>12 menit</strong>.<br>
+                        Sekarang kita lihat Kasir A. Di Kasir A normalnya ada 4 orang. Tiap orang butuh 3 menit. Kalau Andi pindah ke Kasir A, dia jadi orang ke-5.<br>
+                        Total waktu Andi di Kasir A normal = 5 orang $\times$ 3 menit = <strong>15 menit</strong>.</p>
+                        <p><strong>Cek Pernyataan (1):</strong><br>
+                        Kasir A error dan butuh restart 5 menit.<br>
+                        Total waktu di Kasir A sekarang jadi: 15 menit (antrean) + 5 menit (restart) = <strong>20 menit</strong>.<br>
+                        Pertanyaannya: Apakah 20 menit lebih singkat dari 12 menit? <strong>TIDAK</strong>.<br>
+                        Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (1) <strong>CUKUP</strong>.</p>
+                        <p><strong>Cek Pernyataan (2):</strong><br>
+                        Ada 1 orang keluar dari Kasir A. Jadi antrean A yang tadinya 4 orang berkurang jadi 3 orang.<br>
+                        Kalau Andi masuk, Andi jadi orang ke-4.<br>
+                        Waktu Andi di Kasir A sekarang = 4 orang $\times$ 3 menit = <strong>12 menit</strong>.<br>
+                        Pertanyaannya: Apakah 12 menit <em>lebih singkat</em> dari 12 menit? <strong>TIDAK</strong> (karena sama persis, bukan lebih singkat).<br>
+                        Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (2) <strong>CUKUP</strong>.</p>
+                        <p><strong>Kesimpulan:</strong> Karena pernyataan 1 bisa buat ngejawab sendiri, dan pernyataan 2 juga bisa dipake buat ngejawab sendiri, berarti dua-duanya sama-sama cukup secara sendirian.<br>
+                        <strong>Jawaban: D</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 3 -->
+                <div class="soal-item" data-qnum="3">
+                    <div class="soal-header">
+                        <span class="nomor">3.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Antrean</span><br>
+                            Perhatikan empat pernyataan berikut terkait kondisi awal antrean:
+                            <ol class="statement-list">
+                                <li>Waktu total antrean di Kasir A hingga kosong adalah 12 menit.</li>
+                                <li>Kasir C adalah kasir yang akan paling lambat menyelesaikan seluruh antreannya saat ini.</li>
+                                <li>Selisih waktu selesai antrean A dan B adalah 4 menit.</li>
+                                <li>Jika Andi masuk ke Kasir C, ia akan selesai lebih cepat dibandingkan di Kasir B.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang BENAR dari empat pernyataan di atas?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Mari kita bongkar dan hitung waktu normal setiap kasir dulu:</p>
+                        <ul>
+                            <li><strong>Kasir A:</strong> 4 orang $\times$ 3 menit = 12 menit.</li>
+                            <li><strong>Kasir B:</strong> 2 orang $\times$ 4 menit = 8 menit.</li>
+                            <li><strong>Kasir C:</strong> 5 orang $\times$ 2 menit = 10 menit.</li>
+                        </ul>
+                        <p>Sekarang kita cocokkan dengan pernyataannya:</p>
+                        <ol class="statement-list">
+                            <li>Waktu Kasir A kosong adalah 12 menit. $\rightarrow$ <strong>BENAR</strong>. Hitungannya pas 12 menit.</li>
+                            <li>Kasir C paling lambat selesainya. $\rightarrow$ <strong>SALAH</strong>. Yang paling lambat itu Kasir A (12 menit), Kasir C cuma 10 menit.</li>
+                            <li>Selisih waktu A dan B adalah 4 menit. $\rightarrow$ <strong>BENAR</strong>. Kasir A (12) dikurangi Kasir B (8) hasilnya pas 4.</li>
+                            <li>Jika Andi ke Kasir C, dia lebih cepet dari B. $\rightarrow$ Mari kita tes. Kalau Andi ke C, dia jadi orang ke-6. Waktunya: 6 orang $\times$ 2 menit = 12 menit. Waktu di Kasir B juga 12 menit (dari soal nomor 1). Karena sama persis (12 vs 12), berarti ngga lebih cepat. <strong>SALAH</strong>.</li>
+                        </ol>
+                        <p>Total pernyataan yang benar cuma ada 2 (Pernyataan 1 dan 3).<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 4 -->
+                <div class="soal-item" data-qnum="4">
+                    <div class="soal-header">
+                        <span class="nomor">4.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Simulasi dan Antrean</span><br>
+                            Diketahui probabilitas seseorang keluar dari antrean sebelum dilayani adalah $10\%$. Manakah di antara pernyataan berikut yang BENAR terkait ekspektasi (harapan) matematika waktu antrean?
+                            <ol class="statement-list">
+                                <li>Ekspektasi waktu pelayanan untuk 10 orang di Kasir C adalah kurang dari 20 menit.</li>
+                                <li>Semakin panjang antrean, semakin tinggi probabilitas waktu tunggu total meleset dari perhitungan konstan.</li>
+                                <li>Ekspektasi jumlah orang yang bertahan di antrean A adalah 3,6 orang.</li>
+                                <li>Probabilitas semua orang di ketiga kasir (11 orang) tetap berada di antrean adalah $(0,9)^{11}$.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>"Ekspektasi" itu bahasa ribetnya, padahal maksudnya cuma <strong>perkiraan rata-rata</strong> aja.<br>
+                        Kalau peluang keluar $10\%$, berarti peluang dia <strong>bertahan</strong> di antrean adalah $90\%$ atau 0,9.<br>
+                        Ayo kita cek:</p>
+                        <ol class="statement-list">
+                            <li>Kasir C (2 menit/orang). Kalau 10 orang normalnya $10 \times 2 = 20$ menit. Tapi karena peluang keluarnya 10%, jumlah orang yang bakal bertahan cuma $10 \times 90\% = 9$ orang. Jadi ekspektasi waktunya $9 \times 2 = 18$ menit. Angka 18 ini pasti kurang dari 20 menit kan? $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Kalau antrean kepanjangan, pasti makin banyak dong orang yang kesel terus milih keluar? Nah, gara-gara ada yang keluar, waktu aslinya pasti meleset dari hitungan di atas kertas. Makin panjang antrean = makin gede peluang error/meleset. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Di Kasir A ada 4 orang. Jumlah orang yang bertahan = Total orang $\times$ peluang bertahan = $4 \times 0,9 = 3,6$ orang. (Walau mustahil ada 0,6 orang di dunia nyata, tapi secara matematika tulisan ini bener). $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Total orang di semua kasir (4 + 2 + 5 = 11 orang). Peluang SATU orang bertahan itu $90\%$ atau 0,9. Kalau SEBELAS orang bertahan berurutan, dalam matematika peluangnya dikaliin semuanya: $0,9 \times 0,9 \times 0,9...$ sampai 11 kali. Ditulisnya jadi $(0,9)^{11}$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                        </ol>
+                        <p>Karena semuanya benar, pilih opsi semua benar!<br>
+                        <strong>Jawaban: E</strong></p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 2 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 2: Matematika di Balik "FYP" Media Sosial</div>
+                    <p>Algoritma sebuah media sosial menggunakan <em>Graph Theory</em> (teori jejaring) dan pembobotan numerik untuk menentukan skor sebuah konten video agar bisa masuk <em>For You Page</em> (FYP). Skor total $S$ sebuah video dihitung menggunakan rumus:</p>
+                    <p style="text-align: center; font-size: 1.2em; font-weight: bold;">$$S = (3 \times L) + (5 \times R) + (2 \times W)$$</p>
+                    <p>Dimana:<br>
+                    $L =$ Jumlah <em>Like</em>,<br>
+                    $R =$ Jumlah <em>Share</em> (Retweet/Bagikan), dan<br>
+                    $W =$ Rata-rata <em>Watch time</em> (dalam detik).<br>
+                    Agar masuk ke kategori FYP, sebuah video harus memiliki skor $S \ge 500$.</p>
+                </div>
+
+                <!-- Soal 5 -->
+                <div class="soal-item" data-qnum="5">
+                    <div class="soal-header">
+                        <span class="nomor">5.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Sebuah video memiliki 50 <em>like</em>, 20 <em>share</em>, dan ditonton rata-rata selama 45 detik. Berapakah skor total video tersebut?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">250</li>
+                        <li data-option="B">340</li>
+                        <li data-option="C">400</li>
+                        <li data-option="D">440</li>
+                        <li data-option="E">500</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Ini soal paling gampang. Tinggal cocokin angkanya ke dalam huruf di rumus!<br>
+                        Kita dikasih info:<br>
+                        - <em>Like</em> ($L$) = 50<br>
+                        - <em>Share</em> ($R$) = 20<br>
+                        - <em>Watch time</em> ($W$) = 45</p>
+                        <p>Tulis ulang rumusnya: $S = (3 \times L) + (5 \times R) + (2 \times W)$<br>
+                        Masukin angkanya gantiin huruf:<br>
+                        $$S = (3 \times \mathbf{50}) + (5 \times \mathbf{20}) + (2 \times \mathbf{45})$$</p>
+                        <p>Tinggal kaliin deh:<br>
+                        $$S = 150 + 100 + 90$$<br>
+                        $$S = 340$$</p>
+                        <p>Gampang banget kan?<br>
+                        <strong>Jawaban: B</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 6 -->
+                <div class="soal-item" data-qnum="6">
+                    <div class="soal-header">
+                        <span class="nomor">6.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Video B memiliki 100 <em>like</em>. Apakah Video B berhasil masuk FYP?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 10px;">
+                                <li>(1) Rata-rata waktu tonton (W) Video B adalah 60 detik.</li>
+                                <li>(2) Jumlah <em>share</em> (R) Video B adalah 25.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Ingat target FYP adalah kalau skornya $S \ge 500$.<br>
+                        Info awal kita: $L = 100$. Berarti dari <em>like</em> aja dia udah dapet poin: $3 \times 100 = 300$.<br>
+                        Skor S sekarang = 300. Dia butuh minimal 200 poin lagi dari $R$ dan $W$.</p>
+                        <p><strong>Cek Pernyataan (1) aja:</strong><br>
+                        Katanya $W = 60$. Poin tambahannya = $2 \times 60 = 120$.<br>
+                        Total skor = $300 + 120 = 420$. Karena kita ngga tau si $R$ (<em>share</em>) berapa, kita ngga bisa mastiin skor totalnya bakal nembus 500 atau ngga. Siapa tau $R$ nya nol? (Berarti TIDAK CUKUP).</p>
+                        <p><strong>Cek Pernyataan (2) aja:</strong><br>
+                        Katanya $R = 25$. Poin tambahannya = $5 \times 25 = 125$.<br>
+                        Total skor = $300 + 125 = 425$. Sama kayak tadi, kita ngga tau si $W$-nya berapa, jadi ngga bisa jawab pasti bisa masuk FYP apa ngga. (TIDAK CUKUP).</p>
+                        <p><strong>Gabungin Pernyataan (1) dan (2):</strong><br>
+                        Kalau dua info digabung, kita tau $W=60$ dan $R=25$.<br>
+                        Total skor = Poin $L$ (300) + Poin $R$ (125) + Poin $W$ (120) = <strong>545</strong>.<br>
+                        Apakah 545 nembus 500? Ya, tembus banget! FYP!<br>
+                        Karena baru bisa kejawab pas informasinya digabungin, berarti harus bareng-bareng.<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 7 -->
+                <div class="soal-item" data-qnum="7">
+                    <div class="soal-header">
+                        <span class="nomor">7.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Perhatikan pernyataan berikut berdasarkan rumus algoritma $S$:
+                            <ol class="statement-list">
+                                <li>1 <em>share</em> bernilai sama dengan 2,5 detik <em>watch time</em>.</li>
+                                <li>Jika jumlah <em>like</em> digandakan dan indikator lainnya (share & watch time) diasumsikan bernilai tetap dan tidak nol, skor total akan selalu naik kurang dari $100\%$.</li>
+                                <li>Untuk mencapai batas minimal FYP tanpa adanya <em>share</em> dan <em>like</em>, video harus ditonton rata-rata minimal 250 detik.</li>
+                                <li>Kenaikan 10 <em>share</em> akan memberikan tambahan skor yang sama dengan kenaikan 25 <em>like</em>.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang BENAR?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Mari kita analisis rumusnya: $S = 3L + 5R + 2W$.</p>
+                        <ol class="statement-list">
+                            <li>Kalau 1 <em>share</em> ($R=1$), poinnya dapet: $5 \times 1 = 5$ poin. Kalau <em>watch time</em> 2,5 detik ($W=2,5$), poinnya dapet: $2 \times 2,5 = 5$ poin. Sama-sama ngasilin 5 poin! $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Kalau <em>Like</em> dikali dua, skor <em>total</em> ngga mungkin otomatis jadi dua kali lipat (naik 100%). Kenapa? Karena di skor total masih ada sumbangan poin dari $R$ dan $W$. Jika Like dikalikan dua, poin dari Like memang naik 100%, tetapi karena poin R dan W tetap, secara keseluruhan persentase kenaikan <em>skor total</em> pasti "diencerkan" dan hasilnya akan berada di bawah 100%. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Ngga ada <em>share</em> ($R=0$), ngga ada <em>like</em> ($L=0$). Jadi skor cuma bergantung sama jam tayang: $S = 2W$. Biar nembus batas FYP 500, maka $2W = 500 \rightarrow W = 500 / 2 = 250$ detik. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Kalau naik 10 <em>share</em>, poin nambah: $10 \times 5 = 50$ poin. Kalau naik 25 <em>like</em>, poin nambah: $25 \times 3 = 75$ poin. Beda dong angkanya (50 sama 75)! $\rightarrow$ <strong>SALAH</strong>.</li>
+                        </ol>
+                        <p>Ada 3 kalimat yang benar (Kalimat 1, 2, dan 3).<br>
+                        <strong>Jawaban: B</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 8 -->
+                <div class="soal-item" data-qnum="8">
+                    <div class="soal-header">
+                        <span class="nomor">8.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aljabar dan Algoritma</span><br>
+                            Developer media sosial mengubah algoritma menjadi $S_{baru} = (2 \times L) + (10 \times R) + W$. Manakah di antara pernyataan berikut yang BENAR?
+                            <ol class="statement-list">
+                                <li>Peran <em>share</em> menjadi dua kali lipat lebih penting dari algoritma sebelumnya.</li>
+                                <li>Peran <em>watch time</em> (W) berkurang setengahnya secara bobot absolut.</li>
+                                <li>Video yang hanya mengandalkan <em>Like</em> akan lebih sulit masuk FYP dengan algoritma baru.</li>
+                                <li>Skor total sebuah video pasti berubah jika menggunakan rumus algoritma baru.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Mari kita jejerin rumusnya biar kelihatan bedanya:<br>
+                        Rumus Lama: $3L + \mathbf{5}R + \mathbf{2}W$<br>
+                        Rumus Baru: $2L + \mathbf{10}R + \mathbf{1}W$</p>
+                        <ol class="statement-list">
+                            <li>Lihat angka di depan $R$ (<em>share</em>). Awalnya 5, sekarang jadi 10. Yap, angkanya jadi 2 kali lipat lebih gede, berarti makin penting! $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Lihat angka di depan $W$ (<em>watch time</em>). Awalnya dikali 2, sekarang cuma dikali 1. Berarti nilainya terjun bebas setengahnya. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Lihat angka di depan $L$ (<em>Like</em>). Awalnya kalau dapet 1 Like nilainya 3 poin, sekarang nilainya cuma 2 poin. Wah, berarti konten modal Like aja makin kecil sumbangannya, jadinya makin sulit FYP. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Apakah nilainya <strong>pasti</strong> berubah? Kata "pasti" itu bahaya di matematika. Coba kalau kita asalkan masukin angka $L=3, R=1, W=2$.<br>
+                            - Poin lama: $(3\times3) + (5\times1) + (2\times2) = 9 + 5 + 4 = \mathbf{18}$.<br>
+                            - Poin baru: $(2\times3) + (10\times1) + (1\times2) = 6 + 10 + 2 = \mathbf{18}$.<br>
+                            Loh, ternyata bisa SAMA KOK! Jadi dibilang <strong>pasti</strong> berubah itu $\rightarrow$ <strong>SALAH</strong>.</li>
+                        </ol>
+                        <p>Yang benar adalah 1, 2, dan 3.<br>
+                        <strong>Jawaban: A</strong></p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 3 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 3: Efektivitas Diskon Ganda (50% + 20% vs 70%)</div>
+                    <p>Menjelang hari raya, Toko A memberikan promosi "Diskon $50\% + 20\%$". Sementara itu, Toko B, pesaingnya, memberikan diskon tunggal sebesar $70\%$. Banyak konsumen terkecoh dan menganggap kedua jenis diskon tersebut bernilai sama. Harga normal sepotong kemeja di kedua toko adalah Rp400.000,00.</p>
+                </div>
+
+                <!-- Soal 9 -->
+                <div class="soal-item" data-qnum="9">
+                    <div class="soal-header">
+                        <span class="nomor">9.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial (Diskon)</span><br>
+                            Toko C memberikan penawaran "Diskon $x\% + 30\%$". Apakah harga akhir kemeja di Toko C lebih murah daripada di Toko A?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 10px;">
+                                <li>(1) $x = 40$</li>
+                                <li>(2) Toko C memiliki harga normal awal Rp400.000,00.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Sebelum ngejawab soal ini, kita wajib ngitung harga Toko A dulu biar ada patokan.<br>
+                        - <strong>Harga Toko A:</strong> Awalnya Rp400.000. Didiskon pertama $50\%$ alias bayar setengahnya aja (sisanya Rp200.000). Habis itu, sisa yang Rp200.000 ini didiskon lagi $20\%$. (Bayarnya berarti tinggal $80\%$ dari Rp200.000).<br>
+                        $80\% \times 200.000 =$ <strong>Rp160.000</strong>. Ini harga akhir Toko A.</p>
+                        <p>Nah, ditanya apakah Toko C lebih murah dari 160 ribu?</p>
+                        <p><strong>Cek Pernyataan (1) aja:</strong> $x = 40$. Toko C kasih diskon $40\% + 30\%$. Tapi tunggu dulu, harga normal Toko C kita belum tau! Di cerita awal yang harganya Rp400rb itu cuma Toko A dan B. Toko C ngga pernah disebut harga awalnya. Gimana mau ngitung kalau harganya aja ghoib? (TIDAK CUKUP).</p>
+                        <p><strong>Cek Pernyataan (2) aja:</strong> Harga normal Toko C = 400.000. Oke mantap, tapi variabel $x$-nya ngga disebutin, diskon depannya berapa persen? Kita juga ngga bisa ngitung. (TIDAK CUKUP).</p>
+                        <p><strong>Gabungin (1) &amp; (2):</strong><br>
+                        Harga Toko C = 400.000. Diskon = $40\% + 30\%$.<br>
+                        - Diskon 1 (40%): Kita bayar 60%-nya saja. $60\% \times 400.000 = 240.000$.<br>
+                        - Diskon 2 (30%): Dari harga baru 240.000, dipotong 30%, kita cuma bayar 70%-nya. $70\% \times 240.000 = \mathbf{168.000}$.<br>
+                        Pertanyaan: Apakah 168.000 lebih murah dari 160.000? <strong>TIDAK</strong>.<br>
+                        Karena infonya bisa ngebantu kita ngejawab dengan tegas "TIDAK", berarti info gabungannya CUKUP!<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 10 -->
+                <div class="soal-item" data-qnum="10">
+                    <div class="soal-header">
+                        <span class="nomor">10.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial (Diskon)</span><br>
+                            Manakah di antara pernyataan berikut yang BENAR mengenai diskon bertingkat $A\% + B\%$ (diasumsikan $A > 0$ dan $B > 0$)?
+                            <ol class="statement-list">
+                                <li>Total diskon efektif dari $A\% + B\%$ selalu lebih kecil dari $(A+B)\%$.</li>
+                                <li>Diskon $50\% + 20\%$ memiliki harga akhir yang sama dengan diskon $20\% + 50\%$.</li>
+                                <li>Total persentase potongan harga dari diskon $50\% + 20\%$ adalah $60\%$.</li>
+                                <li>Pembeli di Toko B akan membayar lebih mahal dibandingkan pembeli di Toko A.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Konsep penting <em>Mall</em> se-Indonesia: Diskon $50\% + 20\%$ itu <strong>BUKAN</strong> $70\%$. Jangan mau diboongin spanduk sale!</p>
+                        <ol class="statement-list">
+                            <li>Diskon $A\% + B\%$ potongannya selalu di bawah kalau diskon itu langsung digabung ($A+B$). Kenapa? Karena diskon kedua cuma motong dari "harga sisa" yang jumlahnya udah mengecil. (Contoh: $50\%+20\%$ hasilnya cuma potongan 60%, bukan 70%). $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Di matematika perkalian itu sifatnya bolak-balik sama aja (<em>komutatif</em>). Dipotong 50% dulu lalu 20%, harganya bakal persis sama kayak dipotong 20% dulu baru 50%. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Seperti yang udah kita hitung, barang Rp400rb kalau di diskon $50\%+20\%$ hasil akhirnya jadi Rp160.000. Harga dipotong berapa? $400 - 160 = 240$ ribu. Berapa persennya 240 dari 400? $(240 / 400) \times 100\% = 60\%$. Total diskon aslinya emang cuma $60\%$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Toko B diskon langsung 70%. Pembeli cuma bayar 30% dari Rp400.000, yaitu Rp120.000. Sedang Toko A (kayak hitungan sebelumnya) harganya Rp160.000. Jadi Toko B itu LEBIH MURAH, bukan lebih mahal! $\rightarrow$ <strong>SALAH</strong>.</li>
+                        </ol>
+                        <p>Pernyataan yang benar ada 3 (1, 2, dan 3).<br>
+                        <strong>Jawaban: A</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 11 -->
+                <div class="soal-item" data-qnum="11">
+                    <div class="soal-header">
+                        <span class="nomor">11.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial (Diskon)</span><br>
+                            Berapa selisih harga yang harus dibayarkan pembeli jika membeli kemeja tersebut di Toko A dibandingkan dengan di Toko B?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Rp0,00 (Harganya sama)</li>
+                        <li data-option="B">Rp10.000,00</li>
+                        <li data-option="C">Rp20.000,00</li>
+                        <li data-option="D">Rp30.000,00</li>
+                        <li data-option="E">Rp40.000,00</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Karena kita udah capek-capek ngitung harga di dua toko dari nomor sebelumnya, tinggal kita kurangi aja di sini:<br>
+                        - Harga baju di Toko A: Rp160.000 (hasil diskon 50% lalu 20%)<br>
+                        - Harga baju di Toko B: Rp120.000 (hasil langsung diskon 70% dari 400.000)<br>
+                        Selisihnya (bedanya) = $160.000 - 120.000 =$ <strong>Rp40.000</strong>.<br>
+                        <strong>Jawaban: E</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 12 -->
+                <div class="soal-item" data-qnum="12">
+                    <div class="soal-header">
+                        <span class="nomor">12.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Aritmetika Sosial (Diskon)</span><br>
+                            Dina memiliki <em>voucher</em> potongan tunai tambahan sebesar Rp10.000,00 yang dapat digunakan di Toko A <strong>setelah</strong> semua diskon persentase diaplikasikan. Berapa persentase total diskon efektif yang didapatkan Dina terhadap harga normal kemeja tersebut?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$60,0\%$</li>
+                        <li data-option="B">$62,5\%$</li>
+                        <li data-option="C">$65,0\%$</li>
+                        <li data-option="D">$67,5\%$</li>
+                        <li data-option="E">$70,0\%$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Ayo kita jadi temen belanja si Dina!<br>
+                        Dina ke Toko A. Baju udah didiskon $50\% + 20\%$. Harga di kasir udah berubah jadi Rp160.000 (hitungan kita tadi).<br>
+                        Tiba-tiba Dina inget bawa <em>voucher</em> 10 ribu. Kasirnya seneng, potong deh dari Rp160.000.<br>
+                        Harga final yang harus Dina bayar beneran: $160.000 - 10.000 =$ <strong>Rp150.000</strong>.</p>
+                        <p>Sekarang ditanya, berapa total diskon alias "total duit yang berhasil diselamatkan" sama Dina?<br>
+                        Harga asli baju = Rp400.000.<br>
+                        Yang dibayar = Rp150.000.<br>
+                        Duit potongan (diskon total Dina) = $400.000 - 150.000 =$ <strong>Rp250.000</strong>.</p>
+                        <p>Jadikan persentase:<br>
+                        $\text{Persen Diskon} = \frac{\text{Potongan Duit}}{\text{Harga Asli}} \times 100\%$<br>
+                        $\text{Persen Diskon} = \frac{250.000}{400.000} \times 100\%$<br>
+                        Coret nol-nolnya yang nyebelin, jadi: $\frac{25}{40} \times 100\%$.<br>
+                        Disederhanakan (bagi 5) jadi: $\frac{5}{8} \times 100\%$.<br>
+                        100 dibagi 8 = 12,5. Terus dikali 5 = <strong>62,5%</strong>.<br>
+                        <strong>Jawaban: B</strong></p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 4 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 4: Teori Enam Derajat Pemisahan</div>
+                    <p>Teori <em>Six Degrees of Separation</em> menyatakan bahwa setiap orang di dunia dapat dihubungkan ke orang lain melalui maksimal enam perantara sosial. Asumsikan bahwa secara rata-rata, satu orang mengenal secara langsung 40 orang unik (derajat ke-1). Orang-orang di derajat ke-1 ini masing-masing juga mengenal 40 orang unik lainnya yang belum dikenal oleh kelompok sebelumnya (derajat ke-2), dan seterusnya membentuk pertumbuhan eksponensial.</p>
+                </div>
+
+                <!-- Soal 13 -->
+                <div class="soal-item" data-qnum="13">
+                    <div class="soal-header">
+                        <span class="nomor">13.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Eksponen dan Pola Bilangan</span><br>
+                            Manakah di antara pernyataan berikut yang BENAR terkait relasi eksponensial di atas?
+                            <ol class="statement-list">
+                                <li>Jumlah orang pada derajat ke-$n$ dapat diformulasikan sebagai $40^n$.</li>
+                                <li>Pada derajat ke-3, jumlah orang yang terhubung adalah 64.000 orang.</li>
+                                <li>Jika asumsi rata-rata kenalan diubah menjadi 80 orang, maka jumlah populasi yang terhubung pada derajat ke-2 akan menjadi tepat empat kali lipat lebih banyak dibandingkan algoritma awal.</li>
+                                <li>Jaringan eksponensial ini akan mampu menghubungkan lebih dari 8 miliar manusia pada derajat ke-6.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan 1, 2, dan 3 benar.</li>
+                        <li data-option="B">Pernyataan 1 dan 3 benar.</li>
+                        <li data-option="C">Pernyataan 2 dan 4 benar.</li>
+                        <li data-option="D">Hanya pernyataan 4 yang benar.</li>
+                        <li data-option="E">Semua pernyataan benar.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Bayangin ini sistem multi level marketing (MLM) atau penyebaran gosip. Kamu bawa 40 orang, setiap orang itu bawa 40 orang lagi, dst.</p>
+                        <ol class="statement-list">
+                            <li>Karena tiap cabang bercabang 40 lagi secara terus menerus, maka rumusnya adalah perkalian berulang pangkat (Eksponen): $P = 40^n$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Tinggal pakai rumus: $40^3 = 40 \times 40 \times 40 = 64.000$ orang. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Kalau diubah jadi 80. Derajat ke-2 pakai rumus baru: $80^2 = 6.400$. Derajat ke-2 pakai rumus lama: $40^2 = 1.600$. Kalau dibandingin: $6.400 / 1.600 = 4$. Berarti bener, jumlahnya jadi persis 4 kali lipat! $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Yuk hitung pakai rumus: Derajat 6 = $40^6$. Hitung kasar aja: $(4 \times 10)^6 = 4^6 \times 10^6 = 4.096 \times 1.000.000 \approx 4.096.000.000$. Baru sekitar 4 miliar orang! Masih di bawah 8 miliar. $\rightarrow$ <strong>SALAH</strong>.</li>
+                        </ol>
+                        <p>Yang benar ada 3 (1, 2, 3).<br>
+                        <strong>Jawaban: A</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 14 -->
+                <div class="soal-item" data-qnum="14">
+                    <div class="soal-header">
+                        <span class="nomor">14.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Eksponen dan Pola Bilangan</span><br>
+                            Berdasarkan asumsi formula $P = 40^n$ (dengan $P$ = jumlah populasi terhubung dan $n$ = derajat perantara), periksa empat pernyataan ini:
+                            <ol class="statement-list">
+                                <li>Grafik fungsi hubungan ini merupakan garis lurus jika digambar pada bidang kartesius linier biasa.</li>
+                                <li>Jumlah populasi pada derajat ke-4 adalah 2.560.000 orang.</li>
+                                <li>Selisih populasi antara derajat ke-2 dan derajat ke-1 adalah 1.560 orang.</li>
+                                <li>Jika basis eksponen diubah dari 40 menjadi 10, diperlukan minimal 10 derajat pemisahan untuk mencapai populasi 10 miliar.</li>
+                            </ol>
+                            Berapa banyak pernyataan yang BENAR?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">4</li>
+                        <li data-option="B">3</li>
+                        <li data-option="C">2</li>
+                        <li data-option="D">1</li>
+                        <li data-option="E">0</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Kita bedah lagi pernyataannya pelan-pelan:</p>
+                        <ol class="statement-list">
+                            <li>Grafik <strong>eksponensial</strong> (pangkat-pangkatan) itu bentuknya melengkung naik tajam banget ke atas (kayak kurva penyebaran virus), <strong>bukan garis lurus</strong>. Garis lurus itu cuma buat fungsi linier kayak $y = 40x$. $\rightarrow$ <strong>SALAH</strong>.</li>
+                            <li>Derajat 4: $40^4 = 40 \times 40 \times 40 \times 40$. (Cara gampang: $4\times4\times4\times4 = 256$, terus tambahin nol-nya 4 biji) jadinya 2.560.000. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Derajat 2: $40^2 = 1.600$. Derajat 1: $40^1 = 40$. Selisihnya (tinggal dikurang) = $1.600 - 40 = 1.560$. $\rightarrow$ <strong>BENAR</strong>.</li>
+                            <li>Basis 40 diganti 10. Rumus jadi $10^n$. Kita mau cari tau target $\ge 10$ Miliar (Nol-nya ada sepuluh $\rightarrow 10.000.000.000$). Nah, 10 Miliar itu wujud eksponennya adalah $10^{10}$. Berarti bener harus pangkat 10 alias derajat ke-10. $\rightarrow$ <strong>BENAR</strong>.</li>
+                        </ol>
+                        <p>Ada 3 pernyataan yang benar.<br>
+                        <strong>Jawaban: B</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 15 -->
+                <div class="soal-item" data-qnum="15">
+                    <div class="soal-header">
+                        <span class="nomor">15.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Eksponen dan Pola Bilangan</span><br>
+                            Jika populasi sebuah negara kecil adalah 10.000.000 jiwa, pada derajat ke berapakah (<em>minimum</em>) teori relasi ini mampu mencakup seluruh penduduk negara tersebut?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Derajat ke-3</li>
+                        <li data-option="B">Derajat ke-4</li>
+                        <li data-option="C">Derajat ke-5</li>
+                        <li data-option="D">Derajat ke-6</li>
+                        <li data-option="E">Derajat ke-7</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Tugas kita adalah cari tahu pangkat berapa ($n$) di rumus $40^n$ yang hasilnya minimal sama dengan atau lebih besar sedikit dari angka 10.000.000. Coba satu-satu aja pake hasil dari nomor sebelumnya:<br>
+                        - Jika $n=3$, populasi terhubung = 64.000 (Masih kurang banyak banget).<br>
+                        - Jika $n=4$, populasi terhubung = 2.560.000 (Udah jutaan, tapi masih di bawah 10 juta).<br>
+                        - Jika $n=5$, populasi = $40 \times 2.560.000 =$ <strong>102.400.000</strong> (Wah, udah 102 juta jiwa! Sangat jauh melampaui 10 juta penduduk).</p>
+                        <p>Karena di derajat ke-4 belum nyampe, berarti mau nggak mau kita harus nambah satu langkah lagi ke derajat ke-5 untuk menyapu bersih sisa populasinya.<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 16 -->
+                <div class="soal-item" data-qnum="16">
+                    <div class="soal-header">
+                        <span class="nomor">16.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Eksponen dan Pola Bilangan</span><br>
+                            Misalkan Budi ingin mengantarkan sebuah paket rahasia kepada X, seorang tokoh terkenal. Apakah Budi membutuhkan <strong>tepat 3 perantara</strong> untuk bisa terhubung dengan X?
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 10px;">
+                                <li>(1) Budi mengenal Andi, yang merupakan tetangga dari sekretaris pribadi tokoh X.</li>
+                                <li>(2) Sekretaris pribadi tokoh X mengenal tokoh X secara langsung.</li>
+                            </ul>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                        <li data-option="B">Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                        <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                        <li data-option="D">Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
+                        <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Fokus pertanyaannya: "Apakah Budi butuh <strong>TEPAT 3 PERANTARA</strong>?". Perantara itu artinya orang yang berdiri di tengah-tengah antara Si Budi sama Si Tokoh X.</p>
+                        <p>Ayo kita bikin jaringannya (berdasarkan info gabungan 1 dan 2, asumsi tetangga saling kenal di teori sosial ini):<br>
+                        BUDI $\rightarrow$ mengenal $\rightarrow$ ANDI $\rightarrow$ mengenal $\rightarrow$ SEKPRI TOKOH X $\rightarrow$ mengenal $\rightarrow$ TOKOH X.</p>
+                        <p>Ayo kita hitung ada berapa perantara di tengah-tengah jembatan ini:<br>
+                        1. Perantara pertama: Andi.<br>
+                        2. Perantara kedua: Sekpri Tokoh X.<br>
+                        Loh, habis sekpri itu kan udah langsung si Tokoh X? Berarti orang di tengahnya cuma ada 2 doang, nggak nyampe 3 orang!</p>
+                        <p>Nah, karena kita udah bisa buktiin kalau perantaranya cuma butuh 2, maka kita bisa ngejawab pertanyaan di soal dengan lantang: "<strong>TIDAK! Budi nggak butuh tepat 3, dia cuma butuh 2 perantara aja!</strong>"<br>
+                        Karena informasi dari pernyataan (1) dan (2) pas digabungin CUKUP buat ngasih kita jawaban yang akurat, maka jawabannya "Dua pernyataan bersama-sama cukup".<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- ================= WACANA 5 ================= -->
+                <div class="wacana">
+                    <div class="wacana-title">Wacana 5: Analisis "Bubble Tea" dan Volume Es Batu</div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <svg width="100%" style="max-width: 350px; height: auto;" viewBox="-130 -40 260 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Tabung -->
+                            <ellipse cx="0" cy="0" rx="40" ry="10" fill="none" stroke="black" stroke-width="2"/>
+                            <path d="M -40 0 L -40 120 A 40 10 0 0 0 40 120 L 40 0" fill="none" stroke="black" stroke-width="2"/>
+                            <path d="M -40 120 A 40 10 0 0 1 40 120" fill="none" stroke="black" stroke-dasharray="4,4"/>
+                            
+                            <!-- Es batu (Bola) -->
+                            <circle cx="0" cy="100" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                            <circle cx="20" cy="90" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                            <circle cx="-20" cy="85" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                            <circle cx="10" cy="70" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+                            <circle cx="-10" cy="65" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+
+                            <!-- Cairan level -->
+                            <ellipse cx="0" cy="20" rx="40" ry="10" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="4,4"/>
+                            <line x1="-40" y1="20" x2="-65" y2="20" stroke="#2980b9" stroke-width="1"/>
+                            <text x="-70" y="23" font-size="10" text-anchor="end" fill="#2980b9" font-family="sans-serif">Batas Cairan</text>
+                            
+                            <!-- Labels & Dimensi -->
+                            <line x1="40" y1="0" x2="70" y2="0" stroke="black" stroke-dasharray="2,2"/>
+                            <line x1="40" y1="120" x2="70" y2="120" stroke="black" stroke-dasharray="2,2"/>
+                            <line x1="65" y1="0" x2="65" y2="120" stroke="black"/>
+                            <polygon points="65,0 62,5 68,5" fill="black"/>
+                            <polygon points="65,120 62,115 68,115" fill="black"/>
+                            <text x="75" y="65" font-size="12" font-family="sans-serif">t = 15 cm</text>
+
+                            <line x1="0" y1="-25" x2="40" y2="-25" stroke="black"/>
+                            <polygon points="0,-25 5,-28 5,-22" fill="black"/>
+                            <polygon points="40,-25 35,-28 35,-22" fill="black"/>
+                            <text x="20" y="-32" font-size="12" text-anchor="middle" font-family="sans-serif">r = 4 cm</text>
+                            <line x1="0" y1="0" x2="0" y2="-25" stroke="black" stroke-dasharray="2,2"/>
+                            <line x1="40" y1="0" x2="40" y2="-25" stroke="black" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+
+                    <p>Sebuah kedai <em>bubble tea</em> menyajikan minumannya di dalam gelas plastik berbentuk tabung sempurna. Jari-jari alas gelas adalah $r = 4$ cm dan tingginya $t = 15$ cm.<br>
+                    Kedai tersebut menggunakan es batu berbentuk bola sempurna dengan jari-jari $r_{es} = 1,5$ cm.<br>
+                    Standar penyajian (<em>Normal Ice</em>) menggunakan <strong>12 buah es batu</strong>, sedangkan pesanan (<em>Less Ice</em>) hanya menggunakan <strong>4 buah es batu</strong>.<br>
+                    Dalam penyajiannya, minuman teh (cairan) dituangkan hingga memenuhi gelas (<em>full</em>) setelah es batu dimasukkan.<br>
+                    <em>Gunakan nilai $\pi$ sebagaimana adanya, jangan dikonversi ke desimal.</em></p>
+                </div>
+
+                <!-- Soal 17 -->
+                <div class="soal-item" data-qnum="17">
+                    <div class="soal-header">
+                        <span class="nomor">17.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Geometri Ruang (Tabung & Bola)</span><br>
+                            Berapakah kapasitas volume total (volume maksimal) dari gelas kosong tersebut?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$120\pi \text{ cm}^3$</li>
+                        <li data-option="B">$180\pi \text{ cm}^3$</li>
+                        <li data-option="C">$240\pi \text{ cm}^3$</li>
+                        <li data-option="D">$360\pi \text{ cm}^3$</li>
+                        <li data-option="E">$480\pi \text{ cm}^3$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Gelasnya bentuknya <strong>Tabung</strong>. Dari SD sampai kapanpun, rumus ruang tabung itu sama:<br>
+                        Volume Tabung = Luas Alas (Bentuk Lingkaran) $\times$ Tinggi.<br>
+                        $\text{Volume} = (\pi \times r \times r) \times t$</p>
+                        <p>Dari gambar dan soal kita punya angka: jari-jari (r) = 4, dan tinggi (t) = 15. Tinggal masukin aja!<br>
+                        $\text{Volume} = \pi \times 4^2 \times 15$<br>
+                        $\text{Volume} = \pi \times 16 \times 15$<br>
+                        $\text{Volume} =$ <strong>$240\pi$</strong> (Biarkan $\pi$-nya nangkring di situ, jangan repot-repot dikali 3,14).<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 18 -->
+                <div class="soal-item" data-qnum="18">
+                    <div class="soal-header">
+                        <span class="nomor">18.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Geometri Ruang (Tabung & Bola)</span><br>
+                            Berapakah total volume ruang yang ditempati oleh es batu pada pesanan <em>Normal Ice</em>?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$18\pi \text{ cm}^3$</li>
+                        <li data-option="B">$36\pi \text{ cm}^3$</li>
+                        <li data-option="C">$54\pi \text{ cm}^3$</li>
+                        <li data-option="D">$72\pi \text{ cm}^3$</li>
+                        <li data-option="E">$108\pi \text{ cm}^3$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Es batunya ajaib, bentuknya <strong>Bola</strong>!<br>
+                        Rumus nyari gendutnya bola (Volume) itu = $\frac{4}{3} \times \pi \times r^3$.<br>
+                        Jari-jari es (r) = 1,5. Biar gampang nyoret angkanya nanti, 1,5 kita ubah jadi bentuk pecahan $\frac{3}{2}$.</p>
+                        <p>Ayo hitung 1 biji es batu dulu:<br>
+                        $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times (\frac{3}{2})^3$<br>
+                        $(\frac{3}{2})$ pangkat tiga berarti dikali tiga kali: $\frac{3\times3\times3}{2\times2\times2} = \frac{27}{8}$.<br>
+                        Nah kita satukan lagi:<br>
+                        $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times \frac{27}{8}$<br>
+                        (Coret silang: 4 di atas sama 8 di bawah, 8-nya sisa 2. Lalu 27 di atas sama 3 di bawah, 27-nya sisa 9).<br>
+                        Ketemu deh! Volume 1 es batu = $\frac{9}{2}\pi$ alias <strong>$4,5\pi$</strong>.</p>
+                        <p>Karena varian <em>Normal Ice</em> pake <strong>12 buah es batu</strong>, tinggal kali aja:<br>
+                        $\text{Total Es} = 12 \times 4,5\pi =$ <strong>$54\pi$</strong>.<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 19 -->
+                <div class="soal-item" data-qnum="19">
+                    <div class="soal-header">
+                        <span class="nomor">19.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Geometri Ruang (Tabung & Bola)</span><br>
+                            Jika seorang pelanggan memesan varian <em>Normal Ice</em>, berapakah volume murni minuman teh (cairan) yang sebenarnya ia dapatkan?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$186\pi \text{ cm}^3$</li>
+                        <li data-option="B">$204\pi \text{ cm}^3$</li>
+                        <li data-option="C">$240\pi \text{ cm}^3$</li>
+                        <li data-option="D">$288\pi \text{ cm}^3$</li>
+                        <li data-option="E">$306\pi \text{ cm}^3$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Logika jajan minuman:<br>
+                        Gelas yang dikasih ke kita kan diisi sampai penuh. Penuh itu isinya apa aja? Isinya Teh murni ditambah Es Batu yang ngambil jatah ruang di dalem gelas.<br>
+                        Berarti, buat tau seberapa banyak teh murni yang masuk perut, tinggal kurangi aja Gelas Full sama Es Batunya.<br>
+                        $\text{Volume Teh Murni} = \text{Volume Gelas} - \text{Volume Es Normal}$<br>
+                        Ambil jawaban dari soal 17 dan 18:<br>
+                        $\text{Volume Teh Murni} = 240\pi - 54\pi =$ <strong>$186\pi$</strong>.<br>
+                        Sesederhana itu kawan!<br>
+                        <strong>Jawaban: A</strong></p>
+                    </div>
+                </div>
+
+                <!-- Soal 20 -->
+                <div class="soal-item" data-qnum="20">
+                    <div class="soal-header">
+                        <span class="nomor">20.</span>
+                        <div class="pertanyaan">
+                            <span class="kategori">Geometri Ruang (Tabung & Bola)</span><br>
+                            Seorang pelanggan merasa rugi dan beralih dari pesanan <em>Normal Ice</em> menjadi <em>Less Ice</em>. Berapa persentase peningkatkan volume cairan teh yang ia dapatkan dibandingkan saat ia memesan <em>Normal Ice</em>?
+                        </div>
+                    </div>
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$15,50\%$</li>
+                        <li data-option="B">$17,25\%$</li>
+                        <li data-option="C">$19,35\%$</li>
+                        <li data-option="D">$21,50\%$</li>
+                        <li data-option="E">$24,75\%$</li>
+                    </ol>
+                    <div class="explanation">
+                        <p>Mari kita selesaikan kasus manipulasi jualan minuman ini!<br>
+                        Kalau pesan <em>Less Ice</em>, es batunya cuma <strong>4 buah</strong>.<br>
+                        Berarti volume esnya = $4 \times 4,5\pi$ (volume satu es) = <strong>$18\pi$</strong>.</p>
+                        <p>Teh murni di <em>Less Ice</em> = Volume Gelas - Volume Es Less = $240\pi - 18\pi =$ <strong>$222\pi$</strong>.<br>
+                        (Tadi kalau pesen Normal tehnya dapet <strong>$186\pi$</strong>).</p>
+                        <p><strong>Berapa selisihnya (peningkatannya)?</strong><br>
+                        Teh di Less Ice (222) dikurang Teh di Normal (186) = <strong>$36\pi$</strong> nambahnya.</p>
+                        <p><strong>Sekarang jadikan persentase:</strong><br>
+                        Karena di soal dibilangnya <em>"dibandingkan saat ia memesan Normal Ice"</em>, berarti si nilai Normal Ice ini posisinya di bawah (dijadiin patokan pembagi).<br>
+                        $\text{Persentase} = \frac{\text{Selisih Teh}}{\text{Teh Normal Ice}} \times 100\%$<br>
+                        $\text{Persentase} = \frac{36\pi}{186\pi} \times 100\%$<br>
+                        Coret $\pi$-nya. Lalu bagi angkanya dengan 6 biar sederhana.<br>
+                        $\frac{36}{186} \times 100\% = \frac{6}{31} \times 100\% \approx$ <strong>$19,35\%$</strong>.</p>
+                        <p>Artinya, dengan ngurangin es batu ke varian Less Ice, kamu untung (dapet air teh) nyaris 20% lebih banyak!<br>
+                        <strong>Jawaban: C</strong></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ACTION AREA: Submit Button & Result -->
+            <div class="action-area">
+                <button id="submitBtn" class="btn-submit">KUMPULKAN JAWABAN</button>
                 
-                <p><strong>Cek Pernyataan (1):</strong><br>
-                Kasir A error dan butuh restart 5 menit.<br>
-                Total waktu di Kasir A sekarang jadi: 15 menit (antrean) + 5 menit (restart) = <strong>20 menit</strong>.<br>
-                Pertanyaannya: Apakah 20 menit lebih singkat dari 12 menit? <strong>TIDAK</strong>.<br>
-                Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (1) <strong>CUKUP</strong>.</p>
-                
-                <p><strong>Cek Pernyataan (2):</strong><br>
-                Ada 1 orang keluar dari Kasir A. Jadi antrean A yang tadinya 4 orang berkurang jadi 3 orang.<br>
-                Kalau Andi masuk, Andi jadi orang ke-4.<br>
-                Waktu Andi di Kasir A sekarang = 4 orang $\times$ 3 menit = <strong>12 menit</strong>.<br>
-                Pertanyaannya: Apakah 12 menit <em>lebih singkat</em> dari 12 menit? <strong>TIDAK</strong> (karena sama persis, bukan lebih singkat).<br>
-                Karena kita bisa jawab "TIDAK" dengan pasti, berarti pernyataan (2) <strong>CUKUP</strong>.</p>
-                
-                <p><strong>Kesimpulan:</strong> Karena pernyataan 1 bisa buat ngejawab sendiri, dan pernyataan 2 juga bisa dipake buat ngejawab sendiri, berarti dua-duanya sama-sama cukup secara sendirian.<br>
-                <strong>Jawaban: D</strong></p>
+                <div id="resultBox" class="result-box">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="margin:0; color:#2e7d32; font-size: 20px;">LAPORAN HASIL TRYOUT</h3>
+                        <div class="score-display">SKOR: <span id="scoreValue">0</span></div>
+                    </div>
+                    
+                    <div class="stats-summary" style="display: flex; justify-content: center; gap: 15px; margin: 15px 0 30px 0; flex-wrap: wrap;">
+                        <div style="background: var(--correct-bg); color: var(--correct-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--correct-border);">Benar: <span id="count-benar">0</span></div>
+                        <div style="background: var(--wrong-bg); color: var(--wrong-text); padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid var(--wrong-border);">Salah: <span id="count-salah">0</span></div>
+                        <div style="background: #e2e3e5; color: #383d41; padding: 10px 25px; border-radius: 6px; font-weight: bold; border: 1px solid #c8cbcf;">Kosong: <span id="count-kosong">0</span></div>
+                    </div>
+
+                    <div class="analysis-box" style="text-align: left; background: white; padding: 0;">
+                        <h4 style="margin-top: 0; color: var(--header-accent); border-bottom: 2px solid var(--header-accent); padding-bottom: 10px; font-size: 18px;">Analisis Kemampuan per Topik</h4>
+                        
+                        <div style="overflow-x: auto; margin-top: 15px;">
+                            <table class="report-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left;">Topik / Materi</th>
+                                        <th style="padding: 12px;">Total Soal</th>
+                                        <th style="padding: 12px; color: #28a745;">Benar</th>
+                                        <th style="padding: 12px; color: #dc3545;">Salah/Kosong</th>
+                                        <th style="padding: 12px; width: 30%;">Persentase</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topic-breakdown-body">
+                                    <!-- Injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 5px solid var(--header-accent);">
+                            <p style="margin-top: 0; margin-bottom: 10px; font-size: 15px;"><strong>💡 Rekomendasi Belajar:</strong></p>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;" id="recommendation-list">
+                                <!-- Injected by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px dashed #ccc;">
+                        <p style="margin:0; font-weight: 600; color: #d35400; font-size: 16px;">⬇ Silahkan gulir ke atas untuk melihat pembahasan dari setiap soal ⬇</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="worksheet-footer">
+                <b>Tryout 1 - Penalaran Matematika</b><br>
+                <i>CBT System Interface</i><br>
+                <p style="color: #2980b9; font-weight: 600; margin-top: 10px; font-size: 14px;">Persiapan PK dan PM? belajar bersama Math Specialist, hubungi 081381374712</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CUSTOM MODAL -->
+    <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 25px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <h3 id="modalTitle" style="margin-top: 0; color: var(--header-accent);">Konfirmasi</h3>
+            <p id="modalMessage" style="margin-bottom: 20px; color: #555;">Pesan disini</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button id="modalBtnCancel" style="padding: 10px 20px; border: none; background: #eee; color: #333; border-radius: 4px; cursor: pointer; font-weight: bold;">Batal</button>
+                <button id="modalBtnConfirm" style="padding: 10px 20px; border: none; background: var(--header-accent); color: white; border-radius: 4px; cursor: pointer; font-weight: bold;">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
 
-    <!-- NOMOR 3 -->
-    <div class="question">
-        <div class="question-header">3.</div>
-        <p>Perhatikan empat pernyataan berikut terkait kondisi awal antrean:</p>
-        <ol class="statement-list">
-            <li>Waktu total antrean di Kasir A hingga kosong adalah 12 menit.</li>
-            <li>Kasir C adalah kasir yang akan paling lambat menyelesaikan seluruh antreannya saat ini.</li>
-            <li>Selisih waktu selesai antrean A dan B adalah 4 menit.</li>
-            <li>Jika Andi masuk ke Kasir C, ia akan selesai lebih cepat dibandingkan di Kasir B.</li>
-        </ol>
-        <p>Berapa banyak pernyataan yang BENAR dari empat pernyataan di atas?</p>
+    <!-- Script Interaktif (Module Base Storage) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        <ol class="options">
-            <li>4</li>
-            <li>3</li>
-            <li>2</li>
-            <li>1</li>
-            <li>0</li>
-        </ol>
+      // ==========================================
+      // PASTE WEB APP URL KAMU DI SINI ↓
+      // ==========================================
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwExNjfiuKrLrbT8qX5x7Yv0iSQF0Matav2ZzteSE53D-NTUvLuYGE2K4ru8QaNstA2/exec";
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp3')">Tampilkan Pembahasan</button>
-        <div id="exp3" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Mari kita bongkar dan hitung waktu normal setiap kasir dulu:</p>
-                <ul>
-                    <li><strong>Kasir A:</strong> 4 orang $\times$ 3 menit = 12 menit.</li>
-                    <li><strong>Kasir B:</strong> 2 orang $\times$ 4 menit = 8 menit.</li>
-                    <li><strong>Kasir C:</strong> 5 orang $\times$ 2 menit = 10 menit.</li>
-                </ul>
-                <p>Sekarang kita cocokkan dengan pernyataannya:</p>
-                <ol class="statement-list">
-                    <li>Waktu Kasir A kosong adalah 12 menit. $\rightarrow$ <strong>BENAR</strong>. Hitungannya pas 12 menit.</li>
-                    <li>Kasir C paling lambat selesainya. $\rightarrow$ <strong>SALAH</strong>. Yang paling lambat itu Kasir A (12 menit), Kasir C cuma 10 menit.</li>
-                    <li>Selisih waktu A dan B adalah 4 menit. $\rightarrow$ <strong>BENAR</strong>. Kasir A (12) dikurangi Kasir B (8) hasilnya pas 4.</li>
-                    <li>Jika Andi ke Kasir C, dia lebih cepet dari B. $\rightarrow$ Mari kita tes. Kalau Andi ke C, dia jadi orang ke-6. Waktunya: 6 orang $\times$ 2 menit = 12 menit. Waktu di Kasir B juga 12 menit (dari soal nomor 1). Karena sama persis (12 vs 12), berarti ngga lebih cepat. <strong>SALAH</strong>.</li>
-                </ol>
-                <p>Total pernyataan yang benar cuma ada 2 (Pernyataan 1 dan 3).<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
+      // Kunci Jawaban Penalaran Matematika (20 Soal)
+      const answerKey = {
+        1: 'C', 2: 'D', 3: 'C', 4: 'E', 5: 'B',
+        6: 'C', 7: 'B', 8: 'A', 9: 'C', 10: 'A',
+        11: 'E', 12: 'B', 13: 'A', 14: 'B', 15: 'C',
+        16: 'C', 17: 'C', 18: 'C', 19: 'A', 20: 'C'
+      };
 
-    <!-- NOMOR 4 -->
-    <div class="question">
-        <div class="question-header">4.</div>
-        <p>Diketahui probabilitas seseorang keluar dari antrean sebelum dilayani adalah $10\%$. Manakah di antara pernyataan berikut yang BENAR terkait ekspektasi (harapan) matematika waktu antrean?</p>
-        <ol class="statement-list">
-            <li>Ekspektasi waktu pelayanan untuk 10 orang di Kasir C adalah kurang dari 20 menit.</li>
-            <li>Semakin panjang antrean, semakin tinggi probabilitas waktu tunggu total meleset dari perhitungan konstan.</li>
-            <li>Ekspektasi jumlah orang yang bertahan di antrean A adalah 3,6 orang.</li>
-            <li>Probabilitas semua orang di ketiga kasir (11 orang) tetap berada di antrean adalah $(0,9)^{11}$.</li>
-        </ol>
+      // Inisialisasi Variabel DOM
+      const landingPage = document.getElementById('landing-page');
+      const examPage = document.getElementById('exam-page');
+      const btnStart = document.getElementById('btn-start');
+      const timerBar = document.getElementById('timer-bar');
+      const loadingOverlay = document.getElementById('loading-overlay');
+      
+      const namaInput = document.getElementById('nama');
+      const emailInput = document.getElementById('email');
+      const hpInput = document.getElementById('hp');
+      const sekolahInput = document.getElementById('sekolah');
 
-        <ol class="options">
-            <li>Pernyataan 1, 2, dan 3 benar.</li>
-            <li>Pernyataan 1 dan 3 benar.</li>
-            <li>Pernyataan 2 dan 4 benar.</li>
-            <li>Hanya pernyataan 4 yang benar.</li>
-            <li>Semua pernyataan benar.</li>
-        </ol>
+      const options = document.querySelectorAll('.pilihan-ganda li');
+      const submitBtn = document.getElementById('submitBtn');
+      const timerDisplay = document.getElementById('timer-display');
+      
+      // Modal Variabel
+      const modal = document.getElementById('customModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalBtnCancel = document.getElementById('modalBtnCancel');
+      const modalBtnConfirm = document.getElementById('modalBtnConfirm');
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp4')">Tampilkan Pembahasan</button>
-        <div id="exp4" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>"Ekspektasi" itu bahasa ribetnya, padahal maksudnya cuma <strong>perkiraan rata-rata</strong> aja.<br>
-                Kalau peluang keluar $10\%$, berarti peluang dia <strong>bertahan</strong> di antrean adalah $90\%$ atau 0,9.<br>
-                Ayo kita cek:</p>
-                <ol class="statement-list">
-                    <li>Kasir C (2 menit/orang). Kalau 10 orang normalnya $10 \times 2 = 20$ menit. Tapi karena peluang keluarnya 10%, jumlah orang yang bakal bertahan cuma $10 \times 90\% = 9$ orang. Jadi ekspektasi waktunya $9 \times 2 = 18$ menit. Angka 18 ini pasti kurang dari 20 menit kan? $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Kalau antrean kepanjangan, pasti makin banyak dong orang yang kesel terus milih keluar? Nah, gara-gara ada yang keluar, waktu aslinya pasti meleset dari hitungan di atas kertas. Makin panjang antrean = makin gede peluang error/meleset. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Di Kasir A ada 4 orang. Jumlah orang yang bertahan = Total orang $\times$ peluang bertahan = $4 \times 0,9 = 3,6$ orang. (Walau mustahil ada 0,6 orang di dunia nyata, tapi secara matematika tulisan ini bener). $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Total orang di semua kasir (4 + 2 + 5 = 11 orang). Peluang SATU orang bertahan itu $90\%$ atau 0,9. Kalau SEBELAS orang bertahan berurutan, dalam matematika peluangnya dikaliin semuanya: $0,9 \times 0,9 \times 0,9...$ sampai 11 kali. Ditulisnya jadi $(0,9)^{11}$. $\rightarrow$ <strong>BENAR</strong>.</li>
-                </ol>
-                <p>Karena semuanya benar, pilih opsi semua benar!<br>
-                <strong>Jawaban: E</strong></p>
-            </div>
-        </div>
-    </div>
+      let isSubmitted = false;
+      let timerInterval;
+      
+      // Firebase State
+      let db, auth, userId, appId, docRef;
+      let state = {
+          status: 'not_started', // not_started | in_progress | completed
+          endTime: null,
+          answers: {},
+          userData: null
+      };
 
-    <!-- ========================================== -->
-    <!-- WACANA 2 -->
-    <!-- ========================================== -->
-    <div class="wacana">
-        <div class="wacana-title">Wacana 2: Matematika di Balik "FYP" Media Sosial</div>
-        <p>Algoritma sebuah media sosial menggunakan <em>Graph Theory</em> (teori jejaring) dan pembobotan numerik untuk menentukan skor sebuah konten video agar bisa masuk <em>For You Page</em> (FYP). Skor total $S$ sebuah video dihitung menggunakan rumus:</p>
-        <p style="text-align: center;">$$S = (3 \times L) + (5 \times R) + (2 \times W)$$</p>
-        <p>Dimana:<br>
-        $L =$ Jumlah <em>Like</em>,<br>
-        $R =$ Jumlah <em>Share</em> (Retweet/Bagikan), dan<br>
-        $W =$ Rata-rata <em>Watch time</em> (dalam detik).<br>
-        Agar masuk ke kategori FYP, sebuah video harus memiliki skor $S \ge 500$.</p>
-    </div>
+      async function initStorage() {
+          try {
+              if (typeof __firebase_config === 'undefined' || !__firebase_config) throw new Error("Firebase Config missing");
+              const firebaseConfig = JSON.parse(__firebase_config);
+              appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+              
+              const app = initializeApp(firebaseConfig);
+              auth = getAuth(app);
+              db = getFirestore(app);
 
-    <!-- NOMOR 5 -->
-    <div class="question">
-        <div class="question-header">5.</div>
-        <p>Sebuah video memiliki 50 <em>like</em>, 20 <em>share</em>, dan ditonton rata-rata selama 45 detik. Berapakah skor total video tersebut?</p>
-        
-        <ol class="options">
-            <li>250</li>
-            <li>340</li>
-            <li>400</li>
-            <li>440</li>
-            <li>500</li>
-        </ol>
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                  await signInWithCustomToken(auth, __initial_auth_token);
+              } else {
+                  await signInAnonymously(auth);
+              }
+              
+              userId = auth.currentUser.uid;
+              docRef = doc(db, 'artifacts', appId, 'users', userId, 'tryout_state_pm');
+              
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  state = docSnap.data();
+              }
+          } catch (e) {
+              console.warn("Storage tidak tersedia, menggunakan sesi lokal memori.", e);
+          }
+          handleInitialState();
+      }
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp5')">Tampilkan Pembahasan</button>
-        <div id="exp5" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Ini soal paling gampang. Tinggal cocokin angkanya ke dalam huruf di rumus!<br>
-                Kita dikasih info:<br>
-                - <em>Like</em> ($L$) = 50<br>
-                - <em>Share</em> ($R$) = 20<br>
-                - <em>Watch time</em> ($W$) = 45</p>
-                
-                <p>Tulis ulang rumusnya: $S = (3 \times L) + (5 \times R) + (2 \times W)$<br>
-                Masukin angkanya gantiin huruf:<br>
-                $$S = (3 \times \mathbf{50}) + (5 \times \mathbf{20}) + (2 \times \mathbf{45})$$</p>
-                
-                <p>Tinggal kaliin deh:<br>
-                $$S = 150 + 100 + 90$$<br>
-                $$S = 340$$</p>
-                
-                <p>Gampang banget kan?<br>
-                <strong>Jawaban: B</strong></p>
-            </div>
-        </div>
-    </div>
+      function handleInitialState() {
+          loadingOverlay.style.display = 'none';
 
-    <!-- NOMOR 6 -->
-    <div class="question">
-        <div class="question-header">6.</div>
-        <p>Video B memiliki 100 <em>like</em>. Apakah Video B berhasil masuk FYP?</p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li>(1) Rata-rata waktu tonton (W) Video B adalah 60 detik.</li>
-            <li>(2) Jumlah <em>share</em> (R) Video B adalah 25.</li>
-        </ul>
-        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+          if (state.status === 'completed') {
+              // Jika sudah selesai, langsung lompat ke halaman hasil
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'none';
+              processSubmission(true, true); // (auto, isRestoring)
+          } else if (state.status === 'in_progress') {
+              // Jika ter-refresh saat masih mengerjakan
+              restoreUserData(state.userData);
+              restoreAnswers(state.answers);
+              landingPage.style.display = 'none';
+              examPage.style.display = 'block';
+              timerBar.style.display = 'flex';
+              document.body.style.paddingTop = '80px';
+              startTimer(); // Melanjutkan waktu
+          } else {
+              // Baru pertama kali buka
+              landingPage.style.display = 'block';
+          }
+      }
 
-        <ol class="options">
-            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
-            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
-            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
-            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
-            <li>Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
-        </ol>
+      function restoreUserData(userData) {
+          if (!userData) return;
+          document.getElementById('display-nama').textContent = userData.nama || "-";
+          document.getElementById('display-sekolah').textContent = userData.sekolah || "-";
+          document.getElementById('display-hp').textContent = userData.hp || "-";
+      }
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp6')">Tampilkan Pembahasan</button>
-        <div id="exp6" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Ingat target FYP adalah kalau skornya $S \ge 500$.<br>
-                Info awal kita: $L = 100$. Berarti dari <em>like</em> aja dia udah dapet poin: $3 \times 100 = 300$.<br>
-                Skor S sekarang = 300. Dia butuh minimal 200 poin lagi dari $R$ dan $W$.</p>
+      function restoreAnswers(answers) {
+          if (!answers) return;
+          const soalItems = document.querySelectorAll('.soal-item');
+          soalItems.forEach(item => {
+              const qNum = item.getAttribute('data-qnum');
+              if (answers[qNum]) {
+                  const option = item.querySelector(`li[data-option="${answers[qNum]}"]`);
+                  if (option) option.classList.add('selected');
+              }
+          });
+      }
 
-                <p><strong>Cek Pernyataan (1) aja:</strong><br>
-                Katanya $W = 60$. Poin tambahannya = $2 \times 60 = 120$.<br>
-                Total skor = $300 + 120 = 420$. Karena kita ngga tau si $R$ (<em>share</em>) berapa, kita ngga bisa mastiin skor totalnya bakal nembus 500 atau ngga. Siapa tau $R$ nya nol? (Berarti TIDAK CUKUP).</p>
+      // Mulai inisialisasi Firebase saat DOM Load
+      initStorage();
 
-                <p><strong>Cek Pernyataan (2) aja:</strong><br>
-                Katanya $R = 25$. Poin tambahannya = $5 \times 25 = 125$.<br>
-                Total skor = $300 + 125 = 425$. Sama kayak tadi, kita ngga tau si $W$-nya berapa, jadi ngga bisa jawab pasti bisa masuk FYP apa ngga. (TIDAK CUKUP).</p>
+      // LOGIKA TOMBOL MULAI
+      btnStart.addEventListener('click', async function() {
+          const nama = namaInput.value.trim() || "Peserta Anonim";
+          const email = emailInput.value.trim() || "-";
+          const hp = hpInput.value.trim() || "-";
+          const sekolah = sekolahInput.value.trim() || "-";
 
-                <p><strong>Gabungin Pernyataan (1) dan (2):</strong><br>
-                Kalau dua info digabung, kita tau $W=60$ dan $R=25$.<br>
-                Total skor = Poin $L$ (300) + Poin $R$ (125) + Poin $W$ (120) = <strong>545</strong>.<br>
-                Apakah 545 nembus 500? Ya, tembus banget! FYP!<br>
-                Karena baru bisa kejawab pas informasinya digabungin, berarti harus bareng-bareng.<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
+          // Fitur Pengecualian / Admin Bypass
+          if (email.toLowerCase() === "riansyahdhanardi@gmail.com") {
+              // Jika email admin dimasukkan, reset status
+              state.status = 'in_progress';
+              state.answers = {};
+              state.userData = { nama, email, hp, sekolah };
+              state.endTime = Date.now() + 30 * 60000;
+              isSubmitted = false;
 
-    <!-- NOMOR 7 -->
-    <div class="question">
-        <div class="question-header">7.</div>
-        <p>Perhatikan pernyataan berikut berdasarkan rumus algoritma $S$:</p>
-        <ol class="statement-list">
-            <li>1 <em>share</em> bernilai sama dengan 2,5 detik <em>watch time</em>.</li>
-            <li>Jika jumlah <em>like</em> digandakan dan indikator lainnya (share & watch time) diasumsikan bernilai tetap dan tidak nol, skor total akan selalu naik kurang dari $100\%$.</li>
-            <li>Untuk mencapai batas minimal FYP tanpa adanya <em>share</em> dan <em>like</em>, video harus ditonton rata-rata minimal 250 detik.</li>
-            <li>Kenaikan 10 <em>share</em> akan memberikan tambahan skor yang sama dengan kenaikan 25 <em>like</em>.</li>
-        </ol>
-        <p>Berapa banyak pernyataan yang BENAR?</p>
+              // Hapus semua pilihan yang sudah terpilih (reset visual UI)
+              const options = document.querySelectorAll('.pilihan-ganda li');
+              options.forEach(opt => {
+                  opt.classList.remove('selected', 'correct', 'wrong');
+              });
+              const olLists = document.querySelectorAll('.pilihan-ganda');
+              olLists.forEach(ol => {
+                  ol.classList.remove('disabled-options');
+              });
+              const explanations = document.querySelectorAll('.explanation');
+              explanations.forEach(exp => {
+                  exp.style.display = 'none';
+              });
+              
+              // Reset Result Box
+              document.getElementById('resultBox').style.display = 'none';
+              document.getElementById('submitBtn').style.display = 'inline-block';
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          } else {
+             // Alur Normal Peserta
+              state.userData = { nama, email, hp, sekolah };
+              state.status = 'in_progress';
+              // 30 Menit = 30 * 60000 ms (Disesuaikan request)
+              state.endTime = Date.now() + 30 * 60000;
+              
+              if (docRef) {
+                  try { await setDoc(docRef, state); } catch(e) {}
+              }
+          }
 
-        <ol class="options">
-            <li>4</li>
-            <li>3</li>
-            <li>2</li>
-            <li>1</li>
-            <li>0</li>
-        </ol>
+          restoreUserData(state.userData);
+          landingPage.style.display = 'none';
+          examPage.style.display = 'block';
+          timerBar.style.display = 'flex';
+          document.body.style.paddingTop = '80px'; 
+          startTimer();
+          window.scrollTo(0, 0);
+      });
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp7')">Tampilkan Pembahasan</button>
-        <div id="exp7" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Mari kita analisis rumusnya: $S = 3L + 5R + 2W$.</p>
-                <ol class="statement-list">
-                    <li>Kalau 1 <em>share</em> ($R=1$), poinnya dapet: $5 \times 1 = 5$ poin. Kalau <em>watch time</em> 2,5 detik ($W=2,5$), poinnya dapet: $2 \times 2,5 = 5$ poin. Sama-sama ngasilin 5 poin! $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Kalau <em>Like</em> dikali dua, skor <em>total</em> ngga mungkin otomatis jadi dua kali lipat (naik 100%). Kenapa? Karena di skor total masih ada sumbangan poin dari $R$ dan $W$. Jika Like dikalikan dua, poin dari Like memang naik 100%, tetapi karena poin R dan W tetap, secara keseluruhan persentase kenaikan <em>skor total</em> pasti "diencerkan" dan hasilnya akan berada di bawah 100%. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Ngga ada <em>share</em> ($R=0$), ngga ada <em>like</em> ($L=0$). Jadi skor cuma bergantung sama jam tayang: $S = 2W$. Biar nembus batas FYP 500, maka $2W = 500 \rightarrow W = 500 / 2 = 250$ detik. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Kalau naik 10 <em>share</em>, poin nambah: $10 \times 5 = 50$ poin. Kalau naik 25 <em>like</em>, poin nambah: $25 \times 3 = 75$ poin. Beda dong angkanya (50 sama 75)! $\rightarrow$ <strong>SALAH</strong>.</li>
-                </ol>
-                <p>Ada 3 kalimat yang benar (Kalimat 1, 2, dan 3).<br>
-                <strong>Jawaban: B</strong></p>
-            </div>
-        </div>
-    </div>
+      function startTimer() { 
+          timerInterval = setInterval(updateTimer, 1000); 
+          updateTimer(); // Panggil sekali langsung agar tidak delay
+      }
 
-    <!-- NOMOR 8 -->
-    <div class="question">
-        <div class="question-header">8.</div>
-        <p>Developer media sosial mengubah algoritma menjadi $S_{baru} = (2 \times L) + (10 \times R) + W$. Manakah di antara pernyataan berikut yang BENAR?</p>
-        <ol class="statement-list">
-            <li>Peran <em>share</em> menjadi dua kali lipat lebih penting dari algoritma sebelumnya.</li>
-            <li>Peran <em>watch time</em> (W) berkurang setengahnya secara bobot absolut.</li>
-            <li>Video yang hanya mengandalkan <em>Like</em> akan lebih sulit masuk FYP dengan algoritma baru.</li>
-            <li>Skor total sebuah video pasti berubah jika menggunakan rumus algoritma baru.</li>
-        </ol>
+      function updateTimer() {
+          if (isSubmitted || state.status === 'completed') {
+              clearInterval(timerInterval);
+              return;
+          }
 
-        <ol class="options">
-            <li>Pernyataan 1, 2, dan 3 benar.</li>
-            <li>Pernyataan 1 dan 3 benar.</li>
-            <li>Pernyataan 2 dan 4 benar.</li>
-            <li>Hanya pernyataan 4 yang benar.</li>
-            <li>Semua pernyataan benar.</li>
-        </ol>
+          const now = Date.now();
+          const timeDiff = state.endTime - now;
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp8')">Tampilkan Pembahasan</button>
-        <div id="exp8" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Mari kita jejerin rumusnya biar kelihatan bedanya:<br>
-                Rumus Lama: $3L + \mathbf{5}R + \mathbf{2}W$<br>
-                Rumus Baru: $2L + \mathbf{10}R + \mathbf{1}W$</p>
-                <ol class="statement-list">
-                    <li>Lihat angka di depan $R$ (<em>share</em>). Awalnya 5, sekarang jadi 10. Yap, angkanya jadi 2 kali lipat lebih gede, berarti makin penting! $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Lihat angka di depan $W$ (<em>watch time</em>). Awalnya dikali 2, sekarang cuma dikali 1. Berarti nilainya terjun bebas setengahnya. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Lihat angka di depan $L$ (<em>Like</em>). Awalnya kalau dapet 1 Like nilainya 3 poin, sekarang nilainya cuma 2 poin. Wah, berarti konten modal Like aja makin kecil sumbangannya, jadinya makin sulit FYP. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Apakah nilainya <strong>pasti</strong> berubah? Kata "pasti" itu bahaya di matematika. Coba kalau kita asalkan masukin angka $L=3, R=1, W=2$.<br>
-                    - Poin lama: $(3\times3) + (5\times1) + (2\times2) = 9 + 5 + 4 = \mathbf{18}$.<br>
-                    - Poin baru: $(2\times3) + (10\times1) + (1\times2) = 6 + 10 + 2 = \mathbf{18}$.<br>
-                    Loh, ternyata bisa SAMA KOK! Jadi dibilang <strong>pasti</strong> berubah itu $\rightarrow$ <strong>SALAH</strong>.</li>
-                </ol>
-                <p>Yang benar adalah 1, 2, dan 3.<br>
-                <strong>Jawaban: A</strong></p>
-            </div>
-        </div>
-    </div>
+          if (timeDiff <= 0) {
+              clearInterval(timerInterval);
+              timerDisplay.textContent = "00:00";
+              handleTimeUp();
+              return;
+          }
 
-    <!-- ========================================== -->
-    <!-- WACANA 3 -->
-    <!-- ========================================== -->
-    <div class="wacana">
-        <div class="wacana-title">Wacana 3: Efektivitas Diskon Ganda (50% + 20% vs 70%)</div>
-        <p>Menjelang hari raya, Toko A memberikan promosi "Diskon $50\% + 20\%$". Sementara itu, Toko B, pesaingnya, memberikan diskon tunggal sebesar $70\%$. Banyak konsumen terkecoh dan menganggap kedua jenis diskon tersebut bernilai sama. Harga normal sepotong kemeja di kedua toko adalah Rp400.000,00.</p>
-    </div>
+          const remainingSeconds = Math.floor(timeDiff / 1000);
+          const minutes = Math.floor(remainingSeconds / 60);
+          const seconds = remainingSeconds % 60;
 
-    <!-- NOMOR 9 -->
-    <div class="question">
-        <div class="question-header">9.</div>
-        <p>Toko C memberikan penawaran "Diskon $x\% + 30\%$". Apakah harga akhir kemeja di Toko C lebih murah daripada di Toko A?</p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li>(1) $x = 40$</li>
-            <li>(2) Toko C memiliki harga normal awal Rp400.000,00.</li>
-        </ul>
-        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+          timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (remainingSeconds < 300) {
+              timerDisplay.classList.add('timer-warning');
+          } else {
+              timerDisplay.classList.remove('timer-warning');
+          }
+      }
 
-        <ol class="options">
-            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
-            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
-            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
-            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
-            <li>Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
-        </ol>
+      function handleTimeUp() {
+          showModal("Waktu Habis!", "Waktu ujian anda telah habis. Jawaban dikumpulkan otomatis.", false, function() {
+              processSubmission(true, false);
+          });
+      }
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp9')">Tampilkan Pembahasan</button>
-        <div id="exp9" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Sebelum ngejawab soal ini, kita wajib ngitung harga Toko A dulu biar ada patokan.<br>
-                - <strong>Harga Toko A:</strong> Awalnya Rp400.000. Didiskon pertama $50\%$ alias bayar setengahnya aja (sisanya Rp200.000). Habis itu, sisa yang Rp200.000 ini didiskon lagi $20\%$. (Bayarnya berarti tinggal $80\%$ dari Rp200.000).<br>
-                $80\% \times 200.000 =$ <strong>Rp160.000</strong>. Ini harga akhir Toko A.</p>
-                
-                <p>Nah, ditanya apakah Toko C lebih murah dari 160 ribu?</p>
-                <p><strong>Cek Pernyataan (1) aja:</strong> $x = 40$. Toko C kasih diskon $40\% + 30\%$. Tapi tunggu dulu, harga normal Toko C kita belum tau! Di cerita awal yang harganya Rp400rb itu cuma Toko A dan B. Toko C ngga pernah disebut harga awalnya. Gimana mau ngitung kalau harganya aja ghoib? (TIDAK CUKUP).</p>
-                
-                <p><strong>Cek Pernyataan (2) aja:</strong> Harga normal Toko C = 400.000. Oke mantap, tapi variabel $x$-nya ngga disebutin, diskon depannya berapa persen? Kita juga ngga bisa ngitung. (TIDAK CUKUP).</p>
-                
-                <p><strong>Gabungin (1) &amp; (2):</strong><br>
-                Harga Toko C = 400.000. Diskon = $40\% + 30\%$.<br>
-                - Diskon 1 (40%): Kita bayar 60%-nya saja. $60\% \times 400.000 = 240.000$.<br>
-                - Diskon 2 (30%): Dari harga baru 240.000, dipotong 30%, kita cuma bayar 70%-nya. $70\% \times 240.000 = \mathbf{168.000}$.<br>
-                Pertanyaan: Apakah 168.000 lebih murah dari 160.000? <strong>TIDAK</strong>.<br>
-                Karena infonya bisa ngebantu kita ngejawab dengan tegas "TIDAK", berarti info gabungannya CUKUP!<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
+      function showModal(title, message, showCancel, onConfirm) {
+          modalTitle.textContent = title;
+          modalMessage.textContent = message;
+          modalBtnCancel.style.display = showCancel ? 'inline-block' : 'none';
+          modal.style.display = 'flex';
+          
+          modalBtnConfirm.onclick = function() {
+              modal.style.display = 'none';
+              if(onConfirm) onConfirm();
+          };
+          modalBtnCancel.onclick = function() {
+              modal.style.display = 'none';
+          };
+      }
 
-    <!-- NOMOR 10 -->
-    <div class="question">
-        <div class="question-header">10.</div>
-        <p>Manakah di antara pernyataan berikut yang BENAR mengenai diskon bertingkat $A\% + B\%$ (diasumsikan $A > 0$ dan $B > 0$)?</p>
-        <ol class="statement-list">
-            <li>Total diskon efektif dari $A\% + B\%$ selalu lebih kecil dari $(A+B)\%$.</li>
-            <li>Diskon $50\% + 20\%$ memiliki harga akhir yang sama dengan diskon $20\% + 50\%$.</li>
-            <li>Total persentase potongan harga dari diskon $50\% + 20\%$ adalah $60\%$.</li>
-            <li>Pembeli di Toko B akan membayar lebih mahal dibandingkan pembeli di Toko A.</li>
-        </ol>
+      // Klik Pilihan Ganda (Menyimpan Otomatis)
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return; 
+          
+          const siblings = this.parentNode.children;
+          for (let sibling of siblings) {
+            sibling.classList.remove('selected');
+          }
+          this.classList.add('selected');
 
-        <ol class="options">
-            <li>Pernyataan 1, 2, dan 3 benar.</li>
-            <li>Pernyataan 1 dan 3 benar.</li>
-            <li>Pernyataan 2 dan 4 benar.</li>
-            <li>Hanya pernyataan 4 yang benar.</li>
-            <li>Semua pernyataan benar.</li>
-        </ol>
+          // Ambil nomor soal
+          const questionItem = this.closest('.soal-item');
+          const qNum = questionItem.getAttribute('data-qnum');
+          const answer = this.getAttribute('data-option');
+          
+          // Simpan State lokal & Cloud
+          if(qNum) {
+              if(!state.answers) state.answers = {};
+              state.answers[qNum] = answer;
+              if(docRef) {
+                  updateDoc(docRef, { answers: state.answers }).catch(()=>{});
+              }
+          }
+        });
+      });
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp10')">Tampilkan Pembahasan</button>
-        <div id="exp10" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Konsep penting <em>Mall</em> se-Indonesia: Diskon $50\% + 20\%$ itu <strong>BUKAN</strong> $70\%$. Jangan mau diboongin spanduk sale!</p>
-                <ol class="statement-list">
-                    <li>Diskon $A\% + B\%$ potongannya selalu di bawah kalau diskon itu langsung digabung ($A+B$). Kenapa? Karena diskon kedua cuma motong dari "harga sisa" yang jumlahnya udah mengecil. (Contoh: $50\%+20\%$ hasilnya cuma potongan 60%, bukan 70%). $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Di matematika perkalian itu sifatnya bolak-balik sama aja (<em>komutatif</em>). Dipotong 50% dulu lalu 20%, harganya bakal persis sama kayak dipotong 20% dulu baru 50%. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Seperti yang udah kita hitung, barang Rp400rb kalau di diskon $50\%+20\%$ hasil akhirnya jadi Rp160.000. Harga dipotong berapa? $400 - 160 = 240$ ribu. Berapa persennya 240 dari 400? $(240 / 400) \times 100\% = 60\%$. Total diskon aslinya emang cuma $60\%$. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Toko B diskon langsung 70%. Pembeli cuma bayar 30% dari Rp400.000, yaitu Rp120.000. Sedang Toko A (kayak hitungan sebelumnya) harganya Rp160.000. Jadi Toko B itu LEBIH MURAH, bukan lebih mahal! $\rightarrow$ <strong>SALAH</strong>.</li>
-                </ol>
-                <p>Pernyataan yang benar ada 3 (1, 2, dan 3).<br>
-                <strong>Jawaban: A</strong></p>
-            </div>
-        </div>
-    </div>
+      // Klik Tombol Submit Manual
+      submitBtn.addEventListener('click', function() {
+          if (isSubmitted || state.status === 'completed') return;
+          showModal("Kumpulkan Jawaban?", "Apakah anda yakin ingin mengumpulkan jawaban? Anda tidak bisa mengulangi ujian.", true, function() {
+              processSubmission(false, false);
+          });
+      });
 
-    <!-- NOMOR 11 -->
-    <div class="question">
-        <div class="question-header">11.</div>
-        <p>Berapa selisih harga yang harus dibayarkan pembeli jika membeli kemeja tersebut di Toko A dibandingkan dengan di Toko B?</p>
-        
-        <ol class="options">
-            <li>Rp0,00 (Harganya sama)</li>
-            <li>Rp10.000,00</li>
-            <li>Rp20.000,00</li>
-            <li>Rp30.000,00</li>
-            <li>Rp40.000,00</li>
-        </ol>
+      function processSubmission(isAutoSubmit, isRestoring = false) {
+          if(isSubmitted) return;
+          isSubmitted = true;
+          clearInterval(timerInterval);
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp11')">Tampilkan Pembahasan</button>
-        <div id="exp11" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Karena kita udah capek-capek ngitung harga di dua toko dari nomor sebelumnya, tinggal kita kurangi aja di sini:<br>
-                - Harga baju di Toko A: Rp160.000 (hasil diskon 50% lalu 20%)<br>
-                - Harga baju di Toko B: Rp120.000 (hasil langsung diskon 70% dari 400.000)<br>
-                Selisihnya (bedanya) = $160.000 - 120.000 =$ <strong>Rp40.000</strong>.<br>
-                <strong>Jawaban: E</strong></p>
-            </div>
-        </div>
-    </div>
+          timerBar.style.display = "none";
+          
+          // Set status Selesai
+          state.status = 'completed';
+          if (docRef && !isRestoring) {
+              updateDoc(docRef, { status: 'completed' }).catch(()=>{});
+          }
 
-    <!-- NOMOR 12 -->
-    <div class="question">
-        <div class="question-header">12.</div>
-        <p>Dina memiliki <em>voucher</em> potongan tunai tambahan sebesar Rp10.000,00 yang dapat digunakan di Toko A <strong>setelah</strong> semua diskon persentase diaplikasikan. Berapa persentase total diskon efektif yang didapatkan Dina terhadap harga normal kemeja tersebut?</p>
-        
-        <ol class="options">
-            <li>$60,0\%$</li>
-            <li>$62,5\%$</li>
-            <li>$65,0\%$</li>
-            <li>$67,5\%$</li>
-            <li>$70,0\%$</li>
-        </ol>
+          let correctCount = 0;
+          let wrongCount = 0;
+          let emptyCount = 0;
+          const categoryStats = {};
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp12')">Tampilkan Pembahasan</button>
-        <div id="exp12" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Ayo kita jadi temen belanja si Dina!<br>
-                Dina ke Toko A. Baju udah didiskon $50\% + 20\%$. Harga di kasir udah berubah jadi Rp160.000 (hitungan kita tadi).<br>
-                Tiba-tiba Dina inget bawa <em>voucher</em> 10 ribu. Kasirnya seneng, potong deh dari Rp160.000.<br>
-                Harga final yang harus Dina bayar beneran: $160.000 - 10.000 =$ <strong>Rp150.000</strong>.</p>
-                
-                <p>Sekarang ditanya, berapa total diskon alias "total duit yang berhasil diselamatkan" sama Dina?<br>
-                Harga asli baju = Rp400.000.<br>
-                Yang dibayar = Rp150.000.<br>
-                Duit potongan (diskon total Dina) = $400.000 - 150.000 =$ <strong>Rp250.000</strong>.</p>
-                
-                <p>Jadikan persentase:<br>
-                $\text{Persen Diskon} = \frac{\text{Potongan Duit}}{\text{Harga Asli}} \times 100\%$<br>
-                $\text{Persen Diskon} = \frac{250.000}{400.000} \times 100\%$<br>
-                Coret nol-nolnya yang nyebelin, jadi: $\frac{25}{40} \times 100\%$.<br>
-                Disederhanakan (bagi 5) jadi: $\frac{5}{8} \times 100\%$.<br>
-                100 dibagi 8 = 12,5. Terus dikali 5 = <strong>62,5%</strong>.<br>
-                <strong>Jawaban: B</strong></p>
-            </div>
-        </div>
-    </div>
+          const soalItems = document.querySelectorAll('.soal-item');
+          
+          soalItems.forEach((item, index) => {
+              const questionNumber = index + 1;
+              const correctAnswer = answerKey[questionNumber];
+              const selectedOption = item.querySelector('li.selected');
+              
+              // Analisis Kategori
+              const catEl = item.querySelector('.kategori');
+              const categoryName = catEl ? catEl.innerText.trim() : 'Umum';
+              if (!categoryStats[categoryName]) {
+                  categoryStats[categoryName] = { total: 0, correct: 0, wrong: 0, empty: 0 };
+              }
+              categoryStats[categoryName].total++;
 
-    <!-- ========================================== -->
-    <!-- WACANA 4 -->
-    <!-- ========================================== -->
-    <div class="wacana">
-        <div class="wacana-title">Wacana 4: Teori Enam Derajat Pemisahan</div>
-        <p>Teori <em>Six Degrees of Separation</em> menyatakan bahwa setiap orang di dunia dapat dihubungkan ke orang lain melalui maksimal enam perantara sosial. Asumsikan bahwa secara rata-rata, satu orang mengenal secara langsung 40 orang unik (derajat ke-1). Orang-orang di derajat ke-1 ini masing-masing juga mengenal 40 orang unik lainnya yang belum dikenal oleh kelompok sebelumnya (derajat ke-2), dan seterusnya membentuk pertumbuhan eksponensial.</p>
-    </div>
+              // Kunci UI
+              item.querySelector('ol').classList.add('disabled-options');
 
-    <!-- NOMOR 13 -->
-    <div class="question">
-        <div class="question-header">13.</div>
-        <p>Manakah di antara pernyataan berikut yang BENAR terkait relasi eksponensial di atas?</p>
-        <ol class="statement-list">
-            <li>Jumlah orang pada derajat ke-$n$ dapat diformulasikan sebagai $40^n$.</li>
-            <li>Pada derajat ke-3, jumlah orang yang terhubung adalah 64.000 orang.</li>
-            <li>Jika asumsi rata-rata kenalan diubah menjadi 80 orang, maka jumlah populasi yang terhubung pada derajat ke-2 akan menjadi tepat empat kali lipat lebih banyak dibandingkan algoritma awal.</li>
-            <li>Jaringan eksponensial ini akan mampu menghubungkan lebih dari 8 miliar manusia pada derajat ke-6.</li>
-        </ol>
-        
-        <ol class="options">
-            <li>Pernyataan 1, 2, dan 3 benar.</li>
-            <li>Pernyataan 1 dan 3 benar.</li>
-            <li>Pernyataan 2 dan 4 benar.</li>
-            <li>Hanya pernyataan 4 yang benar.</li>
-            <li>Semua pernyataan benar.</li>
-        </ol>
+              if (selectedOption) {
+                  const userAnswer = selectedOption.getAttribute('data-option');
+                  
+                  if (userAnswer === correctAnswer) {
+                      correctCount++;
+                      categoryStats[categoryName].correct++;
+                      selectedOption.classList.add('correct');
+                      selectedOption.classList.remove('selected');
+                  } else {
+                      wrongCount++;
+                      categoryStats[categoryName].wrong++;
+                      selectedOption.classList.add('wrong');
+                      selectedOption.classList.remove('selected');
+                      const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                      if (correctEl) correctEl.classList.add('correct');
+                  }
+              } else {
+                  emptyCount++;
+                  categoryStats[categoryName].empty++;
+                  const correctEl = item.querySelector(`li[data-option="${correctAnswer}"]`);
+                  if (correctEl) correctEl.classList.add('correct');
+              }
+          });
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp13')">Tampilkan Pembahasan</button>
-        <div id="exp13" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Bayangin ini sistem multi level marketing (MLM) atau penyebaran gosip. Kamu bawa 40 orang, setiap orang itu bawa 40 orang lagi, dst.</p>
-                <ol class="statement-list">
-                    <li>Karena tiap cabang bercabang 40 lagi secara terus menerus, maka rumusnya adalah perkalian berulang pangkat (Eksponen): $P = 40^n$. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Tinggal pakai rumus: $40^3 = 40 \times 40 \times 40 = 64.000$ orang. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Kalau diubah jadi 80. Derajat ke-2 pakai rumus baru: $80^2 = 6.400$. Derajat ke-2 pakai rumus lama: $40^2 = 1.600$. Kalau dibandingin: $6.400 / 1.600 = 4$. Berarti bener, jumlahnya jadi persis 4 kali lipat! $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Yuk hitung pakai rumus: Derajat 6 = $40^6$. Hitung kasar aja: $(4 \times 10)^6 = 4^6 \times 10^6 = 4.096 \times 1.000.000 \approx 4.096.000.000$. Baru sekitar 4 miliar orang! Masih di bawah 8 miliar. $\rightarrow$ <strong>SALAH</strong>.</li>
-                </ol>
-                <p>Yang benar ada 3 (1, 2, 3).<br>
-                <strong>Jawaban: A</strong></p>
-            </div>
-        </div>
-    </div>
+          // Skoring (Skala 100)
+          const finalScore = Math.round((correctCount / 20) * 100);
+          
+          // ==========================================
+          // KIRIM DATA KE GOOGLE SHEETS
+          // ==========================================
+          if (!isRestoring && state.userData.email !== "riansyahdhanardi@gmail.com") {
+              submitBtn.innerText = "MENGIRIM JAWABAN...";
+              submitBtn.style.backgroundColor = "#95a5a6";
+              submitBtn.disabled = true;
+              
+              // Susun data yang akan dikirim ke Sheets
+              let dataToSend = {
+                  nama: state.userData.nama,
+                  email: state.userData.email,
+                  hp: state.userData.hp,
+                  sekolah: state.userData.sekolah,
+                  score: finalScore,
+                  benar: correctCount,
+                  salah: wrongCount,
+                  kosong: emptyCount
+              };
+              
+              // Loop masukin jawaban tiap nomor
+              for (let i = 1; i <= 20; i++) {
+                  dataToSend['soal_' + i] = state.answers[i] || "";
+              }
 
-    <!-- NOMOR 14 -->
-    <div class="question">
-        <div class="question-header">14.</div>
-        <p>Berdasarkan asumsi formula $P = 40^n$ (dengan $P$ = jumlah populasi terhubung dan $n$ = derajat perantara), periksa empat pernyataan ini:</p>
-        <ol class="statement-list">
-            <li>Grafik fungsi hubungan ini merupakan garis lurus jika digambar pada bidang kartesius linier biasa.</li>
-            <li>Jumlah populasi pada derajat ke-4 adalah 2.560.000 orang.</li>
-            <li>Selisih populasi antara derajat ke-2 dan derajat ke-1 adalah 1.560 orang.</li>
-            <li>Jika basis eksponen diubah dari 40 menjadi 10, diperlukan minimal 10 derajat pemisahan untuk mencapai populasi 10 miliar.</li>
-        </ol>
-        <p>Berapa banyak pernyataan yang BENAR?</p>
+              // Proses pengiriman (fetch) ke Apps Script
+              fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  body: JSON.stringify(dataToSend),
+                  // Jangan pakai mode 'no-cors' atau header khusus agar JSON bisa diparse dengan baik oleh Apps Script
+              })
+              .then(response => response.json())
+              .then(result => {
+                  console.log("Data sukses terkirim ke server:", result);
+                  submitBtn.style.display = "none";
+              })
+              .catch(error => {
+                  console.error('Error saat mengirim data (Cek koneksi/URL SCRIPT):', error);
+                  submitBtn.style.display = "none";
+              });
+          } else {
+              // Bypass untuk admin atau saat memulihkan sesi (reload)
+              submitBtn.style.display = "none";
+          }
 
-        <ol class="options">
-            <li>4</li>
-            <li>3</li>
-            <li>2</li>
-            <li>1</li>
-            <li>0</li>
-        </ol>
+          // Animasi Angka Skor
+          let currentScore = 0;
+          const scoreEl = document.getElementById('scoreValue');
+          const scoreInterval = setInterval(() => {
+              if (currentScore >= finalScore) {
+                  clearInterval(scoreInterval);
+                  scoreEl.textContent = finalScore;
+              } else {
+                  currentScore += Math.ceil((finalScore - currentScore) / 5) || 1;
+                  scoreEl.textContent = currentScore;
+              }
+          }, 30);
+          
+          document.getElementById('count-benar').textContent = correctCount;
+          document.getElementById('count-salah').textContent = wrongCount;
+          document.getElementById('count-kosong').textContent = emptyCount;
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp14')">Tampilkan Pembahasan</button>
-        <div id="exp14" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Kita bedah lagi pernyataannya pelan-pelan:</p>
-                <ol class="statement-list">
-                    <li>Grafik <strong>eksponensial</strong> (pangkat-pangkatan) itu bentuknya melengkung naik tajam banget ke atas (kayak kurva penyebaran virus), <strong>bukan garis lurus</strong>. Garis lurus itu cuma buat fungsi linier kayak $y = 40x$. $\rightarrow$ <strong>SALAH</strong>.</li>
-                    <li>Derajat 4: $40^4 = 40 \times 40 \times 40 \times 40$. (Cara gampang: $4\times4\times4\times4 = 256$, terus tambahin nol-nya 4 biji) jadinya 2.560.000. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Derajat 2: $40^2 = 1.600$. Derajat 1: $40^1 = 40$. Selisihnya (tinggal dikurang) = $1.600 - 40 = 1.560$. $\rightarrow$ <strong>BENAR</strong>.</li>
-                    <li>Basis 40 diganti 10. Rumus jadi $10^n$. Kita mau cari tau target $\ge 10$ Miliar (Nol-nya ada sepuluh $\rightarrow 10.000.000.000$). Nah, 10 Miliar itu wujud eksponennya adalah $10^{10}$. Berarti bener harus pangkat 10 alias derajat ke-10. $\rightarrow$ <strong>BENAR</strong>.</li>
-                </ol>
-                <p>Ada 3 pernyataan yang benar.<br>
-                <strong>Jawaban: B</strong></p>
-            </div>
-        </div>
-    </div>
+          // Buat Laporan Tabel
+          const tbody = document.getElementById('topic-breakdown-body');
+          tbody.innerHTML = '';
+          
+          let strengths = [];
+          let weaknesses = [];
+          let moderates = [];
 
-    <!-- NOMOR 15 -->
-    <div class="question">
-        <div class="question-header">15.</div>
-        <p>Jika populasi sebuah negara kecil adalah 10.000.000 jiwa, pada derajat ke berapakah (<em>minimum</em>) teori relasi ini mampu mencakup seluruh penduduk negara tersebut?</p>
-        
-        <ol class="options">
-            <li>Derajat ke-3</li>
-            <li>Derajat ke-4</li>
-            <li>Derajat ke-5</li>
-            <li>Derajat ke-6</li>
-            <li>Derajat ke-7</li>
-        </ol>
+          for (const [cat, data] of Object.entries(categoryStats)) {
+              const percentage = Math.round((data.correct / data.total) * 100);
+              const errors = data.wrong + data.empty;
+              
+              if (percentage >= 70) strengths.push(cat);
+              else if (percentage <= 40) weaknesses.push(cat);
+              else moderates.push(cat);
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp15')">Tampilkan Pembahasan</button>
-        <div id="exp15" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Tugas kita adalah cari tahu pangkat berapa ($n$) di rumus $40^n$ yang hasilnya minimal sama dengan atau lebih besar sedikit dari angka 10.000.000. Coba satu-satu aja pake hasil dari nomor sebelumnya:<br>
-                - Jika $n=3$, populasi terhubung = 64.000 (Masih kurang banyak banget).<br>
-                - Jika $n=4$, populasi terhubung = 2.560.000 (Udah jutaan, tapi masih di bawah 10 juta).<br>
-                - Jika $n=5$, populasi = $40 \times 2.560.000 =$ <strong>102.400.000</strong> (Wah, udah 102 juta jiwa! Sangat jauh melampaui 10 juta penduduk).</p>
-                <p>Karena di derajat ke-4 belum nyampe, berarti mau nggak mau kita harus nambah satu langkah lagi ke derajat ke-5 untuk menyapu bersih sisa populasinya.<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
+              let barColor = '#dc3545'; // Merah
+              if (percentage >= 70) barColor = '#28a745'; // Hijau
+              else if (percentage > 40) barColor = '#f39c12'; // Kuning
 
-    <!-- NOMOR 16 -->
-    <div class="question">
-        <div class="question-header">16.</div>
-        <p>Misalkan Budi ingin mengantarkan sebuah paket rahasia kepada X, seorang tokoh terkenal. Apakah Budi membutuhkan <strong>tepat 3 perantara</strong> untuk bisa terhubung dengan X?</p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li>(1) Budi mengenal Andi, yang merupakan tetangga dari sekretaris pribadi tokoh X.</li>
-            <li>(2) Sekretaris pribadi tokoh X mengenal tokoh X secara langsung.</li>
-        </ul>
-        <p>Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.</p>
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                  <td style="padding: 12px; text-align: left; font-weight: 600; color: #444;">${cat}</td>
+                  <td style="padding: 12px;">${data.total}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #28a745;">${data.correct}</td>
+                  <td style="padding: 12px; font-weight: bold; color: #dc3545;">${errors}</td>
+                  <td style="padding: 12px;">
+                      <div class="progress-bar-bg">
+                          <div class="progress-bar-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+                      </div>
+                      <span style="font-size: 12px; font-weight: bold; color: #555;">${percentage}%</span>
+                  </td>
+              `;
+              tbody.appendChild(tr);
+          }
 
-        <ol class="options">
-            <li>Pernyataan (1) SAJA cukup, tetapi pernyataan (2) SAJA tidak cukup.</li>
-            <li>Pernyataan (2) SAJA cukup, tetapi pernyataan (1) SAJA tidak cukup.</li>
-            <li>DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU pernyataan SAJA tidak cukup.</li>
-            <li>Pernyataan (1) SAJA cukup, dan pernyataan (2) SAJA juga cukup.</li>
-            <li>Pernyataan (1) dan pernyataan (2) tidak cukup.</li>
-        </ol>
+          // Generate Teks Rekomendasi
+          const recList = document.getElementById('recommendation-list');
+          recList.innerHTML = '';
 
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp16')">Tampilkan Pembahasan</button>
-        <div id="exp16" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Fokus pertanyaannya: "Apakah Budi butuh <strong>TEPAT 3 PERANTARA</strong>?". Perantara itu artinya orang yang berdiri di tengah-tengah antara Si Budi sama Si Tokoh X.</p>
-                <p>Ayo kita bikin jaringannya (berdasarkan info gabungan 1 dan 2, asumsi tetangga saling kenal di teori sosial ini):<br>
-                BUDI $\rightarrow$ mengenal $\rightarrow$ ANDI $\rightarrow$ mengenal $\rightarrow$ SEKPRI TOKOH X $\rightarrow$ mengenal $\rightarrow$ TOKOH X.</p>
-                <p>Ayo kita hitung ada berapa perantara di tengah-tengah jembatan ini:<br>
-                1. Perantara pertama: Andi.<br>
-                2. Perantara kedua: Sekpri Tokoh X.<br>
-                Loh, habis sekpri itu kan udah langsung si Tokoh X? Berarti orang di tengahnya cuma ada 2 doang, nggak nyampe 3 orang!</p>
-                <p>Nah, karena kita udah bisa buktiin kalau perantaranya cuma butuh 2, maka kita bisa ngejawab pertanyaan di soal dengan lantang: "<strong>TIDAK! Budi nggak butuh tepat 3, dia cuma butuh 2 perantara aja!</strong>"<br>
-                Karena informasi dari pernyataan (1) dan (2) pas digabungin CUKUP buat ngasih kita jawaban yang akurat, maka jawabannya "Dua pernyataan bersama-sama cukup".<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
+          if (strengths.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #27ae60; font-weight: bold;">💪 Pertahankan:</span> Pemahaman nalar matematis di wacana <em>${strengths.join(", ")}</em> kamu sudah sangat baik. Lanjutkan latihannya!</li>`;
+          }
+          if (moderates.length > 0) {
+              recList.innerHTML += `<li style="margin-bottom: 8px;"><span style="color: #d35400; font-weight: bold;">⚖️ Cukup Baik:</span> Kamu cukup paham logika untuk wacana <em>${moderates.join(", ")}</em>, tapi jangan lengah. Tingkatkan lagi penalaran dan ketelitian datanya.</li>`;
+          }
+          if (weaknesses.length > 0) {
+              recList.innerHTML += `<li><span style="color: #c0392b; font-weight: bold;">⚠️ Tingkatkan:</span> Nalurimu di soal <em>${weaknesses.join(", ")}</em> masih kurang maksimal. Yuk, lebih teliti lagi membaca wacana dan data yang disajikan!</li>`;
+          }
 
-    <!-- ========================================== -->
-    <!-- WACANA 5 -->
-    <!-- ========================================== -->
-    <div class="wacana">
-        <div class="wacana-title">Wacana 5: Analisis "Bubble Tea" dan Volume Es Batu</div>
-        
-        <div style="text-align: center; margin: 20px 0;">
-            <svg width="100%" style="max-width: 350px; height: auto;" viewBox="-130 -40 260 180" xmlns="http://www.w3.org/2000/svg">
-                <!-- Tabung -->
-                <ellipse cx="0" cy="0" rx="40" ry="10" fill="none" stroke="black" stroke-width="2"/>
-                <path d="M -40 0 L -40 120 A 40 10 0 0 0 40 120 L 40 0" fill="none" stroke="black" stroke-width="2"/>
-                <path d="M -40 120 A 40 10 0 0 1 40 120" fill="none" stroke="black" stroke-dasharray="4,4"/>
-                
-                <!-- Es batu (Bola) -->
-                <circle cx="0" cy="100" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
-                <circle cx="20" cy="90" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
-                <circle cx="-20" cy="85" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
-                <circle cx="10" cy="70" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
-                <circle cx="-10" cy="65" r="12" fill="cyan" opacity="0.4" stroke="#00bfff" stroke-width="1"/>
+          // Buka Semua Pembahasan
+          const explanations = document.querySelectorAll('.explanation');
+          explanations.forEach(exp => {
+              exp.style.display = 'block';
+          });
 
-                <!-- Cairan level -->
-                <ellipse cx="0" cy="20" rx="40" ry="10" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="4,4"/>
-                <line x1="-40" y1="20" x2="-65" y2="20" stroke="#2980b9" stroke-width="1"/>
-                <text x="-70" y="23" font-size="10" text-anchor="end" fill="#2980b9" font-family="sans-serif">Batas Cairan</text>
-                
-                <!-- Labels & Dimensi -->
-                <line x1="40" y1="0" x2="70" y2="0" stroke="black" stroke-dasharray="2,2"/>
-                <line x1="40" y1="120" x2="70" y2="120" stroke="black" stroke-dasharray="2,2"/>
-                <line x1="65" y1="0" x2="65" y2="120" stroke="black"/>
-                <polygon points="65,0 62,5 68,5" fill="black"/>
-                <polygon points="65,120 62,115 68,115" fill="black"/>
-                <text x="75" y="65" font-size="12" font-family="sans-serif">t = 15 cm</text>
-
-                <line x1="0" y1="-25" x2="40" y2="-25" stroke="black"/>
-                <polygon points="0,-25 5,-28 5,-22" fill="black"/>
-                <polygon points="40,-25 35,-28 35,-22" fill="black"/>
-                <text x="20" y="-32" font-size="12" text-anchor="middle" font-family="sans-serif">r = 4 cm</text>
-                <line x1="0" y1="0" x2="0" y2="-25" stroke="black" stroke-dasharray="2,2"/>
-                <line x1="40" y1="0" x2="40" y2="-25" stroke="black" stroke-dasharray="2,2"/>
-            </svg>
-        </div>
-
-        <p>Sebuah kedai <em>bubble tea</em> menyajikan minumannya di dalam gelas plastik berbentuk tabung sempurna. Jari-jari alas gelas adalah $r = 4$ cm dan tingginya $t = 15$ cm.<br>
-        Kedai tersebut menggunakan es batu berbentuk bola sempurna dengan jari-jari $r_{es} = 1,5$ cm.<br>
-        Standar penyajian (<em>Normal Ice</em>) menggunakan <strong>12 buah es batu</strong>, sedangkan pesanan (<em>Less Ice</em>) hanya menggunakan <strong>4 buah es batu</strong>.<br>
-        Dalam penyajiannya, minuman teh (cairan) dituangkan hingga memenuhi gelas (<em>full</em>) setelah es batu dimasukkan.<br>
-        <em>Gunakan nilai $\pi$ sebagaimana adanya, jangan dikonversi ke desimal.</em></p>
-    </div>
-
-    <!-- NOMOR 17 -->
-    <div class="question">
-        <div class="question-header">17.</div>
-        <p>Berapakah kapasitas volume total (volume maksimal) dari gelas kosong tersebut?</p>
-        
-        <ol class="options">
-            <li>$120\pi \text{ cm}^3$</li>
-            <li>$180\pi \text{ cm}^3$</li>
-            <li>$240\pi \text{ cm}^3$</li>
-            <li>$360\pi \text{ cm}^3$</li>
-            <li>$480\pi \text{ cm}^3$</li>
-        </ol>
-
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp17')">Tampilkan Pembahasan</button>
-        <div id="exp17" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Gelasnya bentuknya <strong>Tabung</strong>. Dari SD sampai kapanpun, rumus ruang tabung itu sama:<br>
-                Volume Tabung = Luas Alas (Bentuk Lingkaran) $\times$ Tinggi.<br>
-                $\text{Volume} = (\pi \times r \times r) \times t$</p>
-                <p>Dari gambar dan soal kita punya angka: jari-jari (r) = 4, dan tinggi (t) = 15. Tinggal masukin aja!<br>
-                $\text{Volume} = \pi \times 4^2 \times 15$<br>
-                $\text{Volume} = \pi \times 16 \times 15$<br>
-                $\text{Volume} =$ <strong>$240\pi$</strong> (Biarkan $\pi$-nya nangkring di situ, jangan repot-repot dikali 3,14).<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOMOR 18 -->
-    <div class="question">
-        <div class="question-header">18.</div>
-        <p>Berapakah total volume ruang yang ditempati oleh es batu pada pesanan <em>Normal Ice</em>?</p>
-        
-        <ol class="options">
-            <li>$18\pi \text{ cm}^3$</li>
-            <li>$36\pi \text{ cm}^3$</li>
-            <li>$54\pi \text{ cm}^3$</li>
-            <li>$72\pi \text{ cm}^3$</li>
-            <li>$108\pi \text{ cm}^3$</li>
-        </ol>
-
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp18')">Tampilkan Pembahasan</button>
-        <div id="exp18" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Es batunya ajaib, bentuknya <strong>Bola</strong>!<br>
-                Rumus nyari gendutnya bola (Volume) itu = $\frac{4}{3} \times \pi \times r^3$.<br>
-                Jari-jari es (r) = 1,5. Biar gampang nyoret angkanya nanti, 1,5 kita ubah jadi bentuk pecahan $\frac{3}{2}$.</p>
-                <p>Ayo hitung 1 biji es batu dulu:<br>
-                $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times (\frac{3}{2})^3$<br>
-                $(\frac{3}{2})$ pangkat tiga berarti dikali tiga kali: $\frac{3\times3\times3}{2\times2\times2} = \frac{27}{8}$.<br>
-                Nah kita satukan lagi:<br>
-                $\text{Volume 1 Es} = \frac{4}{3} \times \pi \times \frac{27}{8}$<br>
-                (Coret silang: 4 di atas sama 8 di bawah, 8-nya sisa 2. Lalu 27 di atas sama 3 di bawah, 27-nya sisa 9).<br>
-                Ketemu deh! Volume 1 es batu = $\frac{9}{2}\pi$ alias <strong>$4,5\pi$</strong>.</p>
-                <p>Karena varian <em>Normal Ice</em> pake <strong>12 buah es batu</strong>, tinggal kali aja:<br>
-                $\text{Total Es} = 12 \times 4,5\pi =$ <strong>$54\pi$</strong>.<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOMOR 19 -->
-    <div class="question">
-        <div class="question-header">19.</div>
-        <p>Jika seorang pelanggan memesan varian <em>Normal Ice</em>, berapakah volume murni minuman teh (cairan) yang sebenarnya ia dapatkan?</p>
-        
-        <ol class="options">
-            <li>$186\pi \text{ cm}^3$</li>
-            <li>$204\pi \text{ cm}^3$</li>
-            <li>$240\pi \text{ cm}^3$</li>
-            <li>$288\pi \text{ cm}^3$</li>
-            <li>$306\pi \text{ cm}^3$</li>
-        </ol>
-
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp19')">Tampilkan Pembahasan</button>
-        <div id="exp19" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Logika jajan minuman:<br>
-                Gelas yang dikasih ke kita kan diisi sampai penuh. Penuh itu isinya apa aja? Isinya Teh murni ditambah Es Batu yang ngambil jatah ruang di dalem gelas.<br>
-                Berarti, buat tau seberapa banyak teh murni yang masuk perut, tinggal kurangi aja Gelas Full sama Es Batunya.<br>
-                $\text{Volume Teh Murni} = \text{Volume Gelas} - \text{Volume Es Normal}$<br>
-                Ambil jawaban dari soal 17 dan 18:<br>
-                $\text{Volume Teh Murni} = 240\pi - 54\pi =$ <strong>$186\pi$</strong>.<br>
-                Sesederhana itu kawan!<br>
-                <strong>Jawaban: A</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOMOR 20 -->
-    <div class="question">
-        <div class="question-header">20.</div>
-        <p>Seorang pelanggan merasa rugi dan beralih dari pesanan <em>Normal Ice</em> menjadi <em>Less Ice</em>. Berapa persentase peningkatkan volume cairan teh yang ia dapatkan dibandingkan saat ia memesan <em>Normal Ice</em>?</p>
-        
-        <ol class="options">
-            <li>$15,50\%$</li>
-            <li>$17,25\%$</li>
-            <li>$19,35\%$</li>
-            <li>$21,50\%$</li>
-            <li>$24,75\%$</li>
-        </ol>
-
-        <button class="show-explanation-btn" onclick="toggleExplanation('exp20')">Tampilkan Pembahasan</button>
-        <div id="exp20" class="tcolorbox">
-            <div class="tcolorbox-title">Pembahasan:</div>
-            <div class="tcolorbox-content">
-                <p>Mari kita selesaikan kasus manipulasi jualan minuman ini!<br>
-                Kalau pesan <em>Less Ice</em>, es batunya cuma <strong>4 buah</strong>.<br>
-                Berarti volume esnya = $4 \times 4,5\pi$ (volume satu es) = <strong>$18\pi$</strong>.</p>
-                <p>Teh murni di <em>Less Ice</em> = Volume Gelas - Volume Es Less = $240\pi - 18\pi =$ <strong>$222\pi$</strong>.<br>
-                (Tadi kalau pesen Normal tehnya dapet <strong>$186\pi$</strong>).</p>
-                <p><strong>Berapa selisihnya (peningkatannya)?</strong><br>
-                Teh di Less Ice (222) dikurang Teh di Normal (186) = <strong>$36\pi$</strong> nambahnya.</p>
-                <p><strong>Sekarang jadikan persentase:</strong><br>
-                Karena di soal dibilangnya <em>"dibandingkan saat ia memesan Normal Ice"</em>, berarti si nilai Normal Ice ini posisinya di bawah (dijadiin patokan pembagi).<br>
-                $\text{Persentase} = \frac{\text{Selisih Teh}}{\text{Teh Normal Ice}} \times 100\%$<br>
-                $\text{Persentase} = \frac{36\pi}{186\pi} \times 100\%$<br>
-                Coret $\pi$-nya. Lalu bagi angkanya dengan 6 biar sederhana.<br>
-                $\frac{36}{186} \times 100\% = \frac{6}{31} \times 100\% \approx$ <strong>$19,35\%$</strong>.</p>
-                <p>Artinya, dengan ngurangin es batu ke varian Less Ice, kamu untung (dapet air teh) nyaris 20% lebih banyak!<br>
-                <strong>Jawaban: C</strong></p>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    function toggleExplanation(id) {
-        var x = document.getElementById(id);
-        var btn = x.previousElementSibling;
-        if (x.style.display === "block" || x.style.display === "") {
-            x.style.display = "none";
-            btn.innerHTML = "Tampilkan Pembahasan";
-        } else {
-            x.style.display = "block";
-            btn.innerHTML = "Sembunyikan Pembahasan";
-        }
-    }
-</script>
-
+          const resultBox = document.getElementById('resultBox');
+          resultBox.style.display = 'block';
+          
+          setTimeout(() => {
+              if(!isRestoring) {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+          }, 200);
+      }
+    </script>
 </body>
 </html>
